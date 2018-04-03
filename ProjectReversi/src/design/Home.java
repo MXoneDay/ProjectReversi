@@ -1,8 +1,8 @@
 package design;
 
+import main.Main;
 import javafx.scene.*;
 import javafx.scene.layout.*;
-import main.Main;
 import javafx.scene.control.*;
 import javafx.geometry.*;
 import javafx.event.*;
@@ -31,8 +31,8 @@ public class Home {
 					Main.usernm = text.getText();
 					Main.mode = 't';
 					System.out.println("b1: " + Main.usernm);
-						Scene scene = tictactoe.Setup.setup();
-						stage.setScene(scene);
+					GridPane pane = tictactoe.Setup.setup();
+					stage.getScene().setRoot(pane);
 				}
 			});
 			b2.setOnAction(new EventHandler<ActionEvent>() {
@@ -42,12 +42,11 @@ public class Home {
 					Main.usernm = text.getText();
 					Main.mode = 'r';
 					System.out.println("b2: " + Main.usernm);
-					Scene scene = reversi.Setup.setup();
-					stage.setScene(scene);
+					stage.getScene().setRoot(reversi.Setup.setup());
 				}
 			});
 			
-			Scene scene = new Scene(root, 400, 400);
+			Scene scene = new Scene(root, 600, 600);
 			
 			stage.setTitle("Test");
 			stage.setScene(scene);

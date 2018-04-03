@@ -1,7 +1,5 @@
 package tictactoe;
 
-import reversi.Setup;
-
 public class CheckMove {
 	
 	public static void check(int hor, int ver) {

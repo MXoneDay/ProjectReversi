@@ -1,26 +1,14 @@
-package main;
+package design;
 
-import java.util.ArrayList;
-import java.util.List;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
-import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
-import javafx.util.Duration;
 
-public class Tttframe extends Application {
+public class Tttframe {
 
     private Tile[][] board = new Tile[3][3];
     private Pane root = new Pane();
@@ -43,10 +31,9 @@ public class Tttframe extends Application {
         return root;
     }
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        primaryStage.setScene(new Scene(createContent()));
-        primaryStage.show();
+    public Scene start() throws Exception {
+    	Scene scene = new Scene(createContent());
+    	return scene;
     }
 
     // Tile is a block of a ... size that is used to build a play board
@@ -58,10 +45,6 @@ public class Tttframe extends Application {
             setAlignment(Pos.CENTER);
             getChildren().addAll(border );
         }
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }
 

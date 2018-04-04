@@ -1,7 +1,8 @@
 package design;
 
 import javafx.scene.layout.*;
-import javafx.scene.control.*;
+import javafx.scene.input.*;
+import javafx.event.*;
 
 public class GridFrame {
 	private GridPane gridPane = new GridPane();
@@ -11,20 +12,28 @@ public class GridFrame {
 		ColumnConstraints cHor = new ColumnConstraints(hor);
 		cHor.setPercentWidth(100.0/hor);
 		RowConstraints rVer = new RowConstraints(ver);
-		rVer.setPercentHeight(90.0/ver);
+		rVer.setPercentHeight(100.0/ver);
 		
 		for(int i = 0; i < hor; i++) {
 			gridPane.getColumnConstraints().add(cHor);
 		}
-		for(int i = 0; i < hor; i++) {
+		for(int i = 0; i < ver; i++) {
 			gridPane.getRowConstraints().add(rVer);
 		}
-		/*
-		rVer.setPercentHeight(50.0);
-		gridPane.getRowConstraints().add(rVer);
 		
-		Button button = new Button("test");
-		gridPane.add(button, 2, 3);*/
+		for(int i = 0; i < hor; i++) {
+			for(int j = 0; j < ver; j++) {
+				CellPane cellpane = new CellPane(i, j);
+				cellpane.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+					@Override
+					public void handle(MouseEvent me) {
+						System.out.println("test " + cellpane.hor + cellpane.ver);
+					}
+				});
+				gridPane.add(cellpane, i, j);
+			}
+		}
 		
 		gridPane.setGridLinesVisible(true);
 		

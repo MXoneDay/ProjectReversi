@@ -9,17 +9,13 @@ public class Move {
 		
 		if(Main.mode == 't') {
 			Tictactoe.check(hor, ver);
-			//tictactoe.CheckMove.check(hor, ver);
 		}
 		else if(Main.mode == 'r') {
 			Reversi.check(hor, ver);
-			//reversi.CheckMove.check(hor, ver);
 		}
 		else {
 			// error
 		}
-		
-		//op eigen bord doen
 		
 		//versturen naar de server
 	}

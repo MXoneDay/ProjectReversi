@@ -2,7 +2,7 @@ package games;
 
 import main.Main;
 import design.GridFrame;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
 
 public class Tictactoe {
 	private static int hor = 3, ver = 3;
@@ -21,6 +21,7 @@ public class Tictactoe {
 				if(board[hor][ver] == 0) {// controleren of de plek leeg is
 					System.out.println(board[hor][ver]);
 					// zet in board
+					board[hor][ver] = 1;
 				}
 			}
 		}

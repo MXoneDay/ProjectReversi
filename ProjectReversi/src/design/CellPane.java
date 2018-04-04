@@ -1,6 +1,6 @@
 package design;
 
-import javafx.scene.layout.*;
+import javafx.scene.layout.Pane;
 
 public class CellPane extends Pane {
 	public final int hor, ver;

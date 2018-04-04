@@ -3,6 +3,7 @@ package design;
 import javafx.scene.layout.*;
 import javafx.scene.input.*;
 import javafx.event.*;
+import framework.Move;
 
 public class GridFrame {
 	private GridPane gridPane = new GridPane();
@@ -28,7 +29,8 @@ public class GridFrame {
 
 					@Override
 					public void handle(MouseEvent me) {
-						System.out.println("test " + cellpane.hor + cellpane.ver);
+						Move.move(cellpane.hor, cellpane.ver);
+						//System.out.println("test " + cellpane.hor + cellpane.ver);
 					}
 				});
 				gridPane.add(cellpane, i, j);

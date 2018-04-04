@@ -1,16 +1,19 @@
 package framework;
 
 import main.Main;
+import games.*;
 
 public class Move {
 	
-	public void move(int hor, int ver) {
+	public static void move(int hor, int ver) {
 		
 		if(Main.mode == 't') {
-			tictactoe.CheckMove.check(hor, ver);
+			Tictactoe.check(hor, ver);
+			//tictactoe.CheckMove.check(hor, ver);
 		}
 		else if(Main.mode == 'r') {
-			reversi.CheckMove.check(hor, ver);
+			Reversi.check(hor, ver);
+			//reversi.CheckMove.check(hor, ver);
 		}
 		else {
 			// error

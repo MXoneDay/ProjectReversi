@@ -1,16 +1,17 @@
 package main;
 
-import design.Home;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import view.HomePage;
 
 public class Main extends Application {
-	public static char mode;
-	public static String usernm;
-	private Home home = new Home();
+	//public char mode;
+	private HomePage home = new HomePage();
 	
 	@Override
 	public void start(Stage stage) throws Exception {
-		home.start(stage);
+		stage.setTitle("Game");
+		stage.setScene(home.createHome());
+		stage.show();
 	}
 }

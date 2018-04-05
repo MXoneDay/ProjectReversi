@@ -1,20 +1,21 @@
-package design;
+package view;
 
-import main.Main;
-import games.*;
 import javafx.scene.Scene;
+import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.geometry.Pos;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.stage.Stage;
 
-public class Home {
+public class HomePage {
+	public String usernm;
+	private Scene scene;
+	private GridFrame gridFrame;
+	//private Game game;
 	
-	public void start(Stage stage) {
+	public Scene createHome() {
 		try {
 			TextField text = new TextField();
 			Label label = new Label("Username: ");
@@ -32,31 +33,34 @@ public class Home {
 				
 				@Override
 				public void handle(ActionEvent ae) {
-					Main.usernm = text.getText();
-					Main.mode = 't';
+					usernm = text.getText();
+					scene.setRoot(new GridFrame('t').createGrid());
+					/*Main.mode = 't';
 					System.out.println("b1: " + Main.usernm);
-					stage.getScene().setRoot(Tictactoe.setup());
+					stage.getScene().setRoot(Tictactoe.setup());*/
 				}
 			});
 			b2.setOnAction(new EventHandler<ActionEvent>() {
 				
 				@Override
 				public void handle(ActionEvent ae) {
-					Main.usernm = text.getText();
-					Main.mode = 'r';
+					usernm = text.getText();
+					scene.setRoot(new GridFrame('r').createGrid());
+					/*Main.mode = 'r';
 					System.out.println("b2: " + Main.usernm);
-					stage.getScene().setRoot(Reversi.setup());
+					stage.getScene().setRoot(Reversi.setup());*/
 				}
 			});
 			
-			Scene scene = new Scene(root, 600, 600);
-			
-			stage.setTitle("Test");
-			stage.setScene(scene);
-			stage.show();
+			return scene = new Scene(root, 600, 600);
 		}
 		catch(Exception ex) {
 			ex.printStackTrace();
 		}
+		return null;
+	}
+	
+	public String getUsernm() {
+		return usernm;
 	}
 }

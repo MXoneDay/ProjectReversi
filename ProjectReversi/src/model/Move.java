@@ -1,12 +1,13 @@
-package framework;
+package model;
 
 import main.Main;
 import games.*;
 
 public class Move {
+	private int turn = 0;
 	
-	public static void move(int hor, int ver) {
-		
+	public void move(int hor, int ver) {
+		/*
 		if(Main.mode == 't') {
 			Tictactoe.check(hor, ver);
 		}
@@ -15,7 +16,7 @@ public class Move {
 		}
 		else {
 			// error
-		}
+		}*/
 		
 		//versturen naar de server
 	}

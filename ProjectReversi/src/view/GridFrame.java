@@ -1,4 +1,4 @@
-package design;
+package view;
 
 import javafx.scene.layout.GridPane;
 import javafx.scene.input.MouseEvent;
@@ -6,12 +6,29 @@ import javafx.event.EventHandler;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Text;
-import framework.Move;
+import games.*;
 
 public class GridFrame {
 	private GridPane gridPane = new GridPane();
+	public Text text = new Text("test");
+	private final Game game;
+	private int hor, ver;
 	
-	public GridPane start(int hor, int ver) {
+	GridFrame(char game){
+		if(game == 'r') {
+			this.game = new Reversi();
+		}
+		else if(game == 't') {
+			this.game = new Tictactoe();
+		}
+		else {
+			this.game = null;
+		}
+		hor = this.game.getHor();
+		ver = this.game.getVer();
+	}
+	
+	public GridPane createGrid() {
 		
 		ColumnConstraints cHor = new ColumnConstraints(hor);
 		cHor.setPercentWidth(100.0/hor);
@@ -33,17 +50,16 @@ public class GridFrame {
 
 					@Override
 					public void handle(MouseEvent me) {
-						Move.move(cellPane.hor, cellPane.ver);
+						game.check(cellPane.hor, cellPane.ver);
+						//Move.move(cellPane.hor, cellPane.ver);
 					}
 				});
 				gridPane.add(cellPane, i, j);
 			}
 		};
 		
-		Text text = new Text("test");
-		gridPane.add(text, 0, ver);
 		
-		//gridPane.setGridLinesVisible(true);
+		gridPane.add(text, 0, ver);
 		
 		return gridPane;
 	}

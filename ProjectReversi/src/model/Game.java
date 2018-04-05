@@ -1,4 +1,4 @@
-package games;
+package model;
 
 public interface Game {
 	public int getHor();

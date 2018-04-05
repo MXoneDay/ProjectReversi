@@ -13,7 +13,6 @@ public class HomePage {
 	public String usernm;
 	private Scene scene;
 	private GridFrame gridFrame;
-	//private Game game;
 	
 	public Scene createHome() {
 		try {

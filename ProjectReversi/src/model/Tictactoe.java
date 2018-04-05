@@ -1,4 +1,4 @@
-package games;
+package model;
 
 public class Tictactoe implements Game {
 	private final int hor = 3, ver = 3;

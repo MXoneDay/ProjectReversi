@@ -1,4 +1,4 @@
-package games;
+package model;
 
 public class Reversi implements Game {
 	private int hor = 8, ver = 8;

@@ -6,6 +6,9 @@ import javafx.event.EventHandler;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Text;
+import model.Game;
+import model.Reversi;
+import model.Tictactoe;
 import games.*;
 
 public class GridFrame {
@@ -51,13 +54,11 @@ public class GridFrame {
 					@Override
 					public void handle(MouseEvent me) {
 						game.check(cellPane.hor, cellPane.ver);
-						//Move.move(cellPane.hor, cellPane.ver);
 					}
 				});
 				gridPane.add(cellPane, i, j);
 			}
 		};
-		
 		
 		gridPane.add(text, 0, ver);
 		

@@ -1,5 +1,6 @@
 package view;
 
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.event.EventHandler;
 import controller.ViewController;
@@ -51,6 +52,7 @@ public class GridPage implements Page{
 		
 		for(int i = 0; i < hor; i++) {
 			for(int j = 0; j < ver; j++) {
+
 				CellPane cellPane = new CellPane(i, j);
 				cellPane.setStyle("-fx-border-color: black"); // from https://stackoverflow.com/questions/27712213/how-do-i-make-a-simple-solid-border-around-a-flowpane-in-javafx/27712713
 				cellPane.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
@@ -58,9 +60,12 @@ public class GridPage implements Page{
 					@Override
 					public void handle(MouseEvent me) {
 						game.move(cellPane.hor, cellPane.ver);
+						cellPane.getChildren().add(game.getImage());
 					}
 				});
 				gridPane.add(cellPane, i, j);
+
+
 			}
 		}
 		

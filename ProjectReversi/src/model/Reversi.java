@@ -1,5 +1,8 @@
 package model;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
 public class Reversi implements Game {
 	private int hor = 8, ver = 8;
 	//private int turn = 0;
@@ -21,6 +24,11 @@ public class Reversi implements Game {
 	}
 
 	@Override
+	public ImageView getImage() {
+		return null;
+	}
+
+	@Override
 	public int getHor() {
 		return hor;
 	}
@@ -35,3 +43,4 @@ public class Reversi implements Game {
 		new ReversiAI(this);
 	}
 }
+

@@ -2,9 +2,9 @@ package model;
 
 public class Reversi implements Game {
 	private int hor = 8, ver = 8;
-	private int turn = 0;
+	//private int turn = 0;
 	
-	public void check(int hor, int ver) {
+	public void move(int hor, int ver) {
 		System.out.println("reversi: " + hor + ver);
 		// check if the move is valid
 		// check if move is within board
@@ -28,5 +28,10 @@ public class Reversi implements Game {
 	@Override
 	public int getVer() {
 		return ver;
+	}
+
+	@Override
+	public void createAI() {
+		new ReversiAI(this);
 	}
 }

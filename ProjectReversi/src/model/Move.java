@@ -1,10 +1,7 @@
 package model;
 
-import main.Main;
-import games.*;
-
 public class Move {
-	private int turn = 0;
+	//private int turn = 0;
 	
 	public void move(int hor, int ver) {
 		/*

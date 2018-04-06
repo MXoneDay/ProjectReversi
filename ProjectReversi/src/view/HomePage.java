@@ -1,22 +1,20 @@
 package view;
 
-import javafx.scene.Scene;
 import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import controller.ViewController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
-public class HomePage {
-	public String usernm;
-	private Scene scene;
-	private GridFrame gridFrame;
+public class HomePage implements Page{
+	public String usernm = "";
 	
-	public Scene createHome() {
+	public GridPane createPage() {
 		try {
-			TextField text = new TextField();
+			TextField text = new TextField(usernm);
 			Label label = new Label("Username: ");
 			Button b1 = new Button("TicTacToe");
 			Button b2 = new Button("Reversi");
@@ -33,7 +31,14 @@ public class HomePage {
 				@Override
 				public void handle(ActionEvent ae) {
 					usernm = text.getText();
-					scene.setRoot(new GridFrame('t').createGrid());
+					try {
+						ViewController.toGame('t');
+					}
+					catch(Exception ex) {
+						text.setText(ex.getMessage());
+					}
+					
+					//scene.setRoot(new GridFrame('t').createGrid());
 					/*Main.mode = 't';
 					System.out.println("b1: " + Main.usernm);
 					stage.getScene().setRoot(Tictactoe.setup());*/
@@ -44,14 +49,20 @@ public class HomePage {
 				@Override
 				public void handle(ActionEvent ae) {
 					usernm = text.getText();
-					scene.setRoot(new GridFrame('r').createGrid());
+					try {
+						ViewController.toGame('r');
+					}
+					catch(Exception ex) {
+						text.setText(ex.getMessage());
+					}
+					//scene.setRoot(new GridFrame('r').createGrid());
 					/*Main.mode = 'r';
 					System.out.println("b2: " + Main.usernm);
 					stage.getScene().setRoot(Reversi.setup());*/
 				}
 			});
-			
-			return scene = new Scene(root, 600, 600);
+			return root;
+			//return scene = new Scene(root, 600, 600);
 		}
 		catch(Exception ex) {
 			ex.printStackTrace();
@@ -61,5 +72,8 @@ public class HomePage {
 	
 	public String getUsernm() {
 		return usernm;
-	}
+	}/*
+	public Scene getScene() {
+		return scene;
+	}*/
 }

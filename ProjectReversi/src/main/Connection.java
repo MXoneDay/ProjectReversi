@@ -13,6 +13,7 @@ public class Connection {
     PrintWriter output;
     Socket socket;
     Thread listenerThread;
+    MessageParser parser = new MessageParser();
 
 
      public boolean start (String host, int port) {
@@ -40,8 +41,8 @@ public class Connection {
                         message = "disconnect";
                         close();
                     }
-                    System.out.println("[Server] -> " + message);
-                    // TODO: parse message and send it to the server
+
+                    this.parser.parse(message);
                  } catch (SocketException exception) {
                     if (exception.getMessage().equals("Connection reset")) {
                         this.connected = false;
@@ -69,5 +70,9 @@ public class Connection {
          } catch (IOException exception) {
              exception.printStackTrace();
          }
+     }
+
+     public void send(String message) {
+        this.output.println(message);
      }
 }

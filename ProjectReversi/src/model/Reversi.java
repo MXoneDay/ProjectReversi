@@ -72,6 +72,26 @@ public class Reversi implements Game {
 		return ver;
 	}
 
+	/*
+	true = x
+	false = o
+	depending on the outcome it will return a text that can be displayed in the class GridPage
+ 	*/
+	@Override
+	public String getTurntext() {
+		if(turn){
+			return new String("Turn : Player White");
+		}
+		else{
+			return new String("Turn : Player Black");
+		}
+	}
+
+	@Override
+	public String getScore() {
+		return null;
+	}
+
 	@Override
 	public void createAI() {
 		new ReversiAI(this);

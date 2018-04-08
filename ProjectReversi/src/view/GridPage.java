@@ -13,7 +13,8 @@ import javafx.scene.text.Text;
 import model.*;
 
 public class GridPage implements Page{
-	public Text text = new Text("test");
+	public Text turn = new Text(" ");
+	public Text scoreboard = new Text(" ");
 	private final Game game;
 	private int hor, ver;
 	private final char type;
@@ -54,13 +55,21 @@ public class GridPage implements Page{
 			for(int j = 0; j < ver; j++) {
 
 				CellPane cellPane = new CellPane(i, j);
-				cellPane.setStyle("-fx-border-color: black"); // from https://stackoverflow.com/questions/27712213/how-do-i-make-a-simple-solid-border-around-a-flowpane-in-javafx/27712713
+				// from https://stackoverflow.com/questions/27712213/how-do-i-make-a-simple-solid-border-around-a-flowpane-in-javafx/27712713
+				cellPane.setStyle("-fx-border-color: black");
+
 				cellPane.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
 					@Override
 					public void handle(MouseEvent me) {
 						game.move(cellPane.hor, cellPane.ver);
+						// add the Playable pieces (Img)
+						// To the cellpane
 						cellPane.getChildren().add(game.getImage());
+						// add the Playable pieces (Img)
+						// To the cellpane
+						turn.setText(game.getTurntext());
+						scoreboard.setText(game.getScore());
 					}
 				});
 				gridPane.add(cellPane, i, j);
@@ -85,12 +94,16 @@ public class GridPage implements Page{
 				ViewController.toGame(type);
 			}
 		});
+
+		turn.setStyle("-fx-font: 22 arial;");
+		scoreboard.setStyle("-fx-font: 22 arial;");
 		
 		menu.add(back, 0, 0);
 		menu.add(reset, 1, 0);
 		
 		gridPane.add(menu, hor-1, ver);
-		gridPane.add(text, 0, ver);
+		gridPane.add(turn, 0, ver);
+		gridPane.add(scoreboard, 1, ver);
 		
 		return gridPane;
 	}

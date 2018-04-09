@@ -3,6 +3,7 @@ package model;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 
 public class Tictactoe implements Game {
 	private final int hor = 3, ver = 3;
@@ -60,5 +61,27 @@ public class Tictactoe implements Game {
 		}
 		return new ImageView(img);
 	}
+
+	/*
+	true = x
+	false = o
+	depending on the outcome it will return a text that can be displayed in the class GridPage
+	 */
+	@Override
+	public String getTurntext() {
+		if(turn){
+			return new String("Turn : Player O");
+		}
+		else{
+			return new String("Turn : Player X");
+		}
+	}
+
+	@Override
+	public String getScore() {
+		return null;
+	}
+
+
 }
 

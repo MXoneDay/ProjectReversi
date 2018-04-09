@@ -8,4 +8,6 @@ public interface Game {
 	public boolean move(int hor, int ver);
 	public void createAI();
 	public ImageView getImage();
+	public String getTurntext();
+	public String getScore();
 }

@@ -1,6 +1,5 @@
 package view;
 
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.event.EventHandler;
 import controller.ViewController;
@@ -15,11 +14,15 @@ import model.*;
 public class GridPage implements Page{
 	public Text turn = new Text(" ");
 	public Text scoreboard = new Text(" ");
+
 	private final Game game;
-	private int hor, ver;
 	private final char type;
+	private final ViewController vc;
+	private final int hor, ver;
+	public Text text = new Text("test");
 	
-	public GridPage(char type){
+	public GridPage(ViewController vc, char type){
+		this.vc = vc;
 		this.type = type;
 		if(type == 'r') {
 			game = new Reversi();
@@ -62,19 +65,17 @@ public class GridPage implements Page{
 
 					@Override
 					public void handle(MouseEvent me) {
-						game.move(cellPane.hor, cellPane.ver);
-						// add the Playable pieces (Img)
-						// To the cellpane
-						cellPane.getChildren().add(game.getImage());
-						// add the Playable pieces (Img)
-						// To the cellpane
+
+						if(game.move(cellPane.hor, cellPane.ver)) {
+							cellPane.getChildren().add(game.getImage());
+						}
+
 						turn.setText(game.getTurntext());
 						scoreboard.setText(game.getScore());
+
 					}
 				});
 				gridPane.add(cellPane, i, j);
-
-
 			}
 		}
 		
@@ -83,7 +84,7 @@ public class GridPage implements Page{
 
 			@Override
 			public void handle(ActionEvent ae) {
-				ViewController.toHome();
+				vc.toHome();
 			}
 		});
 		Button reset = new Button("Reset");
@@ -91,7 +92,7 @@ public class GridPage implements Page{
 
 			@Override
 			public void handle(ActionEvent ae) {
-				ViewController.toGame(type);
+				vc.toGame(type);
 			}
 		});
 
@@ -100,7 +101,13 @@ public class GridPage implements Page{
 		
 		menu.add(back, 0, 0);
 		menu.add(reset, 1, 0);
-		
+		/*
+		int test = hor;
+		if(hor > 3) {
+			test = hor/3;
+		}
+		System.out.println(test);
+		gridPane.add(menu, hor-1, ver, test, 1);*/
 		gridPane.add(menu, hor-1, ver);
 		gridPane.add(turn, 0, ver);
 		gridPane.add(scoreboard, 1, ver);

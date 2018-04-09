@@ -11,6 +11,11 @@ import javafx.event.EventHandler;
 
 public class HomePage implements Page{
 	public String usernm = "";
+	private ViewController vc = new ViewController();
+	
+	public HomePage(ViewController vc){
+		this.vc = vc;
+	}
 	
 	public GridPane createPage() {
 		try {
@@ -32,7 +37,7 @@ public class HomePage implements Page{
 				public void handle(ActionEvent ae) {
 					usernm = text.getText();
 					try {
-						ViewController.toGame('t');
+						vc.toGame('t');
 					}
 					catch(Exception ex) {
 						text.setText(ex.getMessage());
@@ -50,7 +55,7 @@ public class HomePage implements Page{
 				public void handle(ActionEvent ae) {
 					usernm = text.getText();
 					try {
-						ViewController.toGame('r');
+						vc.toGame('r');
 					}
 					catch(Exception ex) {
 						text.setText(ex.getMessage());

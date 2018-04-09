@@ -5,12 +5,12 @@ import javafx.scene.layout.GridPane;
 import view.*;
 
 public class ViewController {
-	private static Scene scene;
-	private static GridPane homePage = null;
+	private Scene scene;
+	private GridPane homePage = null;
 	
-	public static Scene toHome() {
+	public Scene toHome() {
 		if(homePage == null) {
-			homePage = new HomePage().createPage();
+			homePage = new HomePage(this).createPage();
 			scene = new Scene(homePage, 600, 600);
 			System.out.println("Home created");
 		}else {
@@ -19,8 +19,8 @@ public class ViewController {
 		return scene;
 	}
 	
-	public static Scene toGame(char type) {
-		scene.setRoot(new GridPage(type).createPage());
+	public Scene toGame(char type) {
+		scene.setRoot(new GridPage(this, type).createPage());
 		System.out.println("Game created");
 		return scene;
 	}

@@ -1,13 +1,12 @@
 package model;
 
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class Reversi implements Game {
 	private int hor = 8, ver = 8;
 	//private int turn = 0;
 	
-	public void move(int hor, int ver) {
+	public boolean move(int hor, int ver) {
 		System.out.println("reversi: " + hor + ver);
 		// check if the move is valid
 		// check if move is within board
@@ -18,6 +17,7 @@ public class Reversi implements Game {
 			
 		}
 		
+		return false;
 		// controleren of de plek leeg is 
 		// controleren of de ander ernaast zit
 		// controleren of diagonaal of horizontaal of verticaal iets van jou zit

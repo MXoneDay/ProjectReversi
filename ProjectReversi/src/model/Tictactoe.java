@@ -2,9 +2,6 @@ package model;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Ellipse;
-import javafx.scene.shape.Line;
 import javafx.scene.layout.Pane;
 
 public class Tictactoe implements Game {
@@ -33,30 +30,24 @@ public class Tictactoe implements Game {
 	}
 	
 	@Override
-	public void move(int hor, int ver) {
-		System.out.println("tictactoe: " + hor + ver);
+	public boolean move(int hor, int ver) {
+		System.out.println("TTT: " + hor + "-" + ver);
 		// check if the move is valid
-		//if(turn) {
-			if(hor <= this.hor) {// check if move is within board
-				if(ver <= this.ver) {// check if move is within board
-					if(board[hor][ver] == 0) {// controleren of de plek leeg is
-						if(turn){
-							turn = false;
-						}
-						else{
-							turn = true;
-						}
-						System.out.println(board[hor][ver] + " " + turn);
-						// zet in board
-						board[hor][ver] = 1;
-						//turn = false;
-						//
-					}
+		if(hor <= this.hor && ver <= this.ver) {// check if move is within board
+			if(board[hor][ver] == 0) {// controleren of de plek leeg is
+				if(turn){
+					turn = false;
 				}
+				else{
+					turn = true;
+				}
+				System.out.println("Move: " + board[hor][ver] + " " + turn);
+				board[hor][ver] = 1;
+				return true;
 			}
-		//}
+		}
+		return false;
 		//versturen
-
 	}
 
 	@Override

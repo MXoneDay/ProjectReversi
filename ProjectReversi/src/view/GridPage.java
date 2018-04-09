@@ -60,7 +60,6 @@ public class GridPage implements Page{
 				CellPane cellPane = new CellPane(i, j);
 				// from https://stackoverflow.com/questions/27712213/how-do-i-make-a-simple-solid-border-around-a-flowpane-in-javafx/27712713
 				cellPane.setStyle("-fx-border-color: black");
-
 				cellPane.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
 					@Override

@@ -3,7 +3,6 @@ package model;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Text;
 
 public class Tictactoe implements Game {
 	private final int hor = 3, ver = 3;
@@ -81,7 +80,5 @@ public class Tictactoe implements Game {
 	public String getScore() {
 		return null;
 	}
-
-
 }
 

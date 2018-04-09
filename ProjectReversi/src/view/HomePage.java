@@ -42,11 +42,6 @@ public class HomePage implements Page{
 					catch(Exception ex) {
 						text.setText(ex.getMessage());
 					}
-					
-					//scene.setRoot(new GridFrame('t').createGrid());
-					/*Main.mode = 't';
-					System.out.println("b1: " + Main.usernm);
-					stage.getScene().setRoot(Tictactoe.setup());*/
 				}
 			});
 			b2.setOnAction(new EventHandler<ActionEvent>() {
@@ -60,14 +55,9 @@ public class HomePage implements Page{
 					catch(Exception ex) {
 						text.setText(ex.getMessage());
 					}
-					//scene.setRoot(new GridFrame('r').createGrid());
-					/*Main.mode = 'r';
-					System.out.println("b2: " + Main.usernm);
-					stage.getScene().setRoot(Reversi.setup());*/
 				}
 			});
 			return root;
-			//return scene = new Scene(root, 600, 600);
 		}
 		catch(Exception ex) {
 			ex.printStackTrace();
@@ -77,8 +67,5 @@ public class HomePage implements Page{
 	
 	public String getUsernm() {
 		return usernm;
-	}/*
-	public Scene getScene() {
-		return scene;
-	}*/
+	}
 }

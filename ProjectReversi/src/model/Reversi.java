@@ -1,56 +1,32 @@
 package model;
 
+
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class Reversi implements Game {
 	private int hor = 8, ver = 8;
-
 	private int board[][] = new int[hor][ver];
 	private boolean turn = true;
-	/*
-	public void move(int hor, int ver) {
-		System.out.println("reversi: " + hor + ver);
-		// check if the move is valid
-		// check if move is within board
-		if(hor > this.hor) {
-			
-		}
-		if(ver > this.ver) {
-			
-		}
-		
-		return false;
-		// controleren of de plek leeg is 
-		// controleren of de ander ernaast zit
-		// controleren of diagonaal of horizontaal of verticaal iets van jou zit
-	}
-	*/
 
-	// tijdelijke move functie om te kijken of de reversi pieces werken
-	public void move(int hor, int ver) {
+	public boolean move(int hor, int ver) {
 		System.out.println("tictactoe: " + hor + ver);
 		// check if the move is valid
 		//if(turn) {
-		if(hor <= this.hor) {// check if move is within board
-			if(ver <= this.ver) {// check if move is within board
-				if(board[hor][ver] == 0) {// controleren of de plek leeg is
-					if(turn){
-						turn = false;
-					}
-					else{
-						turn = true;
-					}
-					System.out.println(board[hor][ver] + " " + turn);
-					// zet in board
-					board[hor][ver] = 1;
-					//turn = false;
-					//
+		if(hor <= this.hor && ver <= this.ver) {// check if move is within board
+			if(board[hor][ver] == 0) {// controleren of de plek leeg is
+				if(turn){
+					turn = false;
 				}
+				else{
+					turn = true;
+				}
+				System.out.println(board[hor][ver] + " " + turn);
+				// zet in board
+				board[hor][ver] = 1;
 			}
 		}
-		//}
-		//versturen
-
+		return false;
 	}
 	@Override
 	public ImageView getImage() {

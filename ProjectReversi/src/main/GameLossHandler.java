@@ -1,7 +1,7 @@
 package main;
 
-public class GameLossHandler {
-    public static void run(){
+public class GameLossHandler extends ActionHandler{
+    public void run(String message){
         System.out.println("Running GAME LOSS command handler");
     }
 }

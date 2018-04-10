@@ -1,7 +1,7 @@
 package main;
 
-public class GameWinHandler {
-    public static void run(){
+public class GameWinHandler extends ActionHandler {
+    public void run(String message){
         System.out.println("Running GAME WIN command handler");
     }
 }

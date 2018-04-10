@@ -1,7 +1,7 @@
 package main;
 
-public class GameChallengeHandler {
-    public static void run(){
+public class GameChallengeHandler extends ActionHandler{
+    public void run(String message){
         System.out.println("Running GAME CHALLENGE command handler");
     }
 }

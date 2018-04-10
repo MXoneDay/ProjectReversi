@@ -1,7 +1,7 @@
 package main;
 
-public class PlayerListHandler {
-    public static void run(){
+public class PlayerListHandler extends ActionHandler{
+    public void run(String message){
         System.out.println("Running PLAYERLIST command handler");
     }
 }

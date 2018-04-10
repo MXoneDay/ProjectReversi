@@ -15,7 +15,7 @@ public class Main extends Application {
 	public void start(Stage stage) throws Exception {
 	    this.connection = new Connection();
 	    this.connection.start("localhost", 7789);
-	    this.dispatcher = new CommandDispatcher(connection);
+	    this.dispatcher = connection.getDispatcher();
 
 		stage.setTitle("Game");
 		stage.setScene(viewController.toHome());

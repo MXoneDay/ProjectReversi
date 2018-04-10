@@ -14,6 +14,7 @@ public class Connection {
     Socket socket;
     Thread listenerThread;
     MessageParser parser = new MessageParser();
+    CommandDispatcher dispatcher = new CommandDispatcher(this);
 
      public void start (String host, int port) {
          try {
@@ -69,7 +70,11 @@ public class Connection {
          }
      }
 
-     public void send(String message) {
+    public CommandDispatcher getDispatcher() {
+        return dispatcher;
+    }
+
+    public void send(String message) {
         this.output.println(message);
      }
 }

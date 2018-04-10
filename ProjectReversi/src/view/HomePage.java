@@ -5,31 +5,46 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import controller.ViewController;
+import controller.PageController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 
 public class HomePage implements Page{
 	public String usernm = "";
-	private ViewController vc = new ViewController();
+	private final PageController pc;
+	private GridPane gp = new GridPane();
 	
-	public HomePage(ViewController vc){
-		this.vc = vc;
+	public HomePage(PageController pc){
+		this.pc = pc;
 	}
 	
-	public GridPane createPage() {
+	public void createPage() {
 		try {
+			ToggleGroup tg = new ToggleGroup();
 			TextField text = new TextField(usernm);
 			Label label = new Label("Username: ");
+			
+			RadioButton rb1 = new RadioButton("Player vs Player");
+			rb1.setToggleGroup(tg);
+			rb1.setSelected(true);
+			RadioButton rb2 = new RadioButton("Player vs AI");
+			rb2.setToggleGroup(tg);
+			RadioButton rb3 = new RadioButton("AI vs AI");
+			rb3.setToggleGroup(tg);
+			
 			Button b1 = new Button("TicTacToe");
 			Button b2 = new Button("Reversi");
 			
-			GridPane root = new GridPane();
-			root.setAlignment(Pos.CENTER);
-			root.add(label, 0, 0);
-			root.add(text, 1, 0);
-			root.add(b1, 0, 1);
-			root.add(b2, 1, 1);
+			gp.setAlignment(Pos.CENTER);
+			gp.add(label, 0, 0);
+			gp.add(text, 1, 0);
+			gp.add(b1, 0, 1);
+			gp.add(b2, 1, 1);
+			gp.add(rb1, 0, 2);
+			gp.add(rb2, 0, 3);
+			gp.add(rb3, 0, 4);
 			
 			b1.setOnAction(new EventHandler<ActionEvent>() {
 				
@@ -37,7 +52,7 @@ public class HomePage implements Page{
 				public void handle(ActionEvent ae) {
 					usernm = text.getText();
 					try {
-						vc.toGame('t');
+						pc.setGameFW('t');
 					}
 					catch(Exception ex) {
 						text.setText(ex.getMessage());
@@ -50,22 +65,25 @@ public class HomePage implements Page{
 				public void handle(ActionEvent ae) {
 					usernm = text.getText();
 					try {
-						vc.toGame('r');
+						//pc.setGame('r');
 					}
 					catch(Exception ex) {
 						text.setText(ex.getMessage());
 					}
 				}
 			});
-			return root;
 		}
 		catch(Exception ex) {
 			ex.printStackTrace();
 		}
-		return null;
 	}
 	
 	public String getUsernm() {
 		return usernm;
+	}
+
+	@Override
+	public GridPane getPane() {
+		return gp;
 	}
 }

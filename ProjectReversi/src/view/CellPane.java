@@ -3,10 +3,9 @@ package view;
 import javafx.scene.layout.Pane;
 
 public class CellPane extends Pane {
-	public final int hor, ver;
+	public final int loc;
 
-	public CellPane(int hor, int ver){
-		this.hor = hor;
-		this.ver = ver;
+	public CellPane(int loc){
+		this.loc = loc;
 	}
 }

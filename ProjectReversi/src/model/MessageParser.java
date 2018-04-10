@@ -1,11 +1,21 @@
 package model;
 
-import javax.swing.*;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.sql.SQLOutput;
 import java.util.HashMap;
 import java.util.Map;
+
+import handler.ActionHandler;
+import handler.ErrHandler;
+import handler.GameChallengeCancelledHandler;
+import handler.GameChallengeHandler;
+import handler.GameDrawHandler;
+import handler.GameListHandler;
+import handler.GameLossHandler;
+import handler.GameMatchHandler;
+import handler.GameMoveHanlder;
+import handler.GameWinHandler;
+import handler.GameYourTurnHandler;
+import handler.OkHandler;
+import handler.PlayerListHandler;
 
 public class MessageParser {
     Map<String, ActionHandler> messages = new HashMap<String, ActionHandler>();

@@ -20,11 +20,10 @@ public class PageController {
 	}
 	
 	public void setGameFW(char type) throws Exception {
-			gFW = new GameFW(type);
-			gPage = new GridPage(this);
-			gPage.createPage();
-			toGrid();
+		gFW = new GameFW(type);
+		toGrid();
 	}
+	
 	/*
 	public void setGame(char type) {
 		gPage.setType(type);
@@ -35,7 +34,10 @@ public class PageController {
 		scene.setRoot(hPage.getPane());
 	}
 	
-	public void toGrid() {
+	public void toGrid() throws Exception{
+		gFW.setGame();
+		gPage = new GridPage(this);
+		gPage.createPage();
 		scene.setRoot(gPage.getPane());
 	}
 	

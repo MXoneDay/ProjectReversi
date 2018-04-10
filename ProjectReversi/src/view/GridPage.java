@@ -83,7 +83,11 @@ public class GridPage implements Page{
 
 			@Override
 			public void handle(ActionEvent ae) {
-				//pc.setGame(type);
+				try {
+					pc.toGrid();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		});
 

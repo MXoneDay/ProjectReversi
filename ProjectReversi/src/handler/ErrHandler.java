@@ -1,4 +1,4 @@
-package model;
+package handler;
 
 public class ErrHandler extends ActionHandler{
     public void run(String message){

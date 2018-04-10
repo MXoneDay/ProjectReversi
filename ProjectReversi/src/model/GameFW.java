@@ -2,10 +2,19 @@ package model;
 
 public class GameFW {
 	private int board[];
-	private boolean turn = true;
-	private final Game game;
+	private boolean turn;
+	private Game game;
+	private final char type;
 	
-	public GameFW(char type) throws Exception{
+	public GameFW(char type){
+		this.type = type;
+	}
+	
+	public int getHor() {
+		return game.getHor();
+	}
+	
+	public void setGame() throws Exception{
 		if(type == 'r') {
 			game = new Reversi();
 		}else if(type == 't') {
@@ -15,10 +24,7 @@ public class GameFW {
 			throw new Exception("Not currently supported");
 		}
 		board = new int[game.getHor()*game.getVer()];
-	}
-	
-	public int getHor() {
-		return game.getHor();
+		turn = true;
 	}
 	
 	public int getVer() {

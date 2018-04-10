@@ -1,4 +1,4 @@
-package model;
+package handler;
 
 public class GameMatchHandler extends ActionHandler{
     public void run(String message){

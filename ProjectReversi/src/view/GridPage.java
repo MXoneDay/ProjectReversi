@@ -44,19 +44,18 @@ public class GridPage implements Page{
 		}
 		
 		int loc = 0;
-		for(int i = 0; i < hor; i++) {
-			for(int j = 0; j < ver; j++) {
-				CellPane cellPane = new CellPane(loc);
-				loc++;
+		for(int i = 0; i < ver; i++) {
+			for(int j = 0; j < hor; j++) {
+				CellPane cp = new CellPane(loc, j, i);
 				// from https://stackoverflow.com/questions/27712213/how-do-i-make-a-simple-solid-border-around-a-flowpane-in-javafx/27712713
-				cellPane.setStyle("-fx-border-color: black");
-				cellPane.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+				cp.setStyle("-fx-border-color: black");
+				cp.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
 					@Override
 					public void handle(MouseEvent me) {
 						//pc.getImage();
-						if(pc.move(cellPane.loc)) {
-							cellPane.getChildren().add((ImageView)pc.getImage());
+						if(pc.move(cp.loc)) {
+							cp.getChildren().add((ImageView)pc.getImage());
 						}
 						/*
 						if(game.move(cellPane.hor, cellPane.ver)) {
@@ -67,7 +66,10 @@ public class GridPage implements Page{
 						scoreboard.setText(game.getScore());*/
 					}
 				});
-				gPane.add(cellPane, i, j);
+				
+				pc.setBoard(loc, cp);
+				gPane.add(cp, j, i);
+				loc++;
 			}
 		}
 		

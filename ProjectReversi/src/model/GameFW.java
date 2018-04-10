@@ -1,7 +1,12 @@
 package model;
 
+import java.util.HashMap;
+import view.CellPane;
+
+
 public class GameFW {
-	private int board[];
+	private HashMap<Integer, CellPane> board = new HashMap<Integer, CellPane>();
+	//private CellPane[] board2;
 	private boolean turn;
 	private Game game;
 	private final char type;
@@ -14,6 +19,10 @@ public class GameFW {
 		return game.getHor();
 	}
 	
+	public void setBoard(int loc, Object cp) {
+		board.put(loc, (CellPane) cp);
+	}
+	
 	public void setGame() throws Exception{
 		if(type == 'r') {
 			game = new Reversi();
@@ -23,7 +32,7 @@ public class GameFW {
 		else {
 			throw new Exception("Not currently supported");
 		}
-		board = new int[game.getHor()*game.getVer()];
+		//board2 = new CellPane[game.getHor()*game.getVer()];
 		turn = true;
 	}
 	
@@ -37,10 +46,10 @@ public class GameFW {
 	
 	public boolean move(int loc) {
 		if(turn) {
-			turn = !game.isValid(loc, board);
+			turn = !game.isValid(turn, loc, board);
 			return !turn;
 		}else {
-			turn = game.isValid(loc, board);
+			turn = game.isValid(turn, loc, board);
 			return turn;
 		}
 	}

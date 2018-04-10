@@ -65,7 +65,7 @@ public class HomePage implements Page{
 				public void handle(ActionEvent ae) {
 					usernm = text.getText();
 					try {
-						//pc.setGame('r');
+						pc.setGameFW('r');
 					}
 					catch(Exception ex) {
 						text.setText(ex.getMessage());

@@ -1,7 +1,9 @@
 package model;
 
+import java.util.HashMap;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import view.CellPane;
 
 public class Tictactoe implements Game {
 	private final static int hor = 3, ver = 3;
@@ -18,16 +20,20 @@ public class Tictactoe implements Game {
 	}
 
 	@Override
-	public boolean isValid(int loc, int[] board) {
+	public boolean isValid(boolean turn, int loc, HashMap<Integer, CellPane> board) {
 		// check if the move is valid
-		System.out.println("Move: " + board[loc]);
-		if(board[loc] == 0) {// controleren of de plek leeg is
-			board[loc] = 1;
+		System.out.println("Move: " + loc + board.get(loc).filled);
+		if(board.get(loc).filled == 0) {// controleren of de plek leeg is
+			if(turn) {
+				board.get(loc).filled = 1;
+			}else {
+				board.get(loc).filled = 2;
+			}
 			return true;
 		}
 		return false;
 	}
-
+	
 	@Override
 	public void createAI() {
 		// TODO Auto-generated method stub

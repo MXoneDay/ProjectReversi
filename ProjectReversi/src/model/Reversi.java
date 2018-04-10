@@ -1,8 +1,10 @@
 package model;
 
 
+import java.util.HashMap;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import view.CellPane;
 
 public class Reversi implements Game {
 	private final static int hor = 8, ver = 8;
@@ -19,27 +21,28 @@ public class Reversi implements Game {
 	}
 
 	@Override
-	public boolean isValid(int loc, int[] board) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean isValid(boolean turn, int loc, HashMap<Integer, CellPane> board) {
+		//System.out.println("Move: " + loc + board.get(loc).filled);
+		System.out.println(board.get(loc));
+		System.out.println("Base: " + board.get(loc).hor + board.get(loc).ver + loc);
+		System.out.println("Above: " + board.get(loc-hor).hor + board.get(loc-ver).ver + (loc-hor));
+		
+		
+		return true;
 	}
 
 	@Override
 	public void createAI() {
-		// TODO Auto-generated method stub
-		
 	}
 	
 	@Override
 	public int getHor() {
-		// TODO Auto-generated method stub
-		return 0;
+		return hor;
 	}
 
 	@Override
 	public int getVer() {
-		// TODO Auto-generated method stub
-		return 0;
+		return ver;
 	}
 
 }

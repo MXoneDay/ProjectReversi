@@ -24,12 +24,6 @@ public class PageController {
 		toGrid();
 	}
 	
-	/*
-	public void setGame(char type) {
-		gPage.setType(type);
-		toGrid();
-	}*/
-	
 	public void toHome() {
 		scene.setRoot(hPage.getPane());
 	}
@@ -55,5 +49,9 @@ public class PageController {
 	
 	public boolean move(int loc) {
 		return gFW.move(loc);
+	}
+	
+	public void setBoard(int loc, Object cp) {
+		gFW.setBoard(loc, cp);
 	}
 }

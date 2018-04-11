@@ -7,6 +7,7 @@ public class CommandDispatcher {
     }
 
     public void login(String username){
+        System.out.println(username);
         connection.send("login "+username);
     }
 
@@ -16,5 +17,9 @@ public class CommandDispatcher {
 
     public void move(Integer position){
         connection.send("move "+position);
+    }
+
+    public void disconnect(){
+        connection.send("exit");
     }
 }

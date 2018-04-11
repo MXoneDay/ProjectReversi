@@ -5,14 +5,30 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import model.CommandDispatcher;
 import model.Connection;
+import model.DotEnv;
+
+import java.io.IOException;
 
 public class Main extends Application {
     PageController pc = new PageController();
+    DotEnv env;
 
-	@Override
+    {
+        try {
+            env = new DotEnv();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
 	public void start(Stage stage) throws Exception {
-		stage.setTitle("Game");
-		stage.setScene(pc.getScene());
-		stage.show();
+	    this.connection = new Connection();
+	    this.connection.start(env.get("HOST"), Integer.parseInt(env.get("PORT")));
+	    this.dispatcher = connection.getDispatcher();
+    
+		  stage.setTitle("Game");
+		  stage.setScene(pc.getScene());
+		  stage.show();
 	}
 }

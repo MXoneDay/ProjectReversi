@@ -75,6 +75,10 @@ public class Connection {
         return dispatcher;
     }
 
+    public boolean isConnected(){
+         return this.connected;
+    }
+
     public void send(String message) {
         this.output.println(message);
      }

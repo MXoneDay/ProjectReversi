@@ -54,7 +54,7 @@ public class GridPage implements Page{
 					@Override
 					public void handle(MouseEvent me) {
 						//pc.getImage();
-						if(pc.move(cp.loc)) {
+						if(pc.move(cp)) {
 							cp.getChildren().add((ImageView)pc.getImage());
 						}
 						/*

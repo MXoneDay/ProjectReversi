@@ -1,5 +1,6 @@
 package model;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 import controller.PageController;
@@ -14,11 +15,20 @@ public class GameFW {
 	private final char type;
 	Connection connection;
 	CommandDispatcher dispatcher;
+    DotEnv env;
+
+    {
+        try {
+            env = new DotEnv();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 	
 	public GameFW(char type){
 		this.type = type;
 		this.connection = new Connection();
-		this.connection.start("145.37.172.178", 7789);
+		this.connection.start(env.get("HOST"), Integer.parseInt(env.get("PORT")));
 		this.dispatcher = connection.getDispatcher();
 	}
 

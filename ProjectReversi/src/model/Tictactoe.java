@@ -9,6 +9,17 @@ public class Tictactoe implements Game {
 	private final static int hor = 3, ver = 3;
 
 	@Override
+	public String getTurntext(boolean turn) {
+		String t;
+		if(turn){
+			t =  "Turn : Player X"; }
+		else{
+			t = "Turn : Player O";
+		}
+		return t;
+	}
+
+	@Override
 	public ImageView getImage(boolean turn) {
 		Image img;
 		if(turn){
@@ -22,7 +33,7 @@ public class Tictactoe implements Game {
 	@Override
 	public boolean isValid(boolean turn, int loc, HashMap<Integer, CellPane> board) {
 		// check if the move is valid
-		System.out.println("Move: " + loc + board.get(loc).filled);
+		System.out.println("Move: "+ loc + " Filled: " + board.get(loc).filled);
 		if(board.get(loc).filled == 0) {// controleren of de plek leeg is
 			if(turn) {
 				board.get(loc).filled = 1;

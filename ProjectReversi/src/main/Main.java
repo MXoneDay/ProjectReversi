@@ -10,8 +10,6 @@ import model.DotEnv;
 import java.io.IOException;
 
 public class Main extends Application {
-    Connection connection;
-    CommandDispatcher dispatcher;
     PageController pc = new PageController();
     DotEnv env;
 
@@ -28,9 +26,9 @@ public class Main extends Application {
 	    this.connection = new Connection();
 	    this.connection.start(env.get("HOST"), Integer.parseInt(env.get("PORT")));
 	    this.dispatcher = connection.getDispatcher();
-
-		stage.setTitle("Game");
-		stage.setScene(pc.getScene());
-		stage.show();
+    
+		  stage.setTitle("Game");
+		  stage.setScene(pc.getScene());
+		  stage.show();
 	}
 }

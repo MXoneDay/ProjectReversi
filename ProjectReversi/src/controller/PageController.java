@@ -27,7 +27,11 @@ public class PageController {
 	public void toHome() {
 		scene.setRoot(hPage.getPane());
 	}
-	
+
+	public GameFW getgFW() {
+		return gFW;
+	}
+
 	public void toGrid() throws Exception{
 		gFW.setGame();
 		gPage = new GridPage(this);
@@ -45,6 +49,10 @@ public class PageController {
 	
 	public Object getImage() {
 		return gFW.getImage();
+	}
+
+	public String getTurntext() {
+		return gFW.getTurntext();
 	}
 	
 	public boolean move(int loc) {

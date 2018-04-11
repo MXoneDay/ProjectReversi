@@ -9,6 +9,7 @@ public interface Game {
 	public boolean isValid(boolean turn, int loc, HashMap<Integer, CellPane> board);
 	public void createAI();
 	public ImageView getImage(boolean turn);
+	public String getTurntext(boolean turn);
 	public int getHor();
 	public int getVer();
 }

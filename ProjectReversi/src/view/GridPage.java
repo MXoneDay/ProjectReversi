@@ -23,11 +23,9 @@ public class GridPage implements Page{
 	public void createPage() {
 		hor = pc.getHor();
 		ver = pc.getVer();
-		
-		Text turn = new Text(" ");
-		Text scoreboard = new Text(" ");
-		//Text text = new Text("test");
+
 		GridPane menu = new GridPane();
+		Text turn = new Text(" ");
 		Button back = new Button("Back");
 		Button reset = new Button("Reset");
 		
@@ -55,15 +53,10 @@ public class GridPage implements Page{
 					public void handle(MouseEvent me) {
 						//pc.getImage();
 						if(pc.move(cp.loc)) {
-							cp.getChildren().add((ImageView)pc.getImage());
+							cp.getChildren().add((ImageView) pc.getImage());
+							pc.getgFW().getDispatcher().move(cp.loc);
 						}
-						/*
-						if(game.move(cellPane.hor, cellPane.ver)) {
-							cellPane.getChildren().add(game.getImage());
-						}
-
-						turn.setText(game.getTurntext());
-						scoreboard.setText(game.getScore());*/
+						turn.setText(pc.getTurntext());
 					}
 				});
 				
@@ -79,6 +72,7 @@ public class GridPage implements Page{
 			@Override
 			public void handle(ActionEvent ae) {
 				pc.toHome();
+				pc.getgFW().getDispatcher().disconnect();
 			}
 		});
 		reset.setOnAction(new EventHandler<ActionEvent>() {
@@ -87,6 +81,7 @@ public class GridPage implements Page{
 			public void handle(ActionEvent ae) {
 				try {
 					pc.toGrid();
+					pc.getgFW().getDispatcher().disconnect();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -94,7 +89,6 @@ public class GridPage implements Page{
 		});
 
 		turn.setStyle("-fx-font: 22 arial;");
-		scoreboard.setStyle("-fx-font: 22 arial;");
 		
 		menu.add(back, 0, 0);
 		menu.add(reset, 1, 0);
@@ -107,7 +101,6 @@ public class GridPage implements Page{
 		gridPane.add(menu, hor-1, ver, test, 1);*/
 		gPane.add(menu, hor-1, ver);
 		gPane.add(turn, 0, ver);
-		gPane.add(scoreboard, 1, ver);
 	}
 
 	@Override

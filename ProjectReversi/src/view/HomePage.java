@@ -53,6 +53,8 @@ public class HomePage implements Page{
 					usernm = text.getText();
 					try {
 						pc.setGameFW('t');
+						pc.getgFW().getDispatcher().login(usernm);
+						pc.getgFW().getDispatcher().subscribe("Tic-tac-toe");
 					}
 					catch(Exception ex) {
 						text.setText(ex.getMessage());

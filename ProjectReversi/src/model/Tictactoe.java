@@ -1,6 +1,5 @@
 package model;
 
-import java.util.HashMap;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import view.CellPane;
@@ -31,15 +30,16 @@ public class Tictactoe implements Game {
 	}
 
 	@Override
-	public boolean isValid(boolean turn, int loc, HashMap<Integer, CellPane> board) {
+	public boolean isValid(boolean turn, CellPane cp, CellPane[][] board) {
 		// check if the move is valid
-		System.out.println("Move: "+ loc + " Filled: " + board.get(loc).filled);
-		if(board.get(loc).filled == 0) {// controleren of de plek leeg is
+		System.out.println("Move: " + cp.loc + cp.filled);
+		if(cp.filled == 0) {// controleren of de plek leeg is
 			if(turn) {
-				board.get(loc).filled = 1;
+				cp.filled = 1;
 			}else {
-				board.get(loc).filled = 2;
+				cp.filled = 2;
 			}
+			cp.filled = turn ? 1 : 2;
 			return true;
 		}
 		return false;

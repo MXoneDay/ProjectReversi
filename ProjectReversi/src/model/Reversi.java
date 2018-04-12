@@ -1,7 +1,5 @@
 package model;
 
-
-import java.util.HashMap;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import view.CellPane;
@@ -32,14 +30,25 @@ public class Reversi implements Game {
 	}
 
 	@Override
-	public boolean isValid(boolean turn, int loc, HashMap<Integer, CellPane> board) {
-		//System.out.println(board.get(loc));
-		System.out.println(" ------------------------------- ");
-		System.out.println("Base: " + board.get(loc).hor + " " + board.get(loc).ver + " " + loc);
-		System.out.println("Above: " + board.get(loc-hor).hor + " " + board.get(loc-ver).ver + " " + (loc-hor));
-		
-		
-		return true;
+	public boolean isValid(boolean turn, CellPane cp, CellPane[][] board) {
+		System.out.println("Move: " + cp.hor + "-" + cp.ver + " " + cp.filled);
+		/*System.out.println(board.get(loc));
+		//System.out.println("Base: " + board.get(loc).hor + board.get(loc).ver + loc);
+		//System.out.println("Above: " + board.get(loc-hor).hor + board.get(loc-ver).ver + (loc-hor));
+		//checkUp(loc, board);
+		//board.get(loc).filled = 1;
+		//System.out.println(board[cp.ver][cp.hor-8].filled);*/
+		int player = turn ? 1 : 2;
+		//toConvert = new ArrayList<int[]>();
+		if(board[cp.ver][cp.hor].filled == 0) {
+			try {
+				//checkUp(turn, cp, board);
+			}
+			catch(Exception ex) {}
+			board[cp.ver][cp.hor].filled = turn ? 1 : 2;
+			return true;
+		}
+		return false;
 	}
 
 	@Override

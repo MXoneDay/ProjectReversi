@@ -3,11 +3,6 @@ package main;
 import controller.PageController;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import model.CommandDispatcher;
-import model.Connection;
-import model.DotEnv;
-
-import java.io.IOException;
 
 public class Main extends Application {
     PageController pc = new PageController();

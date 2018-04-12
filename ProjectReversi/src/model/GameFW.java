@@ -1,15 +1,12 @@
 package model;
 
 import java.io.IOException;
-import java.util.HashMap;
-
-import controller.PageController;
 import view.CellPane;
 
 
 public class GameFW {
-	private HashMap<Integer, CellPane> board = new HashMap<Integer, CellPane>();
-	//private CellPane[] board2;
+	//private HashMap<Integer, CellPane> board = new HashMap<Integer, CellPane>();
+	private CellPane[][] board;
 	private boolean turn;
 	private Game game;
 	private final char type;
@@ -47,8 +44,9 @@ public class GameFW {
 	}
 
 	// Set the cellpanes on locations with the board so it creates a playable board
-	public void setBoard(int loc, Object cp) {
-		board.put(loc, (CellPane) cp);
+	public void setBoard(int loc, Object ocp) {
+		CellPane cp = (CellPane) ocp;
+		board[cp.ver][cp.hor] = cp;
 	}
 
 	// If the game is not supported by the client it will throw a execption
@@ -61,6 +59,7 @@ public class GameFW {
 		else {
 			throw new Exception("Not currently supported");
 		}
+		board = new CellPane[game.getVer()][game.getHor()];
 		turn = true;
 	}
 
@@ -75,12 +74,12 @@ public class GameFW {
 	}
 
 	// Function for setting a move this checks if the moves is valid before sending it
-	public boolean move(int loc) {
+	public boolean move(Object ocp) {
 		if(turn) {
-			turn = !game.isValid(turn, loc, board);
+			turn = !game.isValid(turn, (CellPane) ocp, board);
 			return !turn;
 		}else {
-			turn = game.isValid(turn, loc, board);
+			turn = game.isValid(turn, (CellPane) ocp, board);
 			return turn;
 		}
 	}

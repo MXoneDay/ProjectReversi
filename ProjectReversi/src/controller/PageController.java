@@ -55,8 +55,8 @@ public class PageController {
 		return gFW.getTurntext();
 	}
 	
-	public boolean move(int loc) {
-		return gFW.move(loc);
+	public boolean move(Object cp) {
+		return gFW.move(cp);
 	}
 	
 	public void setBoard(int loc, Object cp) {

@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,7 +13,7 @@ public class DotEnv {
 
     {
         try {
-            env = new BufferedReader(new FileReader(".env"));
+            env = new BufferedReader(new FileReader("env.env"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

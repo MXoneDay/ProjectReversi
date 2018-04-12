@@ -19,23 +19,38 @@ import handler.PlayerListHandler;
 
 public class MessageParser {
     Map<String, ActionHandler> messages = new HashMap<String, ActionHandler>();
-
+    GameFW gf;
     // initialize handlers
-    OkHandler okHandler = new OkHandler();
-    ErrHandler errHandler = new ErrHandler();
-    GameListHandler gameListHandler = new GameListHandler();
-    PlayerListHandler playerListHandler = new PlayerListHandler();
-    GameMatchHandler gameMatchHandler = new GameMatchHandler();
-    GameYourTurnHandler gameYourTurnHandler = new GameYourTurnHandler();
-    GameMoveHanlder gameMoveHanlder = new GameMoveHanlder();
-    GameWinHandler gameWinHandler = new GameWinHandler();
-    GameLossHandler gameLossHandler = new GameLossHandler();
-    GameDrawHandler gameDrawHandler = new GameDrawHandler();
-    GameChallengeHandler gameChallengeHandler = new GameChallengeHandler();
-    GameChallengeCancelledHandler gameChallengeCancelledHandler = new GameChallengeCancelledHandler();
+    OkHandler okHandler;
+    ErrHandler errHandler;
+    GameListHandler gameListHandler;
+    PlayerListHandler playerListHandler;
+    GameMatchHandler gameMatchHandler;
+    GameYourTurnHandler gameYourTurnHandler;
+    GameMoveHanlder gameMoveHanlder;
+    GameWinHandler gameWinHandler;
+    GameLossHandler gameLossHandler;
+    GameDrawHandler gameDrawHandler;
+    GameChallengeHandler gameChallengeHandler;
+    GameChallengeCancelledHandler gameChallengeCancelledHandler;
 
+    public MessageParser(GameFW gf){
+        this.gf = gf;
+        System.out.println("DEBUG 2 : "+this.gf.toString());
+        // initialize handlers
+        this.okHandler = new OkHandler();
+        this.errHandler = new ErrHandler();
+        this.gameListHandler = new GameListHandler();
+        this.playerListHandler = new PlayerListHandler(this.gf);
+        this.gameMatchHandler = new GameMatchHandler();
+        this.gameYourTurnHandler = new GameYourTurnHandler();
+        this.gameMoveHanlder = new GameMoveHanlder();
+        this.gameWinHandler = new GameWinHandler();
+        this.gameLossHandler = new GameLossHandler();
+        this.gameDrawHandler = new GameDrawHandler();
+        this.gameChallengeHandler = new GameChallengeHandler();
+        this.gameChallengeCancelledHandler = new GameChallengeCancelledHandler();
 
-    public MessageParser(){
         messages.put("OK", this.okHandler);
         messages.put("ERR (.*?)+", this.errHandler);
         messages.put("SVR GAMELIST \\[(.*?)\\]", this.gameListHandler);

@@ -13,8 +13,14 @@ public class Connection {
     PrintWriter output;
     Socket socket;
     Thread listenerThread;
-    MessageParser parser = new MessageParser();
+    GameFW gf;
+    MessageParser parser;
     CommandDispatcher dispatcher = new CommandDispatcher(this);
+
+    public Connection(GameFW gf){
+        this.gf = gf;
+        this.parser = new MessageParser(this.gf);
+    }
 
      public void start (String host, int port) {
          try {

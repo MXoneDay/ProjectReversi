@@ -27,6 +27,7 @@ public class GridPage implements Page{
 		GridPane menu = new GridPane();
 		Text turn = new Text(" ");
 		Button back = new Button("Back");
+		Button playerList = new Button("PlayerList");
 		Button reset = new Button("Reset");
 		
 		ColumnConstraints cHor = new ColumnConstraints(hor);
@@ -54,7 +55,7 @@ public class GridPage implements Page{
 						//pc.getImage();
 						if(pc.move(cp)) {
 							cp.getChildren().add((ImageView) pc.getImage());
-							pc.getgFW().getDispatcher().move(cp.loc);
+//							pc.getgFW().getDispatcher().move(cp.loc);
 						}
 						turn.setText(pc.getTurntext());
 					}
@@ -75,6 +76,7 @@ public class GridPage implements Page{
 				pc.getgFW().getDispatcher().disconnect();
 			}
 		});
+
 		reset.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -92,6 +94,8 @@ public class GridPage implements Page{
 		
 		menu.add(back, 0, 0);
 		menu.add(reset, 1, 0);
+		menu.add(playerList, 2, 0);
+
 		/*
 		int test = hor;
 		if(hor > 3) {

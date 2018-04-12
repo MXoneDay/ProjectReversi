@@ -1,6 +1,8 @@
 package model;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import view.CellPane;
 
 
@@ -13,6 +15,7 @@ public class GameFW {
 	Connection connection;
 	CommandDispatcher dispatcher;
     DotEnv env;
+    String[] players;
 
     {
         try {
@@ -24,7 +27,8 @@ public class GameFW {
 	
 	public GameFW(char type){
 		this.type = type;
-		this.connection = new Connection();
+		this.connection = new Connection(this);
+        System.out.println(env.get("HOST") +" "+env.get("PORT"));
 		this.connection.start(env.get("HOST"), Integer.parseInt(env.get("PORT")));
 		this.dispatcher = connection.getDispatcher();
 	}
@@ -83,4 +87,16 @@ public class GameFW {
 			return turn;
 		}
 	}
+
+    public void setPlayers(String[] players) {
+        this.players = players;
+    }
+
+    public String[] getPlayers() {
+        return this.players;
+    }
+
+    public Connection getConnection() {
+        return connection;
+    }
 }

@@ -7,7 +7,8 @@ import javafx.scene.Scene;
 public class PageController {
 	private Scene scene;
 	private Page hPage = new HomePage(this);
-	private Page gPage;
+    private Page playerPage = new PlayerPage(this);
+    private Page gPage;
 	private GameFW gFW;
 	
 	public PageController() {
@@ -26,6 +27,11 @@ public class PageController {
 	
 	public void toHome() {
 		scene.setRoot(hPage.getPane());
+	}
+
+	public void toPlayerPage() {
+        playerPage.createPage();
+        scene.setRoot(playerPage.getPane());
 	}
 
 	public GameFW getgFW() {

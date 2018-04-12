@@ -36,12 +36,15 @@ public class HomePage implements Page{
 			
 			Button b1 = new Button("TicTacToe");
 			Button b2 = new Button("Reversi");
-			
+			Button b3 = new Button("Players");
+
+
 			gp.setAlignment(Pos.CENTER);
 			gp.add(label, 0, 0);
 			gp.add(text, 1, 0);
 			gp.add(b1, 0, 1);
 			gp.add(b2, 1, 1);
+			gp.add(b3, 2, 1);
 			gp.add(rb1, 0, 2);
 			gp.add(rb2, 0, 3);
 			gp.add(rb3, 0, 4);
@@ -71,6 +74,17 @@ public class HomePage implements Page{
 					}
 					catch(Exception ex) {
 						text.setText(ex.getMessage());
+					}
+				}
+			});
+			b3.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent ae) {
+					try {
+						pc.toPlayerPage();
+					}
+					catch(Exception ex) {
+						ex.printStackTrace();
 					}
 				}
 			});

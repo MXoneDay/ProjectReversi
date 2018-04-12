@@ -1,5 +1,8 @@
 package model;
 
+
+import java.util.ArrayList;
+
 public class CommandDispatcher {
     Connection connection;
     public CommandDispatcher(Connection connection){
@@ -21,5 +24,9 @@ public class CommandDispatcher {
 
     public void disconnect(){
         connection.send("exit");
+    }
+
+    public void getPlayers(){
+        connection.send("get playerlist");
     }
 }

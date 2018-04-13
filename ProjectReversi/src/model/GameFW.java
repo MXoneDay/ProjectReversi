@@ -79,7 +79,9 @@ public class GameFW {
 
 	// A image from a game piece for the current player
 	public Object getImage() {
-		return game.getImage(turn);
+		Object imgV = game.getImage(turn);
+		turn = (turn == 1) ? 2 : 1;
+		return imgV;
 	}
 
 	// Set the text for the current player
@@ -91,7 +93,6 @@ public class GameFW {
 	public boolean move(int hor, int ver) {
 		if(game.isValid(turn, hor, ver, board)) {
 			board.getCell(hor, ver).filled = (turn == 1) ? 1 : 2;
-			turn = (turn == 1) ? 2 : 1;
 			dispatcher.move(board.getCell(hor, ver).loc);
 			return true;
 		}else {

@@ -104,7 +104,7 @@ public class GridPage implements Page{
 			test = hor/3;
 		}
 		System.out.println(test);
-		gridPane.add(menu, hor-1, ver, test, 1);*/
+		gPane.add(menu, hor-1, ver, test, 1);*/
 		gPane.add(menu, hor-1, ver);
 		gPane.add(turn, 0, ver);
 	}

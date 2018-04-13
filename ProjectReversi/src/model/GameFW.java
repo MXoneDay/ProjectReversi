@@ -23,7 +23,7 @@ public class GameFW {
 	
 
 	public void connectToServer() throws Exception {
-		connection = new Connection();
+		connection = new Connection(this);
 		connection.start(env.get("HOST"), Integer.parseInt(env.get("PORT")));
 		dispatcher = connection.getDispatcher();
 		dispatcher.login(user1);
@@ -85,14 +85,21 @@ public class GameFW {
 			return false;
 		}
 	}
-
+	
     public void setPlayers(String[] players) {
         this.players = players;
     }
-
-    public String[] getPlayers() {
-        return this.players;
-    }
+	
+	public String[] getPlayers() {
+		dispatcher.getPlayers();
+		try {
+			Thread.sleep(100);
+		}
+		catch(Exception ex) {
+			
+		}
+		return players;
+	}
 
     public Connection getConnection() {
         return connection;

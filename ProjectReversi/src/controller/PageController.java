@@ -7,7 +7,7 @@ import javafx.scene.Scene;
 public class PageController {
 	private Scene scene;
 	private Page hPage = new HomePage(this);
-  private Page playerPage = new PlayerPage(this);
+	private Page playerPage = new PlayerPage(this);
 	private Page gPage = new GridPage(this);
 	private GameFW gFW = new GameFW();
 	
@@ -35,9 +35,13 @@ public class PageController {
 		scene.setRoot(hPage.getPane());
 	}
   
-	public void toPlayerPage() {
+	public void toPlayerPage() throws Exception {
+		gFW.connectToServer();
+		System.out.println("sofar1");
         playerPage.createPage();
+        System.out.println("sofar2");
         scene.setRoot(playerPage.getPane());
+        System.out.println("sofar3");
 	}
 
 	public void toGrid() throws Exception{
@@ -74,5 +78,9 @@ public class PageController {
 	
 	public void setUser2(String user2) {
 		gFW.user2 = user2;
+	}
+	
+	public String[] getPlayers() {
+		return gFW.getPlayers();
 	}
 }

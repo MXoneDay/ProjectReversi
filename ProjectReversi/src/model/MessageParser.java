@@ -19,8 +19,7 @@ import handler.PlayerListHandler;
 
 public class MessageParser {
     Map<String, ActionHandler> messages = new HashMap<String, ActionHandler>();
-    GameFW gf;
-    // initialize handlers
+    Connection con;
     OkHandler okHandler;
     ErrHandler errHandler;
     GameListHandler gameListHandler;
@@ -34,14 +33,14 @@ public class MessageParser {
     GameChallengeHandler gameChallengeHandler;
     GameChallengeCancelledHandler gameChallengeCancelledHandler;
 
-    public MessageParser(GameFW gf){
-        this.gf = gf;
-        System.out.println("DEBUG 2 : "+this.gf.toString());
+    public MessageParser(Connection con){
+    	this.con = con;
+        //System.out.println("DEBUG 2 : "+this.gf.toString());
         // initialize handlers
         this.okHandler = new OkHandler();
         this.errHandler = new ErrHandler();
         this.gameListHandler = new GameListHandler();
-        this.playerListHandler = new PlayerListHandler(this.gf);
+        this.playerListHandler = new PlayerListHandler(this);
         this.gameMatchHandler = new GameMatchHandler();
         this.gameYourTurnHandler = new GameYourTurnHandler();
         this.gameMoveHanlder = new GameMoveHanlder();
@@ -82,6 +81,10 @@ public class MessageParser {
         if (!messageFound){
             System.out.println("Message not found: " + message);
         }
+    }
+    
+    public void setPlayers(String[] players) {
+    	con.setPlayers(players);
     }
 }
 

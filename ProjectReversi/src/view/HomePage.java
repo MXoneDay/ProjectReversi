@@ -72,6 +72,7 @@ public class HomePage implements Page{
 				public void handle(ActionEvent ae) {
 					usernm = text.getText();
 					try {
+						pc.setUser1(usernm);
 						pc.setGameFW('r');
 					}
 					catch(Exception ex) {
@@ -82,11 +83,13 @@ public class HomePage implements Page{
 			b3.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent ae) {
+					usernm = text.getText();
 					try {
+						pc.setUser1(usernm);
 						pc.toPlayerPage();
 					}
 					catch(Exception ex) {
-						ex.printStackTrace();
+						text.setText(ex.getMessage());
 					}
 				}
 			});

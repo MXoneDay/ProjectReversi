@@ -1,8 +1,5 @@
 package model;
 
-
-import java.util.ArrayList;
-
 public class CommandDispatcher {
     Connection connection;
     public CommandDispatcher(Connection connection){

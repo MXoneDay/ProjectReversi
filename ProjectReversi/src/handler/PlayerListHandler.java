@@ -1,16 +1,14 @@
 package handler;
 
-import model.GameFW;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import model.MessageParser;
 
 public class PlayerListHandler extends ActionHandler{
-    GameFW gf;
-
-    public PlayerListHandler(GameFW gf){
-        this.gf = gf;
-    }
+	MessageParser mp;
+	public PlayerListHandler(MessageParser mp) {
+		this.mp = mp;
+	}
 
     public void run(String message){
         Pattern pattern = Pattern.compile("SVR PLAYERLIST \\[(.*?)\\]");
@@ -21,7 +19,7 @@ public class PlayerListHandler extends ActionHandler{
             System.out.println("DEBUG: "+players);
             players = players.replace("\"", "");
             String[] playersArray = players.split(", ");
-            gf.setPlayers(playersArray);
+            mp.setPlayers(playersArray);
         }
     }
 }

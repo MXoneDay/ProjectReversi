@@ -14,19 +14,19 @@ public class Connection {
     PrintWriter output;
     Socket socket;
     Thread listenerThread;
-    GameFW gf;
-    MessageParser parser;
+    GameFW gFW;
+    MessageParser parser = new MessageParser(this);
     CommandDispatcher dispatcher = new CommandDispatcher(this);
+    
+    public Connection(GameFW gFW){
+    	this.gFW = gFW;
+    }
 
      public void start (String host, int port) throws Exception {
          try {
-        	 
-        	 System.out.println("sofar1");
              socket = new Socket();
              socket.connect(new InetSocketAddress(host,port), 200);
-             System.out.println("sofar2");
              input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-             System.out.println("sofar3");
              output = new PrintWriter(socket.getOutputStream(), true);
              connected = true;
              listen();
@@ -35,7 +35,6 @@ public class Connection {
             //this.connected = false;
          }
      }
-
 
      public void listen() {
          Runnable runnable = () -> {
@@ -49,7 +48,7 @@ public class Connection {
                         close();
                     }
 
-                    this.parser.parse(message);
+                    parser.parse(message);
                  } catch (SocketException exception) {
                     if (exception.getMessage().equals("Connection reset")) {
                         this.connected = false;
@@ -90,4 +89,8 @@ public class Connection {
     public void send(String message) {
         this.output.println(message);
      }
+    
+    public void setPlayers(String[] players) {
+    	gFW.setPlayers(players);
+    }
 }

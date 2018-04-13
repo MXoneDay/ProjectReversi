@@ -7,10 +7,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import controller.PageController;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
-
 public class PlayerPage implements Page{
     private final PageController pc;
     private GridPane gp = new GridPane();
@@ -20,25 +16,21 @@ public class PlayerPage implements Page{
     }
 
     public void createPage() {
-        try {
-            TextField text = new TextField();
-            gp.setAlignment(Pos.CENTER);
-            text.setText("TEST TEST TEST");
-            ObservableList<String> seasonList = FXCollections.<String>observableArrayList();
-
-            pc.setGameFW('t');
-            pc.getgFW().getDispatcher().getPlayers();
-            Thread.sleep(100);
-            String[] players = pc.getgFW().getPlayers();
-            for (String player : players) {
-                seasonList.add(player);
-            }
-            ListView<String> seasons = new ListView<String>((ObservableList<String>) seasonList);
-            gp.add(seasons, 0, 0);
-        }
-        catch(Exception ex) {
-            ex.printStackTrace();
-        }
+    	System.out.println("sofar5");
+    	gp.setAlignment(Pos.CENTER);
+    	 System.out.println("sofar6");
+    	 ObservableList<String> playerList = FXCollections.<String>observableArrayList();
+    	 System.out.println("sofar7");
+    	 String[] pl = pc.getPlayers();
+    	 System.out.println("sofar10");
+    	 for(String s : pl) {
+    		 playerList.add(s);
+    	 }
+    	 System.out.println("sofar8");
+    	ListView<String> players = new ListView<String>(playerList);
+    	 System.out.println("sofar9");
+    	gp.add(players, 0, 0);
+    	System.out.println("sofar4");
     }
 
     @Override

@@ -8,47 +8,31 @@ public class Reversi implements Game {
 	private final static int hor = 8, ver = 8;
 
 	@Override
-	public String getTurntext(boolean turn) {
-		String t;
-		if(turn){
+	public String getTurntext(int turn) {
+		String t = null;
+		if(turn == 1){
 			t =  "Turn : Player White"; }
-		else{
+		else if(turn == 2){
 			t = "Turn : Player Black";
 		}
 		return t;
 	}
 
 	@Override
-	public ImageView getImage(boolean turn) {
-		Image img;
-		if(turn){
+	public ImageView getImage(int turn) {
+		Image img = null;
+		if(turn == 1){
 			img = new Image("pictures/blackpiece.png",60, 60, false, true);
-		}else{
+		}else if(turn == 2){
 			img = new Image("pictures/whitepiece.png",60, 60, false, true);
 		}
 		return new ImageView(img);
 	}
 
 	@Override
-	public boolean isValid(boolean turn, CellPane cp, CellPane[][] board) {
-		System.out.println("Move: " + cp.hor + "-" + cp.ver + " " + cp.filled);
-		/*System.out.println(board.get(loc));
-		//System.out.println("Base: " + board.get(loc).hor + board.get(loc).ver + loc);
-		//System.out.println("Above: " + board.get(loc-hor).hor + board.get(loc-ver).ver + (loc-hor));
-		//checkUp(loc, board);
-		//board.get(loc).filled = 1;
-		//System.out.println(board[cp.ver][cp.hor-8].filled);*/
-		int player = turn ? 1 : 2;
-		//toConvert = new ArrayList<int[]>();
-		if(board[cp.ver][cp.hor].filled == 0) {
-			try {
-				//checkUp(turn, cp, board);
-			}
-			catch(Exception ex) {}
-			board[cp.ver][cp.hor].filled = turn ? 1 : 2;
-			return true;
-		}
-		return false;
+	public boolean isValid(int turn, int hor, int ver, Board board) {
+		System.out.println("Move: " + hor + "-" + ver);
+		return true;
 	}
 
 	@Override

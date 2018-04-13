@@ -7,8 +7,8 @@ import javafx.scene.Scene;
 public class PageController {
 	private Scene scene;
 	private Page hPage = new HomePage(this);
-	private Page gPage;
-	private GameFW gFW;
+	private Page gPage = new GridPage(this);
+	private GameFW gFW = new GameFW();
 	
 	public PageController() {
 		hPage.createPage();
@@ -20,22 +20,20 @@ public class PageController {
 	}
 	
 	public void setGameFW(char type) throws Exception {
-		gFW = new GameFW(type);
+		gFW.setGame(type);
+		gPage.createPage();
 		toGrid();
+	}
+	
+	public void reset() {
+		gFW.reset();
 	}
 	
 	public void toHome() {
 		scene.setRoot(hPage.getPane());
 	}
 
-	public GameFW getgFW() {
-		return gFW;
-	}
-
 	public void toGrid() throws Exception{
-		gFW.setGame();
-		gPage = new GridPage(this);
-		gPage.createPage();
 		scene.setRoot(gPage.getPane());
 	}
 	
@@ -55,11 +53,19 @@ public class PageController {
 		return gFW.getTurntext();
 	}
 	
-	public boolean move(Object cp) {
-		return gFW.move(cp);
+	public boolean move(int hor, int ver) {
+		return gFW.move(hor, ver);
 	}
 	
-	public void setBoard(int loc, Object cp) {
-		gFW.setBoard(loc, cp);
+	public void setInBoard(Object cp) {
+		gFW.setInBoard(cp);
+	}
+	
+	public void setUser1(String user1) {
+		gFW.user1 = user1;
+	}
+	
+	public void setUser2(String user2) {
+		gFW.user2 = user2;
 	}
 }

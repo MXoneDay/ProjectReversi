@@ -18,8 +18,11 @@ public class Connection {
 
      public void start (String host, int port) {
          try {
+        	 System.out.println("sofar1");
              this.socket = new Socket(host, port);
+             System.out.println("sofar2");
              this.input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+             System.out.println("sofar3");
              this.output = new PrintWriter(socket.getOutputStream(), true);
              this.connected = true;
              listen();

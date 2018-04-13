@@ -14,7 +14,8 @@ public class Connection {
     PrintWriter output;
     Socket socket;
     Thread listenerThread;
-    MessageParser parser = new MessageParser();
+    GameFW gf;
+    MessageParser parser;
     CommandDispatcher dispatcher = new CommandDispatcher(this);
 
      public void start (String host, int port) throws Exception {

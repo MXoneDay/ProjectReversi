@@ -2,7 +2,6 @@ package model;
 
 import java.io.IOException;
 
-
 public class GameFW {
 	private Board board;
 	private int turn = 1; // default -> 0! TODO
@@ -12,6 +11,7 @@ public class GameFW {
 	Connection connection;
 	CommandDispatcher dispatcher;
     DotEnv env;
+    String[] players;
 
     {
         try {
@@ -21,6 +21,7 @@ public class GameFW {
         }
     }
 	
+
 	public void connectToServer() throws Exception {
 		connection = new Connection();
 		connection.start(env.get("HOST"), Integer.parseInt(env.get("PORT")));
@@ -84,4 +85,16 @@ public class GameFW {
 			return false;
 		}
 	}
+
+    public void setPlayers(String[] players) {
+        this.players = players;
+    }
+
+    public String[] getPlayers() {
+        return this.players;
+    }
+
+    public Connection getConnection() {
+        return connection;
+    }
 }

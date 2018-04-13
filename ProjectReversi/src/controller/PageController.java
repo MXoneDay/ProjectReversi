@@ -20,6 +20,7 @@ public class PageController {
 	}
 	
 	public void setGameFW(char type) throws Exception {
+		gFW.connectToServer();
 		gFW.setGame(type);
 		gPage.createPage();
 		toGrid();

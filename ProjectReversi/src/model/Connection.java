@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketException;
 
@@ -16,18 +17,21 @@ public class Connection {
     MessageParser parser = new MessageParser();
     CommandDispatcher dispatcher = new CommandDispatcher(this);
 
-     public void start (String host, int port) {
+     public void start (String host, int port) throws Exception {
          try {
+        	 
         	 System.out.println("sofar1");
-             this.socket = new Socket(host, port);
+             socket = new Socket();
+             socket.connect(new InetSocketAddress(host,port), 200);
              System.out.println("sofar2");
-             this.input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+             input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
              System.out.println("sofar3");
-             this.output = new PrintWriter(socket.getOutputStream(), true);
-             this.connected = true;
+             output = new PrintWriter(socket.getOutputStream(), true);
+             connected = true;
              listen();
          } catch (IOException exception) {
-            this.connected = false;
+        	 throw new IOException("No connection to server!");
+            //this.connected = false;
          }
      }
 

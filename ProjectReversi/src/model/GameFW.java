@@ -21,11 +21,11 @@ public class GameFW {
         }
     }
 	
-	public GameFW(){
-		//connection = new Connection();
-		//connection.start(env.get("HOST"), Integer.parseInt(env.get("PORT")));
-		//dispatcher = connection.getDispatcher();
-		//dispatcher.login(user1);
+	public void connectToServer() throws Exception {
+		connection = new Connection();
+		connection.start(env.get("HOST"), Integer.parseInt(env.get("PORT")));
+		dispatcher = connection.getDispatcher();
+		dispatcher.login(user1);
 	}
 	
 	// Get method for the value of the Horizontal value / X-value

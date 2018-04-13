@@ -1,17 +1,13 @@
 package model;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
-import view.CellPane;
-
 
 public class GameFW {
-	//private HashMap<Integer, CellPane> board = new HashMap<Integer, CellPane>();
-	private CellPane[][] board;
-	private boolean turn;
+	private Board board;
+	private int turn = 1; // default -> 0! TODO
 	private Game game;
-	private final char type;
+	public String user1;
+	public String user2;
 	Connection connection;
 	CommandDispatcher dispatcher;
     DotEnv env;
@@ -25,18 +21,14 @@ public class GameFW {
         }
     }
 	
-	public GameFW(char type){
-		this.type = type;
-		this.connection = new Connection(this);
-        System.out.println(env.get("HOST") +" "+env.get("PORT"));
-		this.connection.start(env.get("HOST"), Integer.parseInt(env.get("PORT")));
-		this.dispatcher = connection.getDispatcher();
-	}
 
-	public CommandDispatcher getDispatcher() {
-		return dispatcher;
+	public void connectToServer() throws Exception {
+		connection = new Connection();
+		connection.start(env.get("HOST"), Integer.parseInt(env.get("PORT")));
+		dispatcher = connection.getDispatcher();
+		dispatcher.login(user1);
 	}
-
+	
 	// Get method for the value of the Horizontal value / X-value
 	public int getHor() {
 		return game.getHor();
@@ -48,23 +40,28 @@ public class GameFW {
 	}
 
 	// Set the cellpanes on locations with the board so it creates a playable board
-	public void setBoard(int loc, Object ocp) {
-		CellPane cp = (CellPane) ocp;
-		board[cp.ver][cp.hor] = cp;
+	public void setInBoard(Object ocp) {
+		board.setInBoard(ocp);
 	}
 
-	// If the game is not supported by the client it will throw a execption
-	public void setGame() throws Exception{
+	// If the game is not supported by the client it will throw an execption
+	public void setGame(char type) throws Exception{
 		if(type == 'r') {
 			game = new Reversi();
+			//dispatcher.subscribe("Tic-tac-toe");
 		}else if(type == 't') {
 			game = new Tictactoe();
+			//dispatcher.subscribe("Reversi");
 		}
 		else {
 			throw new Exception("Not currently supported");
 		}
-		board = new CellPane[game.getVer()][game.getHor()];
-		turn = true;
+		board = new Board(game.getVer(), game.getHor());
+	}
+	
+	public void reset() {
+		board.reset();
+		//dispatcher.disconnect();
 	}
 
 	// A image from a game piece for the current player
@@ -78,13 +75,14 @@ public class GameFW {
 	}
 
 	// Function for setting a move this checks if the moves is valid before sending it
-	public boolean move(Object ocp) {
-		if(turn) {
-			turn = !game.isValid(turn, (CellPane) ocp, board);
-			return !turn;
+	public boolean move(int hor, int ver) {
+		if(game.isValid(turn, hor, ver, board)) {
+			board.getCell(hor, ver).filled = (turn == 1) ? 1 : 2;
+			turn = (turn == 1) ? 2 : 1;
+			//dispatcher.move(board.getCell(hor, ver).loc);
+			return true;
 		}else {
-			turn = game.isValid(turn, (CellPane) ocp, board);
-			return turn;
+			return false;
 		}
 	}
 

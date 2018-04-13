@@ -1,13 +1,12 @@
 package model;
 
 import javafx.scene.image.ImageView;
-import view.CellPane;
 
 public interface Game {
-	public boolean isValid(boolean turn, CellPane cp, CellPane[][] board);
+	public boolean isValid(int turn, int hor, int ver, Board board);
 	public void createAI();
-	public ImageView getImage(boolean turn);
-	public String getTurntext(boolean turn);
+	public ImageView getImage(int turn);
+	public String getTurntext(int turn);
 	public int getHor();
 	public int getVer();
 }

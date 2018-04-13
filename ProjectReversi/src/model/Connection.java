@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketException;
 
@@ -17,20 +18,21 @@ public class Connection {
     MessageParser parser;
     CommandDispatcher dispatcher = new CommandDispatcher(this);
 
-    public Connection(GameFW gf){
-        this.gf = gf;
-        this.parser = new MessageParser(this.gf);
-    }
-
-     public void start (String host, int port) {
+     public void start (String host, int port) throws Exception {
          try {
-             this.socket = new Socket(host, port);
-             this.input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-             this.output = new PrintWriter(socket.getOutputStream(), true);
-             this.connected = true;
+        	 
+        	 System.out.println("sofar1");
+             socket = new Socket();
+             socket.connect(new InetSocketAddress(host,port), 200);
+             System.out.println("sofar2");
+             input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+             System.out.println("sofar3");
+             output = new PrintWriter(socket.getOutputStream(), true);
+             connected = true;
              listen();
          } catch (IOException exception) {
-            this.connected = false;
+        	 throw new IOException("No connection to server!");
+            //this.connected = false;
          }
      }
 

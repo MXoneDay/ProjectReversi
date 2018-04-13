@@ -13,16 +13,19 @@ import javafx.scene.image.ImageView;
 
 public class GridPage implements Page{
 	private final PageController pc;
-	private int hor, ver;
-	private GridPane gPane = new GridPane();
+	private GridPane gPane;
 	
 	public GridPage(PageController pc){
 		this.pc = pc;
 	}
 	
-	public void createPage() {
-		hor = pc.getHor();
-		ver = pc.getVer();
+	public void createPage() {/*
+		if(gPane != null) {
+			return;
+		}*/
+		gPane = new GridPane();
+		int hor = pc.getHor();
+		int ver = pc.getVer();
 
 		GridPane menu = new GridPane();
 		Text turn = new Text(" ");
@@ -52,16 +55,14 @@ public class GridPage implements Page{
 
 					@Override
 					public void handle(MouseEvent me) {
-						//pc.getImage();
-						if(pc.move(cp)) {
+						if(pc.move(cp.hor, cp.ver)) {
 							cp.getChildren().add((ImageView) pc.getImage());
-//							pc.getgFW().getDispatcher().move(cp.loc);
 						}
 						turn.setText(pc.getTurntext());
 					}
 				});
 				
-				pc.setBoard(loc, cp);
+				pc.setInBoard(cp);
 				gPane.add(cp, j, i);
 				loc++;
 			}
@@ -73,7 +74,7 @@ public class GridPage implements Page{
 			@Override
 			public void handle(ActionEvent ae) {
 				pc.toHome();
-				pc.getgFW().getDispatcher().disconnect();
+				//pc.getgFW().getDispatcher().disconnect();
 			}
 		});
 
@@ -82,8 +83,8 @@ public class GridPage implements Page{
 			@Override
 			public void handle(ActionEvent ae) {
 				try {
-					pc.toGrid();
-					pc.getgFW().getDispatcher().disconnect();
+					pc.reset();
+					//pc.getgFW().getDispatcher().disconnect();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

@@ -55,9 +55,11 @@ public class HomePage implements Page{
 				public void handle(ActionEvent ae) {
 					usernm = text.getText();
 					try {
+						pc.setUser1(usernm);
 						pc.setGameFW('t');
-						pc.getgFW().getDispatcher().login(usernm);
-						pc.getgFW().getDispatcher().subscribe("Tic-tac-toe");
+						
+						//pc.getgFW().getDispatcher().login(usernm);
+						//pc.getgFW().getDispatcher().subscribe("Tic-tac-toe");
 					}
 					catch(Exception ex) {
 						text.setText(ex.getMessage());
@@ -94,10 +96,6 @@ public class HomePage implements Page{
 		}
 	}
 	
-	public String getUsernm() {
-		return usernm;
-	}
-
 	@Override
 	public GridPane getPane() {
 		return gp;

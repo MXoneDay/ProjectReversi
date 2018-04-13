@@ -8,6 +8,7 @@ public class GameFW {
 	private Game game;
 	public String user1;
 	public String user2;
+	private char type;
 	Connection connection;
 	CommandDispatcher dispatcher;
     DotEnv env;
@@ -46,12 +47,13 @@ public class GameFW {
 
 	// If the game is not supported by the client it will throw an execption
 	public void setGame(char type) throws Exception{
+		this.type = type;
 		if(type == 'r') {
 			game = new Reversi();
-			//dispatcher.subscribe("Tic-tac-toe");
+			dispatcher.subscribe("Reversi");
 		}else if(type == 't') {
 			game = new Tictactoe();
-			//dispatcher.subscribe("Reversi");
+			dispatcher.subscribe("Tic-tac-toe");
 		}
 		else {
 			throw new Exception("Not currently supported");
@@ -60,8 +62,19 @@ public class GameFW {
 	}
 	
 	public void reset() {
-		board.reset();
-		//dispatcher.disconnect();
+		try {
+			board.reset();
+			disconnect();
+			connectToServer();
+			if(type == 'r') {
+				dispatcher.subscribe("Reversi");
+			}else if(type == 't') {
+				dispatcher.subscribe("Tic-tac-toe");
+			}
+		}
+		catch(Exception ex) {
+			
+		}
 	}
 
 	// A image from a game piece for the current player
@@ -79,11 +92,15 @@ public class GameFW {
 		if(game.isValid(turn, hor, ver, board)) {
 			board.getCell(hor, ver).filled = (turn == 1) ? 1 : 2;
 			turn = (turn == 1) ? 2 : 1;
-			//dispatcher.move(board.getCell(hor, ver).loc);
+			dispatcher.move(board.getCell(hor, ver).loc);
 			return true;
 		}else {
 			return false;
 		}
+	}
+	
+	public void disconnect() {
+		dispatcher.disconnect();
 	}
 	
     public void setPlayers(String[] players) {
@@ -93,7 +110,7 @@ public class GameFW {
 	public String[] getPlayers() {
 		dispatcher.getPlayers();
 		try {
-			Thread.sleep(100);
+			Thread.sleep(1000);
 		}
 		catch(Exception ex) {
 			

@@ -37,11 +37,8 @@ public class PageController {
   
 	public void toPlayerPage() throws Exception {
 		gFW.connectToServer();
-		System.out.println("sofar1");
         playerPage.createPage();
-        System.out.println("sofar2");
         scene.setRoot(playerPage.getPane());
-        System.out.println("sofar3");
 	}
 
 	public void toGrid() throws Exception{
@@ -82,5 +79,9 @@ public class PageController {
 	
 	public String[] getPlayers() {
 		return gFW.getPlayers();
+	}
+	
+	public void disconnect() {
+		gFW.disconnect();
 	}
 }

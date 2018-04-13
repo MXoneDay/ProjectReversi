@@ -2,6 +2,8 @@ package view;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -16,21 +18,21 @@ public class PlayerPage implements Page{
     }
 
     public void createPage() {
-    	System.out.println("sofar5");
+    	Button b1 = new Button("Back");
     	gp.setAlignment(Pos.CENTER);
-    	 System.out.println("sofar6");
-    	 ObservableList<String> playerList = FXCollections.<String>observableArrayList();
-    	 System.out.println("sofar7");
-    	 String[] pl = pc.getPlayers();
-    	 System.out.println("sofar10");
-    	 for(String s : pl) {
-    		 playerList.add(s);
-    	 }
-    	 System.out.println("sofar8");
+    	ObservableList<String> playerList = FXCollections.<String>observableArrayList();
+    	playerList.addAll(pc.getPlayers());
     	ListView<String> players = new ListView<String>(playerList);
-    	 System.out.println("sofar9");
+    	
+    	b1.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent ae) {
+				pc.toHome();
+			}
+		});
     	gp.add(players, 0, 0);
-    	System.out.println("sofar4");
+    	gp.add(b1, 0, 1);
     }
 
     @Override

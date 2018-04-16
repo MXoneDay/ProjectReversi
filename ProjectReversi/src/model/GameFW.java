@@ -2,6 +2,7 @@ package model;
 
 import java.io.IOException;
 
+import javafx.application.Platform;
 import view.CellPane;
 
 public class GameFW {
@@ -126,21 +127,22 @@ public class GameFW {
         int hor = 0;
         int ver = 0;
 
-        try {
-            while(true) {
-                loc = loc - hor;
-                ver++;
-            }
-        }
-        catch(Exception ex) {
-            hor = loc;
-        }
+ 		int newhor = loc % getHor();
+        int newver = loc / getVer();
 
-        CellPane cp = board.getCell(hor, ver);
-        System.out.println("Cellpane hor, ver: "+hor+", "+ver);
-        System.out.println("CellPane to draw on: " + cp.toString());
-        cp.filled = turn;
-        cp.getChildren().add(game.getImage(turn));
+		System.out.println(newhor);
+		System.out.println(newver);
+
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				CellPane cp = board.getCell(newhor, newver);
+				System.out.println("Cellpane hor, ver: "+newhor+", "+newver);
+				System.out.println("CellPane to draw on: " + cp.toString());
+				cp.filled = turn;
+				cp.getChildren().add(game.getImage(turn));
+			}
+		});
     }
 
 	public void disconnect() {

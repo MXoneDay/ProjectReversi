@@ -15,7 +15,7 @@ public class Connection {
     Socket socket;
     Thread listenerThread;
     GameFW gFW;
-    MessageParser parser = new MessageParser(this);
+    MessageParser parser;
     CommandDispatcher dispatcher = new CommandDispatcher(this);
     
     public Connection(GameFW gFW){
@@ -24,6 +24,7 @@ public class Connection {
 
      public void start (String host, int port) throws Exception {
          try {
+        	 parser = new MessageParser(gFW);
              socket = new Socket();
              socket.connect(new InetSocketAddress(host,port), 200);
              input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -89,8 +90,4 @@ public class Connection {
     public void send(String message) {
         this.output.println(message);
      }
-    
-    public void setPlayers(String[] players) {
-    	gFW.setPlayers(players);
-    }
 }

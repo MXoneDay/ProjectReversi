@@ -7,4 +7,8 @@ public class TictactoeAI implements AI {
 		this.ttt = ttt;
 		System.out.println(ttt.getVer());
 	}
+	
+	public void tryMove() {
+		//TODO move at random till success
+	}
 }

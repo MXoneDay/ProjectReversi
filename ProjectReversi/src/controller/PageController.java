@@ -20,9 +20,9 @@ public class PageController {
 		return scene;
 	}
 	
-	public void setGameFW(char type) throws Exception {
+	public void setGameFW(char type, Object wait) throws Exception {
 		gFW.connectToServer();
-		gFW.setGame(type);
+		gFW.setGame(type, wait);
 		gPage.createPage();
 		toGrid();
 	}
@@ -53,16 +53,12 @@ public class PageController {
 		return gFW.getHor();
 	}
 	
-	public Object getImage() {
-		return gFW.getImage();
-	}
-
 	public String getTurntext() {
 		return gFW.getTurntext();
 	}
 	
-	public boolean move(int hor, int ver) {
-		return gFW.move(hor, ver);
+	public String move(int hor, int ver) {
+		return gFW.tryMove(hor, ver);
 	}
 	
 	public void setInBoard(Object cp) {

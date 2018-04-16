@@ -27,11 +27,17 @@ public class HomePage implements Page{
 			Label label = new Label("Username: ");
 			
 			RadioButton rb1 = new RadioButton("Player vs Player");
+			rb1.setUserData(1);
 			rb1.setToggleGroup(tg);
 			rb1.setSelected(true);
-			RadioButton rb2 = new RadioButton("Player vs AI");
+			RadioButton rb4 = new RadioButton("Player vs AI");
+			rb4.setUserData(2);
+			rb4.setToggleGroup(tg);
+			RadioButton rb2 = new RadioButton("Player vs Online");
+			rb2.setUserData(3);
 			rb2.setToggleGroup(tg);
-			RadioButton rb3 = new RadioButton("AI vs AI");
+			RadioButton rb3 = new RadioButton("AI vs Online");
+			rb3.setUserData(4);
 			rb3.setToggleGroup(tg);
 			
 			Button b1 = new Button("TicTacToe");
@@ -46,8 +52,9 @@ public class HomePage implements Page{
 			gp.add(b2, 1, 1);
 			gp.add(b3, 2, 1);
 			gp.add(rb1, 0, 2);
-			gp.add(rb2, 0, 3);
-			gp.add(rb3, 0, 4);
+			gp.add(rb4, 0, 3);
+			gp.add(rb2, 0, 4);
+			gp.add(rb3, 0, 5);
 			
 			b1.setOnAction(new EventHandler<ActionEvent>() {
 				
@@ -56,7 +63,7 @@ public class HomePage implements Page{
 					usernm = text.getText();
 					try {
 						pc.setUser1(usernm);
-						pc.setGameFW('t');
+						pc.setGameFW('t', tg.getSelectedToggle().getUserData());
 						
 						//pc.getgFW().getDispatcher().login(usernm);
 						//pc.getgFW().getDispatcher().subscribe("Tic-tac-toe");
@@ -73,7 +80,7 @@ public class HomePage implements Page{
 					usernm = text.getText();
 					try {
 						pc.setUser1(usernm);
-						pc.setGameFW('r');
+						pc.setGameFW('r', (boolean) tg.getSelectedToggle().getUserData());
 					}
 					catch(Exception ex) {
 						text.setText(ex.getMessage());

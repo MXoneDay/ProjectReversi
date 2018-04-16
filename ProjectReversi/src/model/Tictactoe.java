@@ -45,8 +45,8 @@ public class Tictactoe implements Game {
 	
 	@Override
 	public void createAI() {
-		// TODO Auto-generated method stub
-		
+		TictactoeAI ai = new TictactoeAI(this);
+		ai.tryMove();
 	}
 	
 	@Override

@@ -19,7 +19,6 @@ import handler.PlayerListHandler;
 
 public class MessageParser {
     Map<String, ActionHandler> messages = new HashMap<String, ActionHandler>();
-    Connection con;
     OkHandler okHandler;
     ErrHandler errHandler;
     GameListHandler gameListHandler;
@@ -33,20 +32,19 @@ public class MessageParser {
     GameChallengeHandler gameChallengeHandler;
     GameChallengeCancelledHandler gameChallengeCancelledHandler;
 
-    public MessageParser(Connection con){
-    	this.con = con;
+    public MessageParser(GameFW gFW){
         //System.out.println("DEBUG 2 : "+this.gf.toString());
         // initialize handlers
         this.okHandler = new OkHandler();
         this.errHandler = new ErrHandler();
         this.gameListHandler = new GameListHandler();
-        this.playerListHandler = new PlayerListHandler(this);
+        this.playerListHandler = new PlayerListHandler(gFW);
         this.gameMatchHandler = new GameMatchHandler();
-        this.gameYourTurnHandler = new GameYourTurnHandler();
-        this.gameMoveHanlder = new GameMoveHanlder();
-        this.gameWinHandler = new GameWinHandler();
-        this.gameLossHandler = new GameLossHandler();
-        this.gameDrawHandler = new GameDrawHandler();
+        this.gameYourTurnHandler = new GameYourTurnHandler(gFW);
+        this.gameMoveHanlder = new GameMoveHanlder(gFW);
+        this.gameWinHandler = new GameWinHandler(gFW);
+        this.gameLossHandler = new GameLossHandler(gFW);
+        this.gameDrawHandler = new GameDrawHandler(gFW);
         this.gameChallengeHandler = new GameChallengeHandler();
         this.gameChallengeCancelledHandler = new GameChallengeCancelledHandler();
 
@@ -81,10 +79,6 @@ public class MessageParser {
         if (!messageFound){
             System.out.println("Message not found: " + message);
         }
-    }
-    
-    public void setPlayers(String[] players) {
-    	con.setPlayers(players);
     }
 }
 

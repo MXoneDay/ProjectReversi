@@ -2,15 +2,19 @@ package model;
 
 import java.io.IOException;
 
+import view.CellPane;
+
 public class GameFW {
 	private Board board;
 	private int turn = 1; // default -> 0! TODO
 	private Game game;
 	public String user1;
 	public String user2;
+	private int mode;
 	private char type;
+	public boolean waitForMove;
 	Connection connection;
-	CommandDispatcher dispatcher;
+	//CommandDispatcher dispatcher;
     DotEnv env;
     String[] players;
 
@@ -25,9 +29,9 @@ public class GameFW {
 
 	public void connectToServer() throws Exception {
 		connection = new Connection(this);
-		connection.start(env.get("HOST"), Integer.parseInt(env.get("PORT")));
-		dispatcher = connection.getDispatcher();
-		dispatcher.login(user1);
+		//connection.start(env.get("HOST"), Integer.parseInt(env.get("PORT")));
+		//dispatcher = connection.getDispatcher();
+		//dispatcher.login(user1);
 	}
 	
 	// Get method for the value of the Horizontal value / X-value
@@ -46,17 +50,30 @@ public class GameFW {
 	}
 
 	// If the game is not supported by the client it will throw an execption
-	public void setGame(char type) throws Exception{
+	public void setGame(char type, Object wait) throws Exception{
 		this.type = type;
+		mode = (int) wait;
+		
 		if(type == 'r') {
 			game = new Reversi();
-			dispatcher.subscribe("Reversi");
+			//dispatcher.subscribe("Reversi");
 		}else if(type == 't') {
 			game = new Tictactoe();
-			dispatcher.subscribe("Tic-tac-toe");
+			//dispatcher.subscribe("Tic-tac-toe");
 		}
 		else {
 			throw new Exception("Not currently supported");
+		}
+		if(mode == 1) {
+			waitForMove = false;
+		}else if(mode == 2) {
+			waitForMove = true;
+			game.createAI();
+		}else if(mode == 3) {
+			waitForMove = true;
+		}else if(mode == 4) {
+			waitForMove = true;
+			game.createAI();
 		}
 		board = new Board(game.getVer(), game.getHor());
 	}
@@ -67,50 +84,59 @@ public class GameFW {
 			disconnect();
 			connectToServer();
 			if(type == 'r') {
-				dispatcher.subscribe("Reversi");
+				//dispatcher.subscribe("Reversi");
 			}else if(type == 't') {
-				dispatcher.subscribe("Tic-tac-toe");
+				//dispatcher.subscribe("Tic-tac-toe");
 			}
 		}
 		catch(Exception ex) {
 			
 		}
 	}
-
-	// A image from a game piece for the current player
-	public Object getImage() {
-		Object imgV = game.getImage(turn);
-		turn = (turn == 1) ? 2 : 1;
-		return imgV;
-	}
-
+	
 	// Set the text for the current player
 	public String getTurntext() {
 		return game.getTurntext(turn);
 	}
+	
+	public String tryMove(int hor, int ver) {
+		if(waitForMove && turn == 1) {
+			return move(hor, ver);
+		}else if(!waitForMove) {
+			return move(hor, ver);
+		}
+		else {
+			return "Player: " + turn;
+		}
+	}
 
 	// Function for setting a move this checks if the moves is valid before sending it
-	public boolean move(int hor, int ver) {
+	public String move(int hor, int ver) {
 		if(game.isValid(turn, hor, ver, board)) {
-			board.getCell(hor, ver).filled = (turn == 1) ? 1 : 2;
-			dispatcher.move(board.getCell(hor, ver).loc);
-			return true;
-		}else {
-			return false;
+			CellPane cp = board.getCell(hor, ver);
+			cp.filled = turn;
+			cp.getChildren().add(game.getImage(turn));
+			//dispatcher.move(cp.loc);
 		}
+		turn = (turn == 1) ? 2 : 1;
+		return "Player: " + turn;
 	}
 	
 	public void disconnect() {
-		dispatcher.disconnect();
+		//dispatcher.disconnect();
 	}
 	
     public void setPlayers(String[] players) {
         this.players = players;
     }
+    
+    public void setTurn(int turn) {
+    	this.turn = turn;
+    }
 	
 	public String[] getPlayers() {
-		dispatcher.getPlayers();
 		try {
+			//dispatcher.getPlayers();
 			Thread.sleep(1000);
 		}
 		catch(Exception ex) {

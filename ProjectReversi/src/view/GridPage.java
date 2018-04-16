@@ -9,7 +9,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
-import javafx.scene.image.ImageView;
 
 public class GridPage implements Page{
 	private final PageController pc;
@@ -55,10 +54,9 @@ public class GridPage implements Page{
 
 					@Override
 					public void handle(MouseEvent me) {
-						if(pc.move(cp.hor, cp.ver)) {
-							cp.getChildren().add((ImageView) pc.getImage());
-						}
-						turn.setText(pc.getTurntext());
+						turn.setText(pc.move(cp.hor, cp.ver));
+						//cp.getChildren().add((ImageView) pc.getImage());
+						//turn.setText(pc.getTurntext());
 					}
 				});
 				

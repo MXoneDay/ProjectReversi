@@ -2,12 +2,13 @@ package handler;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import model.MessageParser;
+
+import model.GameFW;
 
 public class PlayerListHandler extends ActionHandler{
-	MessageParser mp;
-	public PlayerListHandler(MessageParser mp) {
-		this.mp = mp;
+	GameFW gFW;
+	public PlayerListHandler(GameFW gFW) {
+		this.gFW = gFW;
 	}
 
     public void run(String message){
@@ -19,7 +20,7 @@ public class PlayerListHandler extends ActionHandler{
             System.out.println("DEBUG: "+players);
             players = players.replace("\"", "");
             String[] playersArray = players.split(", ");
-            mp.setPlayers(playersArray);
+            gFW.setPlayers(playersArray);
         }
     }
 }

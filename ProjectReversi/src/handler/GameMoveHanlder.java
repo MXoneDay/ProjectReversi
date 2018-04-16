@@ -26,7 +26,7 @@ public class GameMoveHanlder extends ActionHandler {
 			move = Integer.parseInt(matcher.group(2));
 			details = matcher.group(3);
 		}
-
+		System.out.println("drawMove: "+move);
 		gFW.drawMove(move);
     }
 }

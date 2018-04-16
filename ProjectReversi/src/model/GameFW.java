@@ -136,15 +136,15 @@ public class GameFW {
             hor = loc;
         }
 
-        System.out.println("Clicked on hor: "+hor+", ver: "+ver);
-
         CellPane cp = board.getCell(hor, ver);
+        System.out.println("Cellpane hor, ver: "+hor+", "+ver);
+        System.out.println("CellPane to draw on: " + cp.toString());
         cp.filled = turn;
         cp.getChildren().add(game.getImage(turn));
     }
 
 	public void disconnect() {
-		//dispatcher.disconnect();
+		dispatcher.disconnect();
 	}
 	
     public void setPlayers(String[] players) {
@@ -157,7 +157,7 @@ public class GameFW {
 	
 	public String[] getPlayers() {
 		try {
-			//dispatcher.getPlayers();
+			dispatcher.getPlayers();
 			Thread.sleep(1000);
 		}
 		catch(Exception ex) {

@@ -1,7 +1,5 @@
 package model;
 
-import java.util.ArrayList;
-
 import view.CellPane;
 
 public class Board {
@@ -51,12 +49,22 @@ public class Board {
 		return result;
 	}
 	
-	public int[] checkRL(int hor) {
+	public int[] checkRL(int hor, int ver) {
 		int[] result = new int[board.length];
 		
-		for(int i = 0; i < board.length; i++) {
-			result[i] = board[i][hor].filled;
+		if(hor > ver) {
+			
+		}else if(hor < ver) {
+			
+		}else {
+			int i = 0, j = 0;
+			while(i < board.length && j < board.length) {
+				
+				i++;
+				j++;
+			}
 		}
+		
 		return result;
 	}
 	
@@ -68,28 +76,5 @@ public class Board {
 		}
 		return result;
 	}
-	
-	public ArrayList<Integer> getUp(int hor, int ver) {
-		ArrayList<Integer> result = new ArrayList<Integer>();
-		System.out.println("Started ");
-		for(int i = ver; i > 0; i--) {
-			if(board[i][hor].filled != 0) {
-				result.add(board[i][hor].filled);
-			}
-		}
-		//System.out.println(Arrays.toString(result));
-		return result;
-			/*
-			for(int i = ver; i > 0; i--) {
-				if(board[i][hor].filled == check) {
-					enemy = true;
-				}
-				if(enemy) {
-					if(board[i][hor].filled == turn) {
-						System.out.println("yay: " + i + hor);
-						return;
-					}
-				}
-			}*/
-	}
+
 }

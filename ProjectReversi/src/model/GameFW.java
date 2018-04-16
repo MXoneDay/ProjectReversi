@@ -14,7 +14,7 @@ public class GameFW {
 	private char type;
 	public boolean waitForMove;
 	Connection connection;
-	//CommandDispatcher dispatcher;
+	CommandDispatcher dispatcher;
     DotEnv env;
     String[] players;
 
@@ -29,9 +29,9 @@ public class GameFW {
 
 	public void connectToServer() throws Exception {
 		connection = new Connection(this);
-		//connection.start(env.get("HOST"), Integer.parseInt(env.get("PORT")));
-		//dispatcher = connection.getDispatcher();
-		//dispatcher.login(user1);
+		connection.start(env.get("HOST"), Integer.parseInt(env.get("PORT")));
+		dispatcher = connection.getDispatcher();
+		dispatcher.login(user1);
 	}
 	
 	// Get method for the value of the Horizontal value / X-value
@@ -56,10 +56,10 @@ public class GameFW {
 		
 		if(type == 'r') {
 			game = new Reversi();
-			//dispatcher.subscribe("Reversi");
+			dispatcher.subscribe("Reversi");
 		}else if(type == 't') {
 			game = new Tictactoe();
-			//dispatcher.subscribe("Tic-tac-toe");
+			dispatcher.subscribe("Tic-tac-toe");
 		}
 		else {
 			throw new Exception("Not currently supported");
@@ -84,9 +84,9 @@ public class GameFW {
 			disconnect();
 			connectToServer();
 			if(type == 'r') {
-				//dispatcher.subscribe("Reversi");
+				dispatcher.subscribe("Reversi");
 			}else if(type == 't') {
-				//dispatcher.subscribe("Tic-tac-toe");
+				dispatcher.subscribe("Tic-tac-toe");
 			}
 		}
 		catch(Exception ex) {
@@ -116,12 +116,33 @@ public class GameFW {
 			CellPane cp = board.getCell(hor, ver);
 			cp.filled = turn;
 			cp.getChildren().add(game.getImage(turn));
-			//dispatcher.move(cp.loc);
+			dispatcher.move(cp.loc);
 		}
 		turn = (turn == 1) ? 2 : 1;
 		return "Player: " + turn;
 	}
-	
+
+	public void drawMove(int loc){
+        int hor = 0;
+        int ver = 0;
+
+        try {
+            while(true) {
+                loc = loc - hor;
+                ver++;
+            }
+        }
+        catch(Exception ex) {
+            hor = loc;
+        }
+
+        System.out.println("Clicked on hor: "+hor+", ver: "+ver);
+
+        CellPane cp = board.getCell(hor, ver);
+        cp.filled = turn;
+        cp.getChildren().add(game.getImage(turn));
+    }
+
 	public void disconnect() {
 		//dispatcher.disconnect();
 	}

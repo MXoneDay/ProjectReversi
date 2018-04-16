@@ -47,13 +47,11 @@ public class Board {
 		
 		for(int i = 0; i < board.length; i++) {
 			result[i] = board[ver][i].filled;
-			//System.out.println(board[ver][i].filled);
 		}
-		//System.out.println(Arrays.toString(result));
 		return result;
 	}
 	
-	public int[] checkDRL(int hor) {
+	public int[] checkRL(int hor) {
 		int[] result = new int[board.length];
 		
 		for(int i = 0; i < board.length; i++) {
@@ -62,7 +60,7 @@ public class Board {
 		return result;
 	}
 	
-	public int[] checkDLR(int hor) {
+	public int[] checkLR(int hor) {
 		int[] result = new int[board.length];
 		
 		for(int i = 0; i < board.length; i++) {

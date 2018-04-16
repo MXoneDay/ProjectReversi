@@ -1,7 +1,6 @@
 package model;
 
 import java.io.IOException;
-
 import view.CellPane;
 
 public class GameFW {
@@ -28,7 +27,7 @@ public class GameFW {
 	
 
 	public void connectToServer() throws Exception {
-		connection = new Connection(this);
+		//connection = new Connection(this);
 		//connection.start(env.get("HOST"), Integer.parseInt(env.get("PORT")));
 		//dispatcher = connection.getDispatcher();
 		//dispatcher.login(user1);
@@ -120,6 +119,22 @@ public class GameFW {
 		}
 		turn = (turn == 1) ? 2 : 1;
 		return "Player: " + turn;
+	}
+	
+	public void AIandServerMove(int loc) {
+		int hor = 0;
+		int ver = 0;
+		
+		try {
+			while(true) {
+				loc = loc - hor;
+				ver++;
+			}
+		}
+		catch(Exception ex) {
+			hor = loc;
+		}
+		move(hor, ver);
 	}
 	
 	public void disconnect() {

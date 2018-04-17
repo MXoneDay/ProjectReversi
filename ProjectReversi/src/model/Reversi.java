@@ -6,6 +6,29 @@ import view.CellPane;
 
 public class Reversi implements Game {
 	private final static int hor = 8, ver = 8;
+	
+	Reversi(){
+		/*
+		CellPane cp;
+		cp = board.getCell(4, 4);
+		cp.filled = 2;
+		cp.getChildren().add(getImage(2));
+		cp = board.getCell(4, 5);
+		cp.filled = 1;
+		cp.getChildren().add(getImage(1));
+		cp = board.getCell(5, 4);
+		cp.filled = 2;
+		cp.getChildren().add(getImage(2));
+		cp = board.getCell(5, 5);
+		cp.filled = 1;
+		cp.getChildren().add(getImage(1));*/
+		
+		/* TODO
+		split drawing and filling board.
+		drawing should happen in gamwFw every so often
+		filling in board can happen by all threads an at all times
+		 */
+	}
 
 	@Override
 	public String getTurntext(int turn) {

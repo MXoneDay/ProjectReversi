@@ -33,124 +33,154 @@ public class Reversi implements Game {
 	@Override
 	public boolean isValid(int turn, int hor, int ver, Board board) {
 		System.out.println("Move: " + hor + "-" + ver + " " + turn);
-		int[] horray = board.checkHor(ver);
-		int[] verray = board.checkVer(hor);
 		
-		try {
-			boolean go = false;
-			for(int i = hor; i < horray.length; i++) {
-				if(horray[i] != turn && horray[i] != 0) {
-					go = true;
-				}
-				if(go) {
-					if(horray[i] == turn) {
-						while(i > hor) {
-							--i;
-							board.getCell(i, ver).getChildren().clear();
-							board.getCell(i, ver).getChildren().add(getImage(turn));
-						}
-						break;
-					}
-				}
-			}
-			go = false;
-			for(int i = hor; i >= 0; i--) {
-				if(horray[i] != turn && horray[i] != 0) {
-					go = true;
-				}
-				if(go) {
-					if(horray[i] == turn) {
-						while(i < hor) {
-							++i;
-							board.getCell(i, ver).getChildren().clear();
-							board.getCell(i, ver).getChildren().add(getImage(turn));
-						}
-						break;
-					}
-				}
-			}
-			// ver
-			go = false;
-			for(int i = ver; i < verray.length; i++) {
-				if(verray[i] != turn && verray[i] != 0) {
-					go = true;
-				}
-				if(go) {
-					if(verray[i] == turn) {
-						while(i > ver) {
-							--i;
-							board.getCell(hor, i).getChildren().clear();
-							board.getCell(hor, i).getChildren().add(getImage(turn));
-						}
-						break;
-					}
-				}
-			}
-			go = false;
-			for(int i = ver; i >= 0; i--) {
-				if(verray[i] != turn && verray[i] != 0) {
-					go = true;
-				}
-				if(go) {
-					if(verray[i] == turn) {
-						while(i < ver) {
-							++i;
-							board.getCell(hor, i).getChildren().clear();
-							board.getCell(hor, i).getChildren().add(getImage(turn));
-						}
-						break;
-					}
-				}
-			}
-			
-			go = false;
-			for(int i = ver; i < verray.length; i++) {
-				if(verray[i] != turn && verray[i] != 0) {
-					go = true;
-				}
-				if(go) {
-					if(verray[i] == turn) {
-						while(i > ver) {
-							--i;
-							board.getCell(hor, i).getChildren().clear();
-							board.getCell(hor, i).getChildren().add(getImage(turn));
-						}
-						break;
-					}
-				}
-			}
-			go = false;
-			
-			
-			/*
-			int i = 0, j = 0;
-			while(i < horray.length && j < verray.length) {
-				if(board.getCell(i, j).filled != 0 && board.getCell(i, j).filled != turn) {
+		boolean ret = false;;
+		boolean go = false;
+		int i = hor, j = ver, done = 0;
+		int enemy = (turn == 1) ? 2 : 1;
+		CellPane cp;
+		
+		if(!checkProx(turn, hor, ver, board)) {
+			return ret;
+		}
+
+		while(done < 8) {
+			try {
+				if(board.getCell(i, j).filled == enemy) {
+					System.out.println(done);
 					go = true;
 				}
 				if(go) {
 					if(board.getCell(i, j).filled == turn) {
-						while(i > hor && j > ver) {
-							--i;
-							--j;
-							board.getCell(i, j).getChildren().clear();
-							board.getCell(i, j).getChildren().add(getImage(turn));
+						while(go) {
+							if(i == hor && j == ver) {
+								done++;
+								go = false;
+							}else {
+								if(i != hor) {
+									i = (i < hor) ? ++i : --i;
+								}
+								if(j != ver) {
+									j = (j < ver) ? ++j : --j;
+								}
+							}
+							/*
+							if(i == hor) {
+								
+							}else if(i < hor) {
+								i++;
+								
+							}else if(i > hor) {
+								i--;
+							}
+							if(j == ver) {
+								
+							}else if(j < ver) {
+								j++;
+								
+							}else if(j > ver) {
+								j--;
+							}*/
+							cp = board.getCell(i, j);
+							cp.getChildren().clear();
+							cp.filled = turn;
+							cp.getChildren().add(getImage(turn));
+							ret = true;
 						}
-						break;
 					}
 				}
+			}
+			catch(Exception ex) {
+				i = hor;
+				j = ver;
+				done++;
+				go = false;
+			}
+			
+			switch(done) {
+			case 0:
+				i++;
+				break;
+			case 1:
+				i--;
+				break;
+			case 2:
+				j++;
+				break;
+			case 3:
+				j--;
+				break;
+			case 4:
 				i++;
 				j++;
+				break;
+			case 5:
+				i--;
+				j--;
+				break;
+			case 6:
+				i--;
+				j++;
+				break;
+			case 7:
+				i++;
+				j--;
+				break;
+			}
+			/*
+			if(done == 0) {
+				i++;
+			}else if(done == 1) {
+				i--;
+			}else if(done == 2) {
+				j++;	
+			}else if(done == 3) {
+				j--;
+			}else if(done == 4) {
+				i++;
+				j++;
+			}else if(done == 5) {
+				i--;
+				j--;
+			}else if(done == 6) {
+				i--;
+				j++;
+			}else if(done == 7) {
+				++i;
+				--j;
 			}*/
 		}
-		catch(Exception ex){
-			System.out.println(ex.getMessage());
-			ex.printStackTrace();
-			return false;
-		}
-		return true;
+		return ret;
 	}
-
+	
+	private boolean checkProx(int turn, int hor, int ver, Board board) {
+		if(board.getCell(hor+1, ver).filled == turn) {
+			return true;
+		}
+		if(board.getCell(hor-1, ver).filled == turn) {
+			return true;
+		}
+		if(board.getCell(hor, ver+1).filled == turn) {
+			return true;
+		}
+		if(board.getCell(hor, ver-1).filled == turn) {
+			return true;
+		}
+		if(board.getCell(hor+1, ver+1).filled == turn) {
+			return true;
+		}
+		if(board.getCell(hor+1, ver-1).filled == turn) {
+			return true;
+		}
+		if(board.getCell(hor-1, ver-1).filled == turn) {
+			return true;
+		}
+		if(board.getCell(hor-1, ver+1).filled == turn) {
+			return true;
+		}
+		return false;
+	}
+	
 	@Override
 	public void createAI() {
 	}
@@ -164,6 +194,4 @@ public class Reversi implements Game {
 	public int getVer() {
 		return ver;
 	}
-
 }
-

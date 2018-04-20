@@ -5,7 +5,7 @@ import view.CellPane;
 
 public class GameFW {
 	private Board board;
-	private int turn = 1; // default -> 0! TODO
+	private int turn = 2; // default -> 0! TODO
 	private Game game;
 	public String user1;
 	public String user2;
@@ -63,6 +63,7 @@ public class GameFW {
 		else {
 			throw new Exception("Not currently supported");
 		}
+		
 		if(mode == 1) {
 			waitForMove = false;
 		}else if(mode == 2) {
@@ -74,7 +75,12 @@ public class GameFW {
 			waitForMove = true;
 			game.createAI();
 		}
+		
 		board = new Board(game.getVer(), game.getHor());
+	}
+	
+	public void setup() {
+		game.setup(board);
 	}
 	
 	public void reset() {
@@ -87,9 +93,10 @@ public class GameFW {
 			}else if(type == 't') {
 				//dispatcher.subscribe("Tic-tac-toe");
 			}
+			game.setup(board);
+			turn = 2;
 		}
 		catch(Exception ex) {
-			
 		}
 	}
 	
@@ -99,7 +106,7 @@ public class GameFW {
 	}
 	
 	public String tryMove(int hor, int ver) {
-		if(waitForMove && turn == 1) {
+		if(waitForMove && turn == 2) {
 			return move(hor, ver);
 		}else if(!waitForMove) {
 			return move(hor, ver);
@@ -116,25 +123,9 @@ public class GameFW {
 			cp.filled = turn;
 			cp.getChildren().add(game.getImage(turn));
 			//dispatcher.move(cp.loc);
+			turn = (turn == 1) ? 2 : 1; //TODO remove so server can do this
 		}
-		turn = (turn == 1) ? 2 : 1;
 		return "Player: " + turn;
-	}
-	
-	public void AIandServerMove(int loc) {
-		int hor = 0;
-		int ver = 0;
-		
-		try {
-			while(true) {
-				loc = loc - hor;
-				ver++;
-			}
-		}
-		catch(Exception ex) {
-			hor = loc;
-		}
-		move(hor, ver);
 	}
 	
 	public void disconnect() {

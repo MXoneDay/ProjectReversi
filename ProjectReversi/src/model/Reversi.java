@@ -29,6 +29,23 @@ public class Reversi implements Game {
 		filling in board can happen by all threads an at all times
 		 */
 	}
+	
+	@Override
+	public void setup(Board board) {
+		CellPane cp;
+		cp = board.getCell(3, 3);
+		cp.filled = 2;
+		cp.getChildren().add(getImage(2));
+		cp = board.getCell(3, 4);
+		cp.filled = 1;
+		cp.getChildren().add(getImage(1));
+		cp = board.getCell(4, 3);
+		cp.filled = 1;
+		cp.getChildren().add(getImage(1));
+		cp = board.getCell(4, 4);
+		cp.filled = 2;
+		cp.getChildren().add(getImage(2));
+	}
 
 	@Override
 	public String getTurntext(int turn) {
@@ -52,74 +69,22 @@ public class Reversi implements Game {
 		ImageView iv = new ImageView(img);
 		return iv;
 	}
-
-	@Override
-	public boolean isValid(int turn, int hor, int ver, Board board) {
-		System.out.println("Move: " + hor + "-" + ver + " " + turn);
+	
+	public boolean move(int turn, int hor, int ver, Board board, boolean vc) {
+		if(board.getCell(hor, ver).filled != 0) {
+			return false;
+		}
 		
 		boolean ret = false;;
 		boolean go = false;
 		int i = hor, j = ver, done = 0;
 		int enemy = (turn == 1) ? 2 : 1;
+		int cpFill;
 		CellPane cp;
 		
-		if(!checkProx(turn, hor, ver, board)) {
-			return ret;
-		}
-
+		System.out.println("Move: " + hor + "-" + ver + " " + turn + " " + board.getCell(hor, ver).filled);
+		
 		while(done < 8) {
-			try {
-				if(board.getCell(i, j).filled == enemy) {
-					System.out.println(done);
-					go = true;
-				}
-				if(go) {
-					if(board.getCell(i, j).filled == turn) {
-						while(go) {
-							if(i == hor && j == ver) {
-								done++;
-								go = false;
-							}else {
-								if(i != hor) {
-									i = (i < hor) ? ++i : --i;
-								}
-								if(j != ver) {
-									j = (j < ver) ? ++j : --j;
-								}
-							}
-							/*
-							if(i == hor) {
-								
-							}else if(i < hor) {
-								i++;
-								
-							}else if(i > hor) {
-								i--;
-							}
-							if(j == ver) {
-								
-							}else if(j < ver) {
-								j++;
-								
-							}else if(j > ver) {
-								j--;
-							}*/
-							cp = board.getCell(i, j);
-							cp.getChildren().clear();
-							cp.filled = turn;
-							cp.getChildren().add(getImage(turn));
-							ret = true;
-						}
-					}
-				}
-			}
-			catch(Exception ex) {
-				i = hor;
-				j = ver;
-				done++;
-				go = false;
-			}
-			
 			switch(done) {
 			case 0:
 				i++;
@@ -150,62 +115,89 @@ public class Reversi implements Game {
 				j--;
 				break;
 			}
-			/*
-			if(done == 0) {
-				i++;
-			}else if(done == 1) {
-				i--;
-			}else if(done == 2) {
-				j++;	
-			}else if(done == 3) {
-				j--;
-			}else if(done == 4) {
-				i++;
-				j++;
-			}else if(done == 5) {
-				i--;
-				j--;
-			}else if(done == 6) {
-				i--;
-				j++;
-			}else if(done == 7) {
-				++i;
-				--j;
-			}*/
+			try {
+				cpFill = board.getCell(i, j).filled;
+				
+				if(cpFill == enemy) {
+					go = true;
+				}else if((cpFill == 0 || vc) && !go) {
+					throw new Exception();
+				}else if(cpFill == turn) {
+					if(go) {
+						while(go) {
+							if(vc) {
+								return true;
+							}else {
+								cp = board.getCell(i, j);
+								cp.getChildren().clear();
+								cp.filled = turn;
+								cp.getChildren().add(getImage(turn));
+								ret = true;
+							}
+							if(i == hor && j == ver) {
+								done++;
+								go = false;
+							}else {
+								if(i != hor) {
+									i = (i < hor) ? ++i : --i;
+								}
+								if(j != ver) {
+									j = (j < ver) ? ++j : --j;
+								}
+							}
+						}
+					}else {
+						throw new Exception();
+					}
+				}
+				//TODO get reversi working
+				/*
+				if(board.getCell(i, j).filled == enemy) {
+					go = true;
+				}else if(vc && !go) {
+					throw new Exception();
+				}else if(board.getCell(i, j).filled == turn && !go) {
+					throw new Exception();
+				}else if(go) {
+					if(board.getCell(i, j).filled == turn) {
+						while(go) {
+							if(vc) {
+								return true;
+							}else {
+								cp = board.getCell(i, j);
+								cp.getChildren().clear();
+								cp.filled = turn;
+								cp.getChildren().add(getImage(turn));
+								ret = true;
+							}
+							if(i == hor && j == ver) {
+								done++;
+								go = false;
+							}else {
+								if(i != hor) {
+									i = (i < hor) ? ++i : --i;
+								}
+								if(j != ver) {
+									j = (j < ver) ? ++j : --j;
+								}
+							}
+						}
+					}
+				}*/
+			}
+			catch(Exception ex) {
+				i = hor;
+				j = ver;
+				done++;
+				go = false;
+			}
 		}
 		return ret;
 	}
 	
-	private boolean checkProx(int turn, int hor, int ver, Board board) {
-		if(board.getCell(hor+1, ver).filled == turn) {
-			return true;
-		}
-		if(board.getCell(hor-1, ver).filled == turn) {
-			return true;
-		}
-		if(board.getCell(hor, ver+1).filled == turn) {
-			return true;
-		}
-		if(board.getCell(hor, ver-1).filled == turn) {
-			return true;
-		}
-		if(board.getCell(hor+1, ver+1).filled == turn) {
-			return true;
-		}
-		if(board.getCell(hor+1, ver-1).filled == turn) {
-			return true;
-		}
-		if(board.getCell(hor-1, ver-1).filled == turn) {
-			return true;
-		}
-		if(board.getCell(hor-1, ver+1).filled == turn) {
-			return true;
-		}
-		return false;
-	}
-	
 	@Override
 	public void createAI() {
+		
 	}
 	
 	@Override
@@ -216,5 +208,14 @@ public class Reversi implements Game {
 	@Override
 	public int getVer() {
 		return ver;
+	}
+
+	@Override
+	public boolean isValid(int turn, int hor, int ver, Board board) {
+		
+		if(move(turn, hor, ver, board, true)) {
+			return move(turn, hor, ver, board, false);
+		}
+		return false;
 	}
 }

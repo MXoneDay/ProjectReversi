@@ -5,7 +5,7 @@ import view.CellPane;
 
 public class GameFW {
 	private Board board;
-	private int turn = 2; // default -> 0! TODO
+	private int turn = 1; // default -> 0! TODO
 	private Game game;
 	public String user1;
 	public String user2;

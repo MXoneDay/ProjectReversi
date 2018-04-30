@@ -94,7 +94,7 @@ public class GameFW {
 				//dispatcher.subscribe("Tic-tac-toe");
 			}
 			game.setup(board);
-			turn = 2;
+			turn = 1;
 		}
 		catch(Exception ex) {
 		}
@@ -106,7 +106,7 @@ public class GameFW {
 	}
 	
 	public String tryMove(int hor, int ver) {
-		if(waitForMove && turn == 2) {
+		if(waitForMove/* && turn == 2*/) {
 			return move(hor, ver);
 		}else if(!waitForMove) {
 			return move(hor, ver);

@@ -64,6 +64,7 @@ public class Reversi implements Game {
 	
 	@Override
 	public boolean isValid(int turn, int hor, int ver, Board board) {
+		System.out.println("Move: " + hor + "-" + ver + " " + turn + " " + board.getCell(hor, ver).filled);
 		if(board.getCell(hor, ver).filled != 0) {
 			return false;
 		}
@@ -72,8 +73,6 @@ public class Reversi implements Game {
 		int i = hor, j = ver, done = 0, cpFill;
 		int enemy = (turn == 1) ? 2 : 1;
 		CellPane cp;
-		
-		System.out.println("Move: " + hor + "-" + ver + " " + turn + " " + board.getCell(hor, ver).filled);
 		
 		while(done < 8) {
 			switch(done) {
@@ -122,8 +121,7 @@ public class Reversi implements Game {
 						cp.getChildren().add(getImage(turn));
 						ret = true;
 						if(i == hor && j == ver) {
-							done++;
-							go = false;
+							throw new Exception();
 						}else {
 							if(i != hor) {
 								i = (i < hor) ? ++i : --i;

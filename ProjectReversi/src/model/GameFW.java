@@ -4,9 +4,9 @@ import java.awt.*;
 import java.awt.image.ImageObserver;
 import java.awt.image.ImageProducer;
 import java.io.IOException;
-
 import javafx.application.Platform;
 import view.CellPane;
+import javax.swing.text.html.ImageView;
 
 import javax.swing.text.html.ImageView;
 
@@ -35,6 +35,7 @@ public class GameFW {
 	
 
 	public void connectToServer() throws Exception {
+
 		connection = new Connection(this);
 		connection.start(env.get("HOST"), Integer.parseInt(env.get("PORT")));
 		dispatcher = connection.getDispatcher();
@@ -86,6 +87,7 @@ public class GameFW {
 		else {
 			throw new Exception("Not currently supported");
 		}
+		
 		if(mode == 1) {
 			waitForMove = false;
 		}else if(mode == 2) {
@@ -97,7 +99,12 @@ public class GameFW {
 			waitForMove = true;
 			game.createAI();
 		}
+		
 		board = new Board(game.getVer(), game.getHor());
+	}
+	
+	public void setup() {
+		game.setup(board);
 	}
 	
 	public void reset() {
@@ -120,9 +127,10 @@ public class GameFW {
                     this.player.setImage("o.png");
                 }
 			}
+			game.setup(board);
+			turn = 1;
 		}
 		catch(Exception ex) {
-			
 		}
 	}
 	
@@ -132,7 +140,7 @@ public class GameFW {
 	}
 	
 	public String tryMove(int hor, int ver) {
-		if(waitForMove && turn == 1) {
+		if(waitForMove/* && turn == 2*/) {
 			return move(hor, ver);
 		}else if(!waitForMove) {
 			return move(hor, ver);
@@ -151,6 +159,7 @@ public class GameFW {
 			dispatcher.move(cp.loc);
 		}
 //		turn = (turn == 1) ? 2 : 1;
+
 		return "Player: " + turn;
 	}
 

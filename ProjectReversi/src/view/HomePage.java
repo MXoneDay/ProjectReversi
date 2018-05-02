@@ -80,7 +80,7 @@ public class HomePage implements Page{
 					usernm = text.getText();
 					try {
 						pc.setUser1(usernm);
-						pc.setGameFW('r', (boolean) tg.getSelectedToggle().getUserData());
+						pc.setGameFW('r', tg.getSelectedToggle().getUserData());
 					}
 					catch(Exception ex) {
 						text.setText(ex.getMessage());

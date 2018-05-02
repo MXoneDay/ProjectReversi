@@ -22,10 +22,8 @@ public class Main extends Application {
 					pc.disconnect();
 				}
 				catch(Exception ex) {
-					
 				}
 			}
-			  
 		  });
 	}
 }

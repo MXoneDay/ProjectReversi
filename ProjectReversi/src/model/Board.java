@@ -1,7 +1,5 @@
 package model;
 
-import java.util.ArrayList;
-
 import view.CellPane;
 
 public class Board {
@@ -31,67 +29,5 @@ public class Board {
 	
 	public CellPane getCell(int hor, int ver) {
 		return board[ver][hor];
-	}
-	
-	public int[] checkVer(int hor) {
-		int[] result = new int[board.length];
-		
-		for(int i = 0; i < board.length; i++) {
-			result[i] = board[i][hor].filled;
-		}
-		return result;
-	}
-	
-	public int[] checkHor(int ver) {
-		int[] result = new int[board.length];
-		
-		for(int i = 0; i < board.length; i++) {
-			result[i] = board[ver][i].filled;
-			//System.out.println(board[ver][i].filled);
-		}
-		//System.out.println(Arrays.toString(result));
-		return result;
-	}
-	
-	public int[] checkDRL(int hor) {
-		int[] result = new int[board.length];
-		
-		for(int i = 0; i < board.length; i++) {
-			result[i] = board[i][hor].filled;
-		}
-		return result;
-	}
-	
-	public int[] checkDLR(int hor) {
-		int[] result = new int[board.length];
-		
-		for(int i = 0; i < board.length; i++) {
-			result[i] = board[i][hor].filled;
-		}
-		return result;
-	}
-	
-	public ArrayList<Integer> getUp(int hor, int ver) {
-		ArrayList<Integer> result = new ArrayList<Integer>();
-		System.out.println("Started ");
-		for(int i = ver; i > 0; i--) {
-			if(board[i][hor].filled != 0) {
-				result.add(board[i][hor].filled);
-			}
-		}
-		//System.out.println(Arrays.toString(result));
-		return result;
-			/*
-			for(int i = ver; i > 0; i--) {
-				if(board[i][hor].filled == check) {
-					enemy = true;
-				}
-				if(enemy) {
-					if(board[i][hor].filled == turn) {
-						System.out.println("yay: " + i + hor);
-						return;
-					}
-				}
-			}*/
 	}
 }

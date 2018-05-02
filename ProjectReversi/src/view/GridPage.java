@@ -18,10 +18,7 @@ public class GridPage implements Page{
 		this.pc = pc;
 	}
 	
-	public void createPage() {/*
-		if(gPane != null) {
-			return;
-		}*/
+	public void createPage() {
 		gPane = new GridPane();
 		int hor = pc.getHor();
 		int ver = pc.getVer();

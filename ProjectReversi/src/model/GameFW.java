@@ -134,7 +134,7 @@ public class GameFW {
 	}
 	
 	public String tryMove(int hor, int ver) {
-		if(waitForMove/* && turn == 2*/) {
+		if(waitForMove) {
 			return move(hor, ver);
 		}else if(!waitForMove) {
 			return move(hor, ver);
@@ -157,7 +157,6 @@ public class GameFW {
             dispatcher.move(cp.loc);
             setTurn(2);
         }
-//		turn = (turn == 1) ? 2 : 1;
         return "Player: " + turn;
 	}
 

@@ -10,6 +10,6 @@ public class GameWinHandler extends ActionHandler {
 	}
     public void run(String message){
         System.out.println("Running GAME WIN command handler");
-        gFW.setTurn(0);
+//        gFW.setTurn(0);
     }
 }

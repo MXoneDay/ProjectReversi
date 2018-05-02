@@ -8,6 +8,8 @@ import javafx.application.Platform;
 import view.CellPane;
 import javax.swing.text.html.ImageView;
 
+import javax.swing.text.html.ImageView;
+
 public class GameFW {
 	private Board board;
 	private int turn = 1; // default -> 0! TODO
@@ -40,7 +42,6 @@ public class GameFW {
 
         this.player = new Player(user1);
 		dispatcher.login(this.player.getUsername());
-
 	}
 	
 	// Get method for the value of the Horizontal value / X-value
@@ -155,9 +156,9 @@ public class GameFW {
 			CellPane cp = board.getCell(hor, ver);
 			cp.filled = turn;
 			cp.getChildren().add(game.getImage(turn));
-
 			dispatcher.move(cp.loc);
 		}
+//		turn = (turn == 1) ? 2 : 1;
 
 		return "Player: " + turn;
 	}

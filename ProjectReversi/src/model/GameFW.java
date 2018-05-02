@@ -12,7 +12,7 @@ import javax.swing.text.html.ImageView;
 
 public class GameFW {
 	private Board board;
-	private int turn = 1; // default -> 0! TODO
+	private int turn = 0; // default -> 0! TODO
 	private Game game;
 	public String user1;
 	public String user2;
@@ -152,15 +152,19 @@ public class GameFW {
 
 	// Function for setting a move this checks if the moves is valid before sending it
 	public String move(int hor, int ver) {
-		if(game.isValid(turn, hor, ver, board)) {
-			CellPane cp = board.getCell(hor, ver);
-			cp.filled = turn;
-			cp.getChildren().add(game.getImage(turn));
-			dispatcher.move(cp.loc);
-		}
-//		turn = (turn == 1) ? 2 : 1;
+        if(turn != 1){
+            return "Player: " + turn;
+        }
 
-		return "Player: " + turn;
+        if(game.isValid(turn, hor, ver, board)) {
+            CellPane cp = board.getCell(hor, ver);
+            cp.filled = turn;
+            cp.getChildren().add(game.getImage(turn));
+            dispatcher.move(cp.loc);
+            setTurn(2);
+        }
+//		turn = (turn == 1) ? 2 : 1;
+        return "Player: " + turn;
 	}
 
 	public void drawMove(int loc){
@@ -206,5 +210,9 @@ public class GameFW {
 
     public Connection getConnection() {
         return connection;
+    }
+
+    public void setTurn(int turn) {
+        this.turn = turn;
     }
 }

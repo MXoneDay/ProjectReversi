@@ -9,7 +9,6 @@ public class GameFW {
 	private int turn = 0; // default -> 0! TODO
 	private Game game;
 	public String user1;
-	public String user2;
 	private int mode;
 	private char type;
 	public boolean waitForMove;
@@ -17,10 +16,10 @@ public class GameFW {
 	CommandDispatcher dispatcher;
     DotEnv env;
     String[] players;
-    Player player;
-
-    {
-        try {
+    Player player1, player2;
+    
+    public GameFW(){
+    	try {
             env = new DotEnv();
         } catch (IOException e) {
             e.printStackTrace();
@@ -34,8 +33,8 @@ public class GameFW {
 		connection.start(env.get("HOST"), Integer.parseInt(env.get("PORT")));
 		dispatcher = connection.getDispatcher();
 
-        this.player = new Player(user1);
-		dispatcher.login(this.player.getUsername());
+        this.player1 = new Player(user1);
+		dispatcher.login(this.player1.getUsername());
 	}
 	
 	// Get method for the value of the Horizontal value / X-value
@@ -63,18 +62,18 @@ public class GameFW {
 			dispatcher.subscribe("Reversi");
 
             if (getPlayers().length == 0){
-                this.player.setImage("whitepiece.png");
+                this.player1.setImage("whitepiece.png");
             }else{
-                this.player.setImage("blackpiece.png");
+                this.player1.setImage("blackpiece.png");
             }
 		}else if(type == 't') {
 			game = new Tictactoe();
 			dispatcher.subscribe("Tic-tac-toe");
 
             if (getPlayers().length == 0){
-                this.player.setImage("x.png");
+                this.player1.setImage("x.png");
             }else{
-                this.player.setImage("o.png");
+                this.player1.setImage("o.png");
             }
 
 		}
@@ -109,16 +108,16 @@ public class GameFW {
 			if(type == 'r') {
 				dispatcher.subscribe("Reversi");
                 if (getPlayers().length == 0){
-                    this.player.setImage("whitepiece.png");
+                    this.player1.setImage("whitepiece.png");
                 }else{
-                    this.player.setImage("blackpiece.png");
+                    this.player1.setImage("blackpiece.png");
                 }
 			}else if(type == 't') {
 				dispatcher.subscribe("Tic-tac-toe");
                 if (getPlayers().length == 0){
-                    this.player.setImage("x.png");
+                    this.player1.setImage("x.png");
                 }else{
-                    this.player.setImage("o.png");
+                    this.player1.setImage("o.png");
                 }
 			}
 			game.setup(board);
@@ -161,9 +160,6 @@ public class GameFW {
 	}
 
 	public void drawMove(int loc){
-        //int hor = 0;
-        //int ver = 0;
-
  		int newhor = loc % getHor();
         int newver = loc / getVer();
 

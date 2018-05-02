@@ -70,10 +70,6 @@ public class PageController {
 		gFW.user1 = user1;
 	}
 	
-	public void setUser2(String user2) {
-		gFW.user2 = user2;
-	}
-	
 	public String[] getPlayers() {
 		return gFW.getPlayers();
 	}

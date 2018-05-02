@@ -26,13 +26,10 @@ public class HomePage implements Page{
 			TextField text = new TextField(usernm);
 			Label label = new Label("Username: ");
 			
-			RadioButton rb1 = new RadioButton("Player vs Player");
-			rb1.setUserData(1);
-			rb1.setToggleGroup(tg);
-			rb1.setSelected(true);
 			RadioButton rb4 = new RadioButton("Player vs AI");
 			rb4.setUserData(2);
 			rb4.setToggleGroup(tg);
+			rb4.setSelected(true);
 			RadioButton rb2 = new RadioButton("Player vs Online");
 			rb2.setUserData(3);
 			rb2.setToggleGroup(tg);
@@ -51,7 +48,6 @@ public class HomePage implements Page{
 			gp.add(b1, 0, 1);
 			gp.add(b2, 1, 1);
 			gp.add(b3, 2, 1);
-			gp.add(rb1, 0, 2);
 			gp.add(rb4, 0, 3);
 			gp.add(rb2, 0, 4);
 			gp.add(rb3, 0, 5);
@@ -64,9 +60,6 @@ public class HomePage implements Page{
 					try {
 						pc.setUser1(usernm);
 						pc.setGameFW('t', tg.getSelectedToggle().getUserData());
-						
-						//pc.getgFW().getDispatcher().login(usernm);
-						//pc.getgFW().getDispatcher().subscribe("Tic-tac-toe");
 					}
 					catch(Exception ex) {
 						text.setText(ex.getMessage());

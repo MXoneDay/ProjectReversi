@@ -1,14 +1,8 @@
 package model;
 
-import java.awt.*;
-import java.awt.image.ImageObserver;
-import java.awt.image.ImageProducer;
 import java.io.IOException;
 import javafx.application.Platform;
 import view.CellPane;
-import javax.swing.text.html.ImageView;
-
-import javax.swing.text.html.ImageView;
 
 public class GameFW {
 	private Board board;
@@ -164,8 +158,8 @@ public class GameFW {
 	}
 
 	public void drawMove(int loc){
-        int hor = 0;
-        int ver = 0;
+        //int hor = 0;
+        //int ver = 0;
 
  		int newhor = loc % getHor();
         int newver = loc / getVer();

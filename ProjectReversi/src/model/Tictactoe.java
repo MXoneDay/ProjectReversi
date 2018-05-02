@@ -5,8 +5,12 @@ import javafx.scene.image.ImageView;
 import view.CellPane;
 
 public class Tictactoe implements Game {
-	private final static int hor = 3, ver = 3;
+	private final int hor = 3, ver = 3;
 
+	@Override
+	public void setup(Board board) {
+	}
+	
 	@Override
 	public String getTurntext(int turn) {
 		String t = null;
@@ -59,5 +63,7 @@ public class Tictactoe implements Game {
 	public int getVer() {
 		return ver;
 	}
+
+	
 }
 

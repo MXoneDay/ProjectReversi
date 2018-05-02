@@ -24,6 +24,7 @@ public class PageController {
 		gFW.connectToServer();
 		gFW.setGame(type, wait);
 		gPage.createPage();
+		gFW.setup();
 		toGrid();
 	}
 	

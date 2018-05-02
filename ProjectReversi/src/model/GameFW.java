@@ -1,11 +1,16 @@
 package model;
 
+import java.awt.*;
+import java.awt.image.ImageObserver;
+import java.awt.image.ImageProducer;
 import java.io.IOException;
+import javafx.application.Platform;
 import view.CellPane;
+import javax.swing.text.html.ImageView;
 
 public class GameFW {
 	private Board board;
-	private int turn = 2; // default -> 0! TODO
+	private int turn = 1; // default -> 0! TODO
 	private Game game;
 	public String user1;
 	public String user2;
@@ -13,9 +18,10 @@ public class GameFW {
 	private char type;
 	public boolean waitForMove;
 	Connection connection;
-	//CommandDispatcher dispatcher;
+	CommandDispatcher dispatcher;
     DotEnv env;
     String[] players;
+    Player player;
 
     {
         try {
@@ -27,10 +33,14 @@ public class GameFW {
 	
 
 	public void connectToServer() throws Exception {
-		//connection = new Connection(this);
-		//connection.start(env.get("HOST"), Integer.parseInt(env.get("PORT")));
-		//dispatcher = connection.getDispatcher();
-		//dispatcher.login(user1);
+
+		connection = new Connection(this);
+		connection.start(env.get("HOST"), Integer.parseInt(env.get("PORT")));
+		dispatcher = connection.getDispatcher();
+
+        this.player = new Player(user1);
+		dispatcher.login(this.player.getUsername());
+
 	}
 	
 	// Get method for the value of the Horizontal value / X-value
@@ -55,10 +65,23 @@ public class GameFW {
 		
 		if(type == 'r') {
 			game = new Reversi();
-			//dispatcher.subscribe("Reversi");
+			dispatcher.subscribe("Reversi");
+
+            if (getPlayers().length == 0){
+                this.player.setImage("whitepiece.png");
+            }else{
+                this.player.setImage("blackpiece.png");
+            }
 		}else if(type == 't') {
 			game = new Tictactoe();
-			//dispatcher.subscribe("Tic-tac-toe");
+			dispatcher.subscribe("Tic-tac-toe");
+
+            if (getPlayers().length == 0){
+                this.player.setImage("x.png");
+            }else{
+                this.player.setImage("o.png");
+            }
+
 		}
 		else {
 			throw new Exception("Not currently supported");
@@ -89,9 +112,19 @@ public class GameFW {
 			disconnect();
 			connectToServer();
 			if(type == 'r') {
-				//dispatcher.subscribe("Reversi");
+				dispatcher.subscribe("Reversi");
+                if (getPlayers().length == 0){
+                    this.player.setImage("whitepiece.png");
+                }else{
+                    this.player.setImage("blackpiece.png");
+                }
 			}else if(type == 't') {
-				//dispatcher.subscribe("Tic-tac-toe");
+				dispatcher.subscribe("Tic-tac-toe");
+                if (getPlayers().length == 0){
+                    this.player.setImage("x.png");
+                }else{
+                    this.player.setImage("o.png");
+                }
 			}
 			game.setup(board);
 			turn = 1;
@@ -122,27 +155,46 @@ public class GameFW {
 			CellPane cp = board.getCell(hor, ver);
 			cp.filled = turn;
 			cp.getChildren().add(game.getImage(turn));
-			//dispatcher.move(cp.loc);
-			turn = (turn == 1) ? 2 : 1; //TODO remove so server can do this
+
+			dispatcher.move(cp.loc);
 		}
+
 		return "Player: " + turn;
 	}
-	
+
+	public void drawMove(int loc){
+        int hor = 0;
+        int ver = 0;
+
+ 		int newhor = loc % getHor();
+        int newver = loc / getVer();
+
+		System.out.println(newhor);
+		System.out.println(newver);
+
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				CellPane cp = board.getCell(newhor, newver);
+				System.out.println("Cellpane hor, ver: "+newhor+", "+newver);
+				System.out.println("CellPane to draw on: " + cp.toString());
+				cp.filled = turn;
+				cp.getChildren().add(game.getImage(turn));
+			}
+		});
+    }
+
 	public void disconnect() {
-		//dispatcher.disconnect();
+		dispatcher.disconnect();
 	}
 	
     public void setPlayers(String[] players) {
         this.players = players;
     }
     
-    public void setTurn(int turn) {
-    	this.turn = turn;
-    }
-	
 	public String[] getPlayers() {
 		try {
-			//dispatcher.getPlayers();
+			dispatcher.getPlayers();
 			Thread.sleep(1000);
 		}
 		catch(Exception ex) {

@@ -25,6 +25,7 @@ public class Tictactoe implements Game {
 	@Override
 	public ImageView getImage(int turn) {
 		Image img = null;
+
 		if(turn == 1){
 			img = new Image("pictures/x.png");
 		}else if(turn == 2){

@@ -60,7 +60,6 @@ public class MessageParser {
         messages.put("SVR GAME DRAW \\{(.*?)\\}", this.gameDrawHandler);
         messages.put("SVR GAME CHALLENGE \\{(.*?)\\}", this.gameChallengeHandler);
         messages.put("SVR GAME CHALLENGE CANCELLED \\{(.*?)\\}", this.gameChallengeCancelledHandler);
-
     }
 
     public void parse(String message){

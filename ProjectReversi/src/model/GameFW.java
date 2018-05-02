@@ -150,7 +150,7 @@ public class GameFW {
             return "Player: " + turn;
         }
 
-        if(game.isValid(turn, hor, ver, board)) {
+        if(game.isValid(turn, hor, ver, board, false)) {
             CellPane cp = board.getCell(hor, ver);
             cp.filled = turn;
             cp.getChildren().add(game.getImage(turn));

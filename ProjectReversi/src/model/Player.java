@@ -1,8 +1,5 @@
 package model;
 
-import javax.swing.text.html.ImageView;
-import java.awt.*;
-
 public class Player {
     boolean isTurn = false;
     String image;

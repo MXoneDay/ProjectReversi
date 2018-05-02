@@ -11,4 +11,10 @@ public class TictactoeAI implements AI {
 	public void tryMove() {
 		//TODO move at random till success
 	}
+
+	@Override
+	public void doMove() {
+		// TODO Auto-generated method stub
+		
+	}
 }

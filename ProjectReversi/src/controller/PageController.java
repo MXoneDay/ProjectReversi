@@ -20,7 +20,7 @@ public class PageController {
 		return scene;
 	}
 	
-	public void setGameFW(char type, Object wait) throws Exception {
+	public void setGameFW(char type, Object wait) throws Exception {//TODO remove
 		gFW.connectToServer();
 		gFW.setGame(type, wait);
 		gPage.createPage();
@@ -36,7 +36,7 @@ public class PageController {
 		scene.setRoot(hPage.getPane());
 	}
   
-	public void toPlayerPage() throws Exception {
+	public void toPlayerPage() throws Exception {//TODO remove, outdated
 		gFW.connectToServer();
         playerPage.createPage();
         scene.setRoot(playerPage.getPane());
@@ -54,20 +54,8 @@ public class PageController {
 		return gFW.getHor();
 	}
 	
-	public String getTurntext() {
-		return gFW.getTurntext();
-	}
-	
-	public String move(int hor, int ver) {
-		return gFW.tryMove(hor, ver);
-	}
-	
 	public void setInBoard(Object cp) {
 		gFW.setInBoard(cp);
-	}
-	
-	public void setUser1(String user1) {
-		gFW.user1 = user1;
 	}
 	
 	public String[] getPlayers() {
@@ -76,5 +64,9 @@ public class PageController {
 	
 	public void disconnect() {
 		gFW.disconnect();
+	}
+	
+	public void ConnectnLogin(String name) throws Exception {
+		gFW.connectToServer(name);
 	}
 }

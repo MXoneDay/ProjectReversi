@@ -3,11 +3,11 @@ package model;
 import javafx.scene.image.ImageView;
 
 public interface Game {
-	public void setup(Board board);
-	public boolean isValid(int turn, int hor, int ver, Board board, boolean justCheck);
-	public void createAI();
-	public ImageView getImage(int turn);
-	public String getTurntext(int turn);
-	public int getHor();
-	public int getVer();
+	void setup(Board board);
+	boolean isValid(int turn, int hor, int ver, Board board, boolean justCheck);
+	void createAI();
+	ImageView getImage(int turn);
+	String getTurntext(int turn);
+	int getHor();
+	int getVer();
 }

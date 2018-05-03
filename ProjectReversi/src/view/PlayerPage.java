@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import controller.PageController;
 
@@ -29,6 +30,17 @@ public class PlayerPage implements Page{
 			@Override
 			public void handle(ActionEvent ae) {
 				pc.toHome();
+			}
+		});
+
+		players.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent event) {
+                if(event.getClickCount() == 2){
+                    String opponent = players.getSelectionModel().getSelectedItem();
+                    System.out.println("clicked on " + opponent);
+                }
 			}
 		});
     	gp.add(players, 0, 0);

@@ -41,8 +41,8 @@ public class PlayerPage implements Page{
             @Override
             public void handle(ActionEvent ae) {
                 if (selectedOpponent != null){
-                    // todo send challenge to server using selectedOpponent and Reversi parameters
                     System.out.println("Challenging player: "+selectedOpponent+" to Reversi");
+                    pc.startChallenge(selectedOpponent, "Reversi");
                 }
             }
         });
@@ -52,8 +52,8 @@ public class PlayerPage implements Page{
             @Override
             public void handle(ActionEvent ae) {
                 if (selectedOpponent != null){
-                    // todo send challenge to server using selectedOpponent and Tic-tac-toe parameters
                     System.out.println("Challenging player: "+selectedOpponent+" to Tic-tac-toe");
+                    pc.startChallenge(selectedOpponent, "Tic-tac-toe");
                 }
             }
         });

@@ -37,6 +37,10 @@ public class GameFW {
         this.player = new Player(user1);
 		dispatcher.login(this.player.getUsername());
 	}
+
+	public void login(String username){
+        dispatcher.login(username);
+    }
 	
 	// Get method for the value of the Horizontal value / X-value
 	public int getHor() {
@@ -208,5 +212,9 @@ public class GameFW {
 
     public void setTurn(int turn) {
         this.turn = turn;
+    }
+
+    public void startChallenge(String username, String game){
+        dispatcher.challenge(username, game);
     }
 }

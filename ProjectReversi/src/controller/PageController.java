@@ -27,7 +27,7 @@ public class PageController {
 		gFW.setup();
 		toGrid();
 	}
-	
+
 	public void reset() {
 		gFW.reset();
 	}
@@ -36,8 +36,9 @@ public class PageController {
 		scene.setRoot(hPage.getPane());
 	}
   
-	public void toPlayerPage() throws Exception {
+	public void toPlayerPage(String username) throws Exception {
 		gFW.connectToServer();
+		gFW.login(username);
         playerPage.createPage();
         scene.setRoot(playerPage.getPane());
 	}
@@ -77,8 +78,16 @@ public class PageController {
 	public String[] getPlayers() {
 		return gFW.getPlayers();
 	}
-	
+
 	public void disconnect() {
 		gFW.disconnect();
+	}
+
+	public void startChallenge(String username, String game){
+		gFW.startChallenge(username, game);
+	}
+
+	public void login(String username){
+		gFW.login(username);
 	}
 }

@@ -93,7 +93,7 @@ public class HomePage implements Page{
 					usernm = text.getText();
 					try {
 						pc.setUser1(usernm);
-						pc.toPlayerPage();
+						pc.toPlayerPage(usernm);
 					}
 					catch(Exception ex) {
 						text.setText(ex.getMessage());

@@ -26,4 +26,8 @@ public class CommandDispatcher {
     public void getPlayers(){
         connection.send("get playerlist");
     }
+
+    public void challenge(String username, String game){
+        connection.send("challenge " + '"'+username+ "\" " + '"'+game+'"');
+    }
 }

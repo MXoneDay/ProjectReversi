@@ -24,7 +24,7 @@ public class GameFW {
         }
     }
 
-	public void connectToServer(String name) throws Exception {
+	public void connectToServer() throws Exception {
 		connection = new Connection(this);
 		connection.start(env.get("HOST"), Integer.parseInt(env.get("PORT")));
 		dispatcher = connection.getDispatcher();
@@ -71,7 +71,7 @@ public class GameFW {
 		try {
 			board.reset();
 			disconnect();
-			connectToServer(player1.getName());
+			connectToServer();
 			if(type == 'r') {
 				dispatcher.subscribe("Reversi");
 			}else if(type == 't') {

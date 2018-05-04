@@ -14,6 +14,11 @@ public class PageController {
 	public PageController() {
 		hPage.createPage();
 		scene = new Scene(hPage.getPane(), 600, 600);
+		try {
+			gFW.connectToServer();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 	
 	public Scene getScene() {
@@ -21,7 +26,7 @@ public class PageController {
 	}
 	
 	public void setGameFW(char type, Object wait) throws Exception {//TODO remove
-		gFW.connectToServer();
+		//gFW.connectToServer();
 		gFW.setGame(type, wait);
 		gPage.createPage();
 		gFW.setup();
@@ -36,9 +41,9 @@ public class PageController {
 		scene.setRoot(hPage.getPane());
 	}
   
-	public void toPlayerPage() throws Exception {//TODO remove, outdated
-		gFW.connectToServer();
-        playerPage.createPage();
+	public void toPlayerPage(String name, boolean p1Ai, boolean p2Ai) {//TODO remove, outdated
+		//gFW.connectToServer();
+        playerPage.createPage(name, p1Ai, p2Ai);
         scene.setRoot(playerPage.getPane());
 	}
 
@@ -64,9 +69,5 @@ public class PageController {
 	
 	public void disconnect() {
 		gFW.disconnect();
-	}
-	
-	public void ConnectnLogin(String name) throws Exception {
-		gFW.connectToServer(name);
 	}
 }

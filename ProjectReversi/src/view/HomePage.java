@@ -35,7 +35,7 @@ public class HomePage implements Page{
 			RadioButton rb2 = new RadioButton("Player vs Online");
 			RadioButton rb3 = new RadioButton("AI vs Online");
 			
-			//Button b1 = new Button("TicTacToe"); //TODO move to challenge page
+			Button b1 = new Button("TicTacToe"); //TODO move to challenge page
 			Button b2 = new Button("Reversi"); //TODO move to challenge page
 			Button b3 = new Button("Next"); // is challenge page
 			
@@ -48,7 +48,7 @@ public class HomePage implements Page{
 			
 			rb3.setUserData(4);
 			rb3.setToggleGroup(tg);
-			/*
+			
 			b1.setOnAction(new EventHandler<ActionEvent>() {
 				
 				@Override
@@ -61,7 +61,7 @@ public class HomePage implements Page{
 						text.setText(ex.getMessage());
 					}
 				}
-			});*/
+			});
 			b2.setOnAction(new EventHandler<ActionEvent>() {
 				
 				@Override
@@ -86,8 +86,7 @@ public class HomePage implements Page{
 				public void handle(ActionEvent ae) {
 					try {
 						//pc.setUser1(usernm);
-						//pc.toPlayerPage();
-						pc.ConnectnLogin(text.getText());
+						pc.toPlayerPage(text.getText(), rb3.isSelected(), rb1.isSelected());
 					}
 					catch(Exception ex) {
 						text.setText(ex.getMessage());
@@ -99,7 +98,7 @@ public class HomePage implements Page{
 			gp.add(RButtons, 0, 2);
 			gp.add(name, 0, 0);
 			gp.add(text, 1, 0);
-			//gp.add(b1, 0, 1);
+			gp.add(b1, 0, 1);
 			gp.add(b2, 1, 1);
 			gp.add(b3, 2, 1);
 			gp.add(rb1, 0, 3);

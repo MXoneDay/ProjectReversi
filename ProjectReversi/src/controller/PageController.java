@@ -86,8 +86,4 @@ public class PageController {
 	public void startChallenge(String username, String game){
 		gFW.startChallenge(username, game);
 	}
-
-	public void login(String username){
-		gFW.login(username);
-	}
 }

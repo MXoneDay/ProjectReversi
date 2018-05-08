@@ -6,10 +6,8 @@ import view.CellPane;
 
 public class GameFW {
 	private Board board;
-	private int turn = 0; // default -> 0! TODO
+	private int turn = 0;
 	private Game game;
-	private char type;
-	public boolean waitForMove;
 	private Connection connection;
 	private CommandDispatcher dispatcher;
     private DotEnv env;
@@ -23,12 +21,17 @@ public class GameFW {
             e.printStackTrace();
         }
     }
+    
+    public void setPlayers(boolean p1Ai, boolean p2Ai ) {
+    	player1 = (p1Ai) ? null : new User();
+    	player2 = (p2Ai) ? null : new User();
+    }
 
-	public void connectToServer() throws Exception {
+	public void connectToServer(String name) throws Exception {
 		connection = new Connection(this);
 		connection.start(env.get("HOST"), Integer.parseInt(env.get("PORT")));
 		dispatcher = connection.getDispatcher();
-		//dispatcher.login(name);
+		dispatcher.login(name);
 	}
 	
 	// Get method for the value of the Horizontal value / X-value
@@ -47,19 +50,8 @@ public class GameFW {
 	}
 
 	// If the game is not supported by the client it will throw an execption
-	public void setGame(char type, Object wait) throws Exception{
-		this.type = type;
-		
-		if(type == 'r') {
-			game = new Reversi();
-			dispatcher.subscribe("Reversi");
-		}else if(type == 't') {
-			game = new Tictactoe();
-			dispatcher.subscribe("Tic-tac-toe");
-		}
-		else {
-			throw new Exception("Not currently supported");
-		}
+	public void setGame(Object game) {
+		this.game = (Game) game;
 		board = new Board(getVer(), getHor());
 	}
 	
@@ -67,34 +59,42 @@ public class GameFW {
 		game.setup(board);
 	}
 	
+	/*
 	public void reset() {
 		try {
 			board.reset();
 			disconnect();
 			connectToServer();
-			if(type == 'r') {
-				dispatcher.subscribe("Reversi");
-			}else if(type == 't') {
-				dispatcher.subscribe("Tic-tac-toe");
-			}
+			game = (Game) Class.forName(game.getClass().getName()).getConstructor().newInstance();
 			game.setup(board);
-			turn = 1;
+			// TODO subsribe to game
+			turn = 0;
 		}
 		catch(Exception ex) {
 		}
-	}
+	}*/
 	
 	// Set the text for the current player
 	public String getTurntext() {
 		return game.getTurntext(turn);
 	}
-
-	// Function for setting a move this checks if the moves is valid before sending it
-	public String move(int hor, int ver) {
-        if(turn != 1){
+	
+	public String tryMove(int hor, int ver) {
+		if(turn != 1){
             return "Player: " + turn;
         }
+		//if()
+		return null;
+	}
 
+	// Function for setting a move this checks if the moves is valid before sending it
+	public String move(int hor, int ver, Player player) {
+		if((player == player1 || player == null) && turn != 1) {
+			return "Player: " + turn;
+		}else if(player == player2 && turn != 2) {
+			return null;
+		}
+		
         if(game.isValid(turn, hor, ver, board, false)) {
             CellPane cp = board.getCell(hor, ver);
             cp.filled = turn;
@@ -138,7 +138,6 @@ public class GameFW {
 			Thread.sleep(1000);
 		}
 		catch(Exception ex) {
-			
 		}
 		return players;
 	}

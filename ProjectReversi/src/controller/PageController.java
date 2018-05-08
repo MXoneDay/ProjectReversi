@@ -14,40 +14,47 @@ public class PageController {
 	public PageController() {
 		hPage.createPage();
 		scene = new Scene(hPage.getPane(), 600, 600);
-		try {
-			gFW.connectToServer();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
 	}
 	
 	public Scene getScene() {
 		return scene;
 	}
 	
-	public void setGameFW(char type, Object wait) throws Exception {//TODO remove
+	public String move(int hor, int ver) {
+		return gFW.move(hor, ver, null);
+	}
+	
+	public void setGame(Object game) {//TODO remove
 		//gFW.connectToServer();
-		gFW.setGame(type, wait);
+		gFW.setGame(game);
 		gPage.createPage();
 		gFW.setup();
 		toGrid();
 	}
 	
+	/*
 	public void reset() {
 		gFW.reset();
-	}
+	}*/
 	
 	public void toHome() {
+		gFW.disconnect();
 		scene.setRoot(hPage.getPane());
 	}
   
-	public void toPlayerPage(String name, boolean p1Ai, boolean p2Ai) {//TODO remove, outdated
-		//gFW.connectToServer();
-        playerPage.createPage(name, p1Ai, p2Ai);
+	public void toPlayerPage(String name, boolean p1Ai, boolean p2Ai) throws Exception {
+		gFW.connectToServer(name);
+		gFW.setPlayers(p1Ai, p2Ai);
+        playerPage.createPage();
         scene.setRoot(playerPage.getPane());
 	}
+	
+	public void toPlayerPage() {
+		//playerPage.createPage();
+		scene.setRoot(playerPage.getPane());
+	}
 
-	public void toGrid() throws Exception{
+	public void toGrid() {
 		scene.setRoot(gPage.getPane());
 	}
 	

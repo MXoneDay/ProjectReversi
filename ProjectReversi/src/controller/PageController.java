@@ -8,9 +8,10 @@ public class PageController {
 	private Scene scene;
 	private Page hPage = new HomePage(this);
 	private Page playerPage = new PlayerPage(this);
+	private Page challengePage = new ChallengePage(this);
 	private Page gPage = new GridPage(this);
 	private GameFW gFW = new GameFW();
-	
+
 	public PageController() {
 		hPage.createPage();
 		scene = new Scene(hPage.getPane(), 600, 600);
@@ -37,10 +38,19 @@ public class PageController {
 	}
   
 	public void toPlayerPage(String username) throws Exception {
-		gFW.connectToServer();
-		gFW.login(username);
+        gFW.connectToServer();
+        gFW.login(username);
         playerPage.createPage();
         scene.setRoot(playerPage.getPane());
+    }
+
+    public void backToPlayerPage() throws Exception {
+        scene.setRoot(playerPage.getPane());
+    }
+
+	public void toChallengePage() {
+		challengePage.createPage();
+		scene.setRoot(challengePage.getPane());
 	}
 
 	public void toGrid() throws Exception{

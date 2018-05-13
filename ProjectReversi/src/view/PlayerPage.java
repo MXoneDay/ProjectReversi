@@ -43,6 +43,7 @@ public class PlayerPage implements Page{
                 if (selectedOpponent != null){
                     System.out.println("Challenging player: "+selectedOpponent+" to Reversi");
                     pc.startChallenge(selectedOpponent, "Reversi");
+                    pc.toChallengePage();
                 }
             }
         });
@@ -54,6 +55,7 @@ public class PlayerPage implements Page{
                 if (selectedOpponent != null){
                     System.out.println("Challenging player: "+selectedOpponent+" to Tic-tac-toe");
                     pc.startChallenge(selectedOpponent, "Tic-tac-toe");
+                    pc.toChallengePage();
                 }
             }
         });
@@ -61,6 +63,7 @@ public class PlayerPage implements Page{
 		players.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
 			public void handle(MouseEvent event) {
+
 			    selectedOpponent = players.getSelectionModel().getSelectedItem();
                 System.out.println("Selected: "+selectedOpponent);
 			}

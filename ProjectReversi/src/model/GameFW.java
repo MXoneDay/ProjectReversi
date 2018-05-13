@@ -190,7 +190,7 @@ public class GameFW {
 	public void disconnect() {
 		dispatcher.disconnect();
 	}
-	
+
     public void setPlayers(String[] players) {
         this.players = players;
     }

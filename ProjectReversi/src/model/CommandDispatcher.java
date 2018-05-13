@@ -28,6 +28,7 @@ public class CommandDispatcher {
     }
 
     public void challenge(String username, String game){
+        System.out.println(("challenge " + '"'+username+ "\" " + '"'+game+'"'));
         connection.send("challenge " + '"'+username+ "\" " + '"'+game+'"');
     }
 }

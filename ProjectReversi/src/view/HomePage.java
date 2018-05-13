@@ -10,6 +10,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.stage.Popup;
+import javafx.scene.shape.Circle;
+import javafx.scene.paint.Color;
 
 public class HomePage implements Page{
 	private final PageController pc;
@@ -21,6 +24,7 @@ public class HomePage implements Page{
 	
 	public void createPage() {
 		try {
+			final Popup ppp = new Popup();
 			ToggleGroup tg = new ToggleGroup();
 			TextField text = new TextField();
 			Label name = new Label("Username: ");
@@ -48,7 +52,9 @@ public class HomePage implements Page{
 						pc.toPlayerPage(text.getText(), rb3.isSelected(), rb1.isSelected());
 					}
 					catch(Exception ex) {
+						ppp.getContent().addAll(new Circle(25, 25, 50, Color.AQUAMARINE));
 						text.setText(ex.getMessage());
+						ppp.show(pc.getScene().getWindow());
 						//TODO popup?
 					}
 				}

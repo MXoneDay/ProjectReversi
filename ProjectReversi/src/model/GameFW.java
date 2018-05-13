@@ -83,7 +83,7 @@ public class GameFW {
 		if(turn != 1){
             return "Player: " + turn;
         }
-		//if()
+		//TODO make check if user or ai, then to move and return
 		return null;
 	}
 

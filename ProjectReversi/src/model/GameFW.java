@@ -66,21 +66,6 @@ public class GameFW {
 		game.setup(board);
 	}
 	
-	/*
-	public void reset() {
-		try {
-			board.reset();
-			disconnect();
-			connectToServer();
-			game = (Game) Class.forName(game.getClass().getName()).getConstructor().newInstance();
-			game.setup(board);
-			// TODO subsribe to game
-			turn = 0;
-		}
-		catch(Exception ex) {
-		}
-	}*/
-	
 	// Set the text for the current player
 	public String getTurntext() {
 		return game.getTurntext(turn);
@@ -172,5 +157,4 @@ public class GameFW {
 	public void acceptChallenge(String challengeNumber){
 		dispatcher.acceptChallenge(challengeNumber);
 	}
-
 }

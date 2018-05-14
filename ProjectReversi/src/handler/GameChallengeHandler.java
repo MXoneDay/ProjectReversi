@@ -45,7 +45,8 @@ public class GameChallengeHandler extends ActionHandler{
 
 			@Override
 			public void run() {
-				Alert alert = new Alert(AlertType.CONFIRMATION);
+				Alert alert = gFW.pageController().getAlertView().getAlert();
+				alert.setAlertType(AlertType.CONFIRMATION);
 				alert.setHeaderText(null);
 				alert.setTitle("Challenge recieved!");
 				alert.setContentText(challenger + " has challenged you to a game of "+gameType+", the challenge number is "+challengeNumber);    
@@ -53,7 +54,7 @@ public class GameChallengeHandler extends ActionHandler{
 				ButtonType bt2 = new ButtonType("Deny");
 				alert.getButtonTypes().setAll(bt1, bt2);
 				
-				Optional<ButtonType> result = alert.showAndWait();
+				Optional<ButtonType> result = gFW.pageController().getAlertView().getAlert().showAndWait();
 				if(result.get() == bt1) {
                     gFW.acceptChallenge(challengeNumber);
 				}else if(result.get() == bt2) {

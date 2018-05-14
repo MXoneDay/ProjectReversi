@@ -10,6 +10,7 @@ public class PageController {
 	private Page playerPage = new PlayerPage(this);
 	private Page challengePage = new ChallengePage(this);
 	private Page gPage = new GridPage(this);
+	private AlertView av = new AlertView();
 	private GameFW gFW = new GameFW();
 
 	public PageController() {
@@ -89,5 +90,9 @@ public class PageController {
 
 	public void startChallenge(String username, String game){
 		gFW.startChallenge(username, game);
+	}
+	
+	public AlertView getAlertView(){
+		return av;
 	}
 }

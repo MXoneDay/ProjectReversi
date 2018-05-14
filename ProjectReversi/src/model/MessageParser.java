@@ -21,7 +21,6 @@ public class MessageParser {
     GameChallengeCancelledHandler gameChallengeCancelledHandler;
 
     public MessageParser(GameFW gFW){
-        //System.out.println("DEBUG 2 : "+this.gf.toString());
         // initialize handlers
         this.okHandler = new OkHandler();
         this.errHandler = new ErrHandler();
@@ -34,7 +33,7 @@ public class MessageParser {
         this.gameLossHandler = new GameLossHandler(gFW);
         this.gameDrawHandler = new GameDrawHandler(gFW);
         this.gameChallengeHandler = new GameChallengeHandler(gFW);
-        this.gameChallengeCancelledHandler = new GameChallengeCancelledHandler();
+        this.gameChallengeCancelledHandler = new GameChallengeCancelledHandler(gFW);
 
         messages.put("OK", this.okHandler);
         messages.put("ERR (.*?)+", this.errHandler);

@@ -1,6 +1,8 @@
 package model;
 
 import java.io.IOException;
+
+import controller.PageController;
 import javafx.application.Platform;
 import view.CellPane;
 
@@ -18,6 +20,7 @@ public class GameFW {
     DotEnv env;
     String[] players;
     Player player;
+    PageController pageController;
 
     {
         try {
@@ -217,4 +220,13 @@ public class GameFW {
     public void startChallenge(String username, String game){
         dispatcher.challenge(username, game);
     }
+
+	public void setPageController(PageController pageController) {
+		this.pageController = pageController;
+	}
+
+	public PageController pageController(){
+    	return this.pageController;
+	}
+
 }

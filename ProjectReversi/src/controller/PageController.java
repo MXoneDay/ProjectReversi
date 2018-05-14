@@ -9,12 +9,14 @@ public class PageController {
 	private Page hPage = new HomePage(this);
 	private Page playerPage = new PlayerPage(this);
 	private Page challengePage = new ChallengePage(this);
+	private Page challengeChoicePage = new ChallengeChoicePage(this);
 	private Page gPage = new GridPage(this);
 	private GameFW gFW = new GameFW();
 
 	public PageController() {
 		hPage.createPage();
 		scene = new Scene(hPage.getPane(), 600, 600);
+		gFW.setPageController(this);
 	}
 	
 	public Scene getScene() {
@@ -51,6 +53,12 @@ public class PageController {
 	public void toChallengePage() {
 		challengePage.createPage();
 		scene.setRoot(challengePage.getPane());
+	}
+
+	public void toChallengeChoicePage(String player, String game) {
+		System.out.println("being called from inside toChallengeChoicePage");
+		challengeChoicePage.createPage();
+		scene.setRoot(challengeChoicePage.getPane());
 	}
 
 	public void toGrid() throws Exception{

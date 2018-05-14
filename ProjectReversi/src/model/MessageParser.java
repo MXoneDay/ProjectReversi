@@ -33,7 +33,7 @@ public class MessageParser {
         this.gameWinHandler = new GameWinHandler(gFW);
         this.gameLossHandler = new GameLossHandler(gFW);
         this.gameDrawHandler = new GameDrawHandler(gFW);
-        this.gameChallengeHandler = new GameChallengeHandler();
+        this.gameChallengeHandler = new GameChallengeHandler(gFW);
         this.gameChallengeCancelledHandler = new GameChallengeCancelledHandler();
 
         messages.put("OK", this.okHandler);

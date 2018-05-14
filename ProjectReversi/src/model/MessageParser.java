@@ -2,7 +2,6 @@ package model;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import handler.*;
 
 public class MessageParser {

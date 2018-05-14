@@ -27,7 +27,7 @@ public class GridPage implements Page{
 		Text turn = new Text(" ");
 		Button back = new Button("Back");
 		Button playerList = new Button("PlayerList");
-		Button reset = new Button("Reset");
+		//Button reset = new Button("Reset");
 		
 		ColumnConstraints cHor = new ColumnConstraints(hor);
 		cHor.setPercentWidth(100.0/hor);
@@ -73,7 +73,7 @@ public class GridPage implements Page{
 				//pc.getgFW().getDispatcher().disconnect();
 			}
 		});
-
+		/*
 		reset.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -85,12 +85,12 @@ public class GridPage implements Page{
 					e.printStackTrace();
 				}
 			}
-		});
+		});*/
 
 		turn.setStyle("-fx-font: 22 arial;");
 		
 		menu.add(back, 0, 0);
-		menu.add(reset, 1, 0);
+		//menu.add(reset, 1, 0);
 		menu.add(playerList, 2, 0);
 
 		/*

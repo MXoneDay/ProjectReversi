@@ -8,37 +8,33 @@ import view.CellPane;
 
 public class GameFW {
 	private Board board;
-	private int turn = 0; // default -> 0! TODO
+	private int turn = 0;
 	private Game game;
-	public String user1;
-	public String user2;
-	private int mode;
-	private char type;
-	public boolean waitForMove;
-	Connection connection;
-	CommandDispatcher dispatcher;
-    DotEnv env;
-    String[] players;
-    Player player;
+	  private Connection connection;
+	  private CommandDispatcher dispatcher;
+    private DotEnv env;
+    private String[] players;
+    private Player player1, player2;
     PageController pageController;
-
-    {
-        try {
+    
+    public GameFW(){
+    	try {
             env = new DotEnv();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-	
+    
+    public void setPlayers(boolean p1Ai, boolean p2Ai ) {
+    	player1 = (p1Ai) ? null : new User();
+    	player2 = (p2Ai) ? null : new User();
+    }
 
-	public void connectToServer() throws Exception {
-
+	public void connectToServer(String name) throws Exception {
 		connection = new Connection(this);
 		connection.start(env.get("HOST"), Integer.parseInt(env.get("PORT")));
 		dispatcher = connection.getDispatcher();
-
-        this.player = new Player(user1);
-		dispatcher.login(this.player.getUsername());
+		dispatcher.login(name);
 	}
 
 	public void login(String username){
@@ -61,79 +57,29 @@ public class GameFW {
 	}
 
 	// If the game is not supported by the client it will throw an execption
-	public void setGame(char type, Object wait) throws Exception{
-		this.type = type;
-		mode = (int) wait;
-		
-		if(type == 'r') {
-			game = new Reversi();
-			dispatcher.subscribe("Reversi");
-
-            if (getPlayers().length == 0){
-                this.player.setImage("whitepiece.png");
-            }else{
-                this.player.setImage("blackpiece.png");
-            }
-		}else if(type == 't') {
-			game = new Tictactoe();
-			dispatcher.subscribe("Tic-tac-toe");
-
-            if (getPlayers().length == 0){
-                this.player.setImage("x.png");
-            }else{
-                this.player.setImage("o.png");
-            }
-
-		}
-		else {
-			throw new Exception("Not currently supported");
-		}
-		
-		if(mode == 1) {
-			waitForMove = false;
-		}else if(mode == 2) {
-			waitForMove = true;
-			game.createAI();
-		}else if(mode == 3) {
-			waitForMove = true;
-		}else if(mode == 4) {
-			waitForMove = true;
-			game.createAI();
-		}
-		
-		board = new Board(game.getVer(), game.getHor());
+	public void setGame(Object game) {
+		this.game = (Game) game;
+		board = new Board(getVer(), getHor());
 	}
 	
 	public void setup() {
 		game.setup(board);
 	}
 	
+	/*
 	public void reset() {
 		try {
 			board.reset();
 			disconnect();
 			connectToServer();
-			if(type == 'r') {
-				dispatcher.subscribe("Reversi");
-                if (getPlayers().length == 0){
-                    this.player.setImage("whitepiece.png");
-                }else{
-                    this.player.setImage("blackpiece.png");
-                }
-			}else if(type == 't') {
-				dispatcher.subscribe("Tic-tac-toe");
-                if (getPlayers().length == 0){
-                    this.player.setImage("x.png");
-                }else{
-                    this.player.setImage("o.png");
-                }
-			}
+			game = (Game) Class.forName(game.getClass().getName()).getConstructor().newInstance();
 			game.setup(board);
-			turn = 1;
+			// TODO subsribe to game
+			turn = 0;
 		}
 		catch(Exception ex) {
 		}
-	}
+	}*/
 	
 	// Set the text for the current player
 	public String getTurntext() {
@@ -141,37 +87,32 @@ public class GameFW {
 	}
 	
 	public String tryMove(int hor, int ver) {
-		if(waitForMove/* && turn == 2*/) {
-			return move(hor, ver);
-		}else if(!waitForMove) {
-			return move(hor, ver);
-		}
-		else {
-			return "Player: " + turn;
-		}
+		if(turn != 1){
+            return "Player: " + turn;
+        }
+		//TODO make check if user or ai, then to move and return
+		return null;
 	}
 
 	// Function for setting a move this checks if the moves is valid before sending it
-	public String move(int hor, int ver) {
-        if(turn != 1){
-            return "Player: " + turn;
-        }
-
-        if(game.isValid(turn, hor, ver, board)) {
+	public String move(int hor, int ver, Player player) {
+		if((player == player1 || player == null) && turn != 1) {
+			return "Player: " + turn;
+		}else if(player == player2 && turn != 2) {
+			return null;
+		}
+		
+        if(game.isValid(turn, hor, ver, board, false)) {
             CellPane cp = board.getCell(hor, ver);
             cp.filled = turn;
             cp.getChildren().add(game.getImage(turn));
             dispatcher.move(cp.loc);
             setTurn(2);
         }
-//		turn = (turn == 1) ? 2 : 1;
         return "Player: " + turn;
 	}
 
 	public void drawMove(int loc){
-        //int hor = 0;
-        //int ver = 0;
-
  		int newhor = loc % getHor();
         int newver = loc / getVer();
 
@@ -204,7 +145,6 @@ public class GameFW {
 			Thread.sleep(1000);
 		}
 		catch(Exception ex) {
-			
 		}
 		return players;
 	}

@@ -35,14 +35,11 @@ public class Tictactoe implements Game {
 	}
 
 	@Override
-	public boolean isValid(int turn, int hor, int ver, Board board) {
+	public boolean isValid(int turn, int hor, int ver, Board board, boolean justCheck) {
 		// check if the move is valid
 		CellPane cp = board.getCell(hor, ver);
 		System.out.println("Move: " + cp.loc + cp.filled);
-		if(cp.filled == 0) {// controleren of de plek leeg is
-			//cp.filled = 1;
-			//cp.filled = 2;
-			//cp.filled = turn ? 1 : 2;
+		if(cp.filled == 0) {
 			return true;
 		}
 		return false;
@@ -51,7 +48,6 @@ public class Tictactoe implements Game {
 	@Override
 	public void createAI() {
 		TictactoeAI ai = new TictactoeAI(this);
-		ai.tryMove();
 	}
 	
 	@Override

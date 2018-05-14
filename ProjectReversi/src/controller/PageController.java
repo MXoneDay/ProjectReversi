@@ -23,25 +23,33 @@ public class PageController {
 		return scene;
 	}
 	
-	public void setGameFW(char type, Object wait) throws Exception {
-		gFW.connectToServer();
-		gFW.setGame(type, wait);
+	public String move(int hor, int ver) {
+		return gFW.move(hor, ver, null);
+	}
+	
+	public void setGame(Object game) {//TODO remove
+		//gFW.connectToServer();
+		gFW.setGame(game);
 		gPage.createPage();
 		gFW.setup();
 		toGrid();
 	}
 
+	
+	/*
 	public void reset() {
 		gFW.reset();
-	}
+	}*/
 	
 	public void toHome() {
+		gFW.disconnect();
 		scene.setRoot(hPage.getPane());
 	}
   
-	public void toPlayerPage(String username) throws Exception {
-        gFW.connectToServer();
-        gFW.login(username);
+	public void toPlayerPage(String name, boolean p1Ai, boolean p2Ai) throws Exception {
+		gFW.connectToServer(name);
+		gFW.setPlayers(p1Ai, p2Ai);
+
         playerPage.createPage();
         scene.setRoot(playerPage.getPane());
     }
@@ -60,8 +68,13 @@ public class PageController {
 		challengeChoicePage.createPage();
 		scene.setRoot(challengeChoicePage.getPane());
 	}
+	
+	public void toPlayerPage() {
+		//playerPage.createPage();
+		scene.setRoot(playerPage.getPane());
+	}
 
-	public void toGrid() throws Exception{
+	public void toGrid() {
 		scene.setRoot(gPage.getPane());
 	}
 	
@@ -73,24 +86,8 @@ public class PageController {
 		return gFW.getHor();
 	}
 	
-	public String getTurntext() {
-		return gFW.getTurntext();
-	}
-	
-	public String move(int hor, int ver) {
-		return gFW.tryMove(hor, ver);
-	}
-	
 	public void setInBoard(Object cp) {
 		gFW.setInBoard(cp);
-	}
-	
-	public void setUser1(String user1) {
-		gFW.user1 = user1;
-	}
-	
-	public void setUser2(String user2) {
-		gFW.user2 = user2;
 	}
 	
 	public String[] getPlayers() {

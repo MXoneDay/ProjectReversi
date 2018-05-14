@@ -23,24 +23,13 @@ public class Reversi implements Game {
 		cp.filled = 2;
 		cp.getChildren().add(getImage(2));
 	}
-
+	
 	@Override
-	public String getTurntext(int turn) {
-		String t = null;
-		if(turn == 1){
-			t =  "Turn : Player White"; }
-		else if(turn == 2){
-			t = "Turn : Player Black";
-		}
-		return t;
-	}
-
-	@Override
-	public ImageView getImage(int turn) {
+	public ImageView getImage(boolean turn) {
 		Image img = null;
-		if(turn == 1){
+		if(turn){
 			img = new Image("pictures/blackpiece.png", 60 ,60, false, true);
-		}else if(turn == 2){
+		}else {
 			img = new Image("pictures/whitepiece.png", 60, 60, false, true);
 		}
 		ImageView iv = new ImageView(img);
@@ -63,15 +52,14 @@ public class Reversi implements Game {
 	}
 	
 	@Override
-	public boolean isValid(int turn, int hor, int ver, Board board, boolean justCheck) {
-		System.out.println("Move: " + hor + "-" + ver + " " + turn + " " + board.getCell(hor, ver).filled);
-		if(board.getCell(hor, ver).filled != 0) {
+	public boolean isValid(Player turn, int hor, int ver, Board board, boolean justCheck) {
+		if(board.getCell(hor, ver).filled != null) {
 			return false;
 		}
 		
 		boolean ret = false, go = false;
-		int i = hor, j = ver, done = 0, cpFill;
-		int enemy = (turn == 1) ? 2 : 1;
+		int i = hor, j = ver, done = 0;
+		String cpFill;
 		CellPane cp;
 		
 		while(done < 8) {
@@ -111,7 +99,7 @@ public class Reversi implements Game {
 				if(cpFill == enemy) {
 					go = true;
 					continue;
-				}else if(cpFill == 0) {
+				}else if(cpFill == null) {
 					throw new Exception();
 				}else if(cpFill == turn) {
 					while(go) {

@@ -7,14 +7,15 @@ import view.CellPane;
 
 public class GameFW {
 	private Board board;
-	private int turn = 0;
+	private Player turn = null;
 	private Game game;
 	private Connection connection;
 	private CommandDispatcher dispatcher;
     private DotEnv env;
-    private String[] players;
-    private String user1, user2;
-    PageController pageController;
+    private String[] playerlist;
+    private Player user1, user2;
+    private Player[] players = new Player[10]; // TODO implememnt
+    private PageController pageController;
     
     public GameFW(){
     	try {
@@ -28,7 +29,7 @@ public class GameFW {
 		connection = new Connection(this);
 		connection.start(env.get("HOST"), Integer.parseInt(env.get("PORT")));
 		dispatcher = connection.getDispatcher();
-		user1 = name;
+		user1 = new Player(name);
 		dispatcher.login(name);
 	}
 
@@ -54,13 +55,18 @@ public class GameFW {
 	// If the game is not supported by the client it will throw an execption
 	public void setGame(Object game, String pToMove, String oppenent) {
 		this.game = (Game) game;
-		user2 = oppenent;
+		user2 = new Player(oppenent);
 		board = new Board(getVer(), getHor());
+		
 		if(pToMove == oppenent) {
-			turn = 2;
+			turn = user2;
+			user2.setImageView(this.game.getImage(true));
+			user1.setImageView(this.game.getImage(false));
 		}
-		else if(pToMove == user1){
-			turn = 1;
+		else if(pToMove == user1.getName()){
+			turn = user1;
+			user2.setImageView(this.game.getImage(false));
+			user1.setImageView(this.game.getImage(true));
 		}
 		System.out.println("1: " + user1 + " 2: " + user2 + " m: " + pToMove);
 	}
@@ -71,17 +77,22 @@ public class GameFW {
 	
 	// Set the text for the current player
 	public String getTurntext() {
-		return game.getTurntext(turn);
+		//return game.getTurntext(turn); TODO
+		return "TODO";
 	}
 
 	// Function for setting a move this checks if the moves is valid before sending it
 	public String move(int hor, int ver) {
+		if(turn == user2) {
+			return "Player: " + turn;
+		}
         if(game.isValid(turn, hor, ver, board, false)) {
+        	System.out.println("Move: " + hor + "-" + ver + " " + turn + " " + board.getCell(hor, ver).filled);
             CellPane cp = board.getCell(hor, ver);
-            cp.filled = turn;
-            cp.getChildren().add(game.getImage(turn));
+            cp.filled = turn.getName();
+            cp.getChildren().add(turn.getImageView());
             dispatcher.move(cp.loc);
-            setTurn(2);
+            turn = user2;
         }
         return "Player: " + turn;
 	}
@@ -94,10 +105,8 @@ public class GameFW {
 			@Override
 			public void run() {
 				CellPane cp = board.getCell(newhor, newver);
-				System.out.println("Cellpane hor, ver: "+newhor+", "+newver);
-				System.out.println("CellPane to draw on: " + cp.toString());
-				cp.filled = turn;
-				cp.getChildren().add(game.getImage(turn));
+				cp.filled = turn.getName();
+				//cp.getChildren().add(game.getImage(turn)); TODO
 			}
 		});
     }
@@ -107,7 +116,7 @@ public class GameFW {
 	}
 
     public void setPlayers(String[] players) {
-        this.players = players;
+        this.playerlist = players;
     }
     
 	public String[] getPlayers() {
@@ -117,15 +126,15 @@ public class GameFW {
 		}
 		catch(Exception ex) {
 		}
-		return players;
+		return playerlist;
 	}
 
     public Connection getConnection() {
         return connection;
     }
-
-    public void setTurn(int turn) {
-        this.turn = turn;
+    
+    public void setTurn() {
+        turn = user1;
     }
 
     public void startChallenge(String username, String game){

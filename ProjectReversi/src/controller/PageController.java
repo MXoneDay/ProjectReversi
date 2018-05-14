@@ -27,8 +27,8 @@ public class PageController {
 		return gFW.move(hor, ver);
 	}
 	
-	public void setGame(Object game) {
-		gFW.setGame(game);
+	public void setGame(Object game, String pToMove, String opponent) {
+		gFW.setGame(game, pToMove, opponent);
 		gPage.createPage();
 		gFW.setup();
 		toGrid();

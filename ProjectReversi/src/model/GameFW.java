@@ -13,6 +13,7 @@ public class GameFW {
 	private CommandDispatcher dispatcher;
     private DotEnv env;
     private String[] players;
+    private String user1, user2;
     PageController pageController;
     
     public GameFW(){
@@ -27,6 +28,7 @@ public class GameFW {
 		connection = new Connection(this);
 		connection.start(env.get("HOST"), Integer.parseInt(env.get("PORT")));
 		dispatcher = connection.getDispatcher();
+		user1 = name;
 		dispatcher.login(name);
 	}
 
@@ -50,9 +52,17 @@ public class GameFW {
 	}
 
 	// If the game is not supported by the client it will throw an execption
-	public void setGame(Object game) {
+	public void setGame(Object game, String pToMove, String oppenent) {
 		this.game = (Game) game;
+		user2 = oppenent;
 		board = new Board(getVer(), getHor());
+		if(pToMove == oppenent) {
+			turn = 2;
+		}
+		else if(pToMove == user1){
+			turn = 1;
+		}
+		System.out.println("1: " + user1 + " 2: " + user2 + " m: " + pToMove);
 	}
 	
 	public void setup() {

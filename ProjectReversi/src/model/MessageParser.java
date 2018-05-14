@@ -22,7 +22,7 @@ public class MessageParser {
     public MessageParser(GameFW gFW){
         // initialize handlers
         this.okHandler = new OkHandler();
-        this.errHandler = new ErrHandler();
+        this.errHandler = new ErrHandler(gFW);
         this.gameListHandler = new GameListHandler();
         this.playerListHandler = new PlayerListHandler(gFW);
         this.gameMatchHandler = new GameMatchHandler(gFW);

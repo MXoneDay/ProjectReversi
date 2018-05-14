@@ -27,19 +27,12 @@ public class PageController {
 		return gFW.move(hor, ver, null);
 	}
 	
-	public void setGame(Object game) {//TODO remove
-		//gFW.connectToServer();
+	public void setGame(Object game) {
 		gFW.setGame(game);
 		gPage.createPage();
 		gFW.setup();
 		toGrid();
 	}
-
-	
-	/*
-	public void reset() {
-		gFW.reset();
-	}*/
 	
 	public void toHome() {
 		gFW.disconnect();
@@ -54,14 +47,13 @@ public class PageController {
         scene.setRoot(playerPage.getPane());
     }
 	
+	public void toPlayerPage() {
+		scene.setRoot(playerPage.getPane());
+	}
+	
 	public void toChallengePage() {
 		challengePage.createPage();
 		scene.setRoot(challengePage.getPane());
-	}
-	
-	public void toPlayerPage() {
-		//playerPage.createPage();
-		scene.setRoot(playerPage.getPane());
 	}
 
 	public void toGrid() {

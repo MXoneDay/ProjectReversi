@@ -10,8 +10,8 @@ public class GameFW {
 	private Board board;
 	private int turn = 0;
 	private Game game;
-	  private Connection connection;
-	  private CommandDispatcher dispatcher;
+	private Connection connection;
+	private CommandDispatcher dispatcher;
     private DotEnv env;
     private String[] players;
     private Player player1, player2;
@@ -70,23 +70,9 @@ public class GameFW {
 	public String getTurntext() {
 		return game.getTurntext(turn);
 	}
-	
-	public String tryMove(int hor, int ver) {
-		if(turn != 1){
-            return "Player: " + turn;
-        }
-		//TODO make check if user or ai, then to move and return
-		return null;
-	}
 
 	// Function for setting a move this checks if the moves is valid before sending it
 	public String move(int hor, int ver, Player player) {
-		if((player == player1 || player == null) && turn != 1) {
-			return "Player: " + turn;
-		}else if(player == player2 && turn != 2) {
-			return null;
-		}
-		
         if(game.isValid(turn, hor, ver, board, false)) {
             CellPane cp = board.getCell(hor, ver);
             cp.filled = turn;

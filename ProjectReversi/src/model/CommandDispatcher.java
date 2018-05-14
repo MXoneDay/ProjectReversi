@@ -31,4 +31,9 @@ public class CommandDispatcher {
         System.out.println(("challenge " + '"'+username+ "\" " + '"'+game+'"'));
         connection.send("challenge " + '"'+username+ "\" " + '"'+game+'"');
     }
+
+    public void acceptChallenge(String challengeNumber){
+        System.out.println("accepting challenge...");
+        connection.send("challenge accept "+challengeNumber);
+    }
 }

@@ -27,7 +27,7 @@ public class MessageParser {
         this.errHandler = new ErrHandler();
         this.gameListHandler = new GameListHandler();
         this.playerListHandler = new PlayerListHandler(gFW);
-        this.gameMatchHandler = new GameMatchHandler();
+        this.gameMatchHandler = new GameMatchHandler(gFW);
         this.gameYourTurnHandler = new GameYourTurnHandler(gFW);
         this.gameMoveHanlder = new GameMoveHanlder(gFW);
         this.gameWinHandler = new GameWinHandler(gFW);

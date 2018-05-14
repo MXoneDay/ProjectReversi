@@ -55,9 +55,9 @@ public class GameChallengeHandler extends ActionHandler{
 				
 				Optional<ButtonType> result = alert.showAndWait();
 				if(result.get() == bt1) {
-					// accept
+                    gFW.acceptChallenge(challengeNumber);
 				}else if(result.get() == bt2) {
-					// cancel
+					// do nothing.
 				}
 			}
         	

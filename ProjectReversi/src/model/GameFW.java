@@ -169,4 +169,8 @@ public class GameFW {
     	return this.pageController;
 	}
 
+	public void acceptChallenge(String challengeNumber){
+		dispatcher.acceptChallenge(challengeNumber);
+	}
+
 }

@@ -8,12 +8,15 @@ public class PageController {
 	private Scene scene;
 	private Page hPage = new HomePage(this);
 	private Page playerPage = new PlayerPage(this);
+	private Page challengePage = new ChallengePage(this);
+	private Page challengeChoicePage = new ChallengeChoicePage(this);
 	private Page gPage = new GridPage(this);
 	private GameFW gFW = new GameFW();
-	
+
 	public PageController() {
 		hPage.createPage();
 		scene = new Scene(hPage.getPane(), 600, 600);
+		gFW.setPageController(this);
 	}
 	
 	public Scene getScene() {
@@ -31,6 +34,7 @@ public class PageController {
 		gFW.setup();
 		toGrid();
 	}
+
 	
 	/*
 	public void reset() {
@@ -45,8 +49,24 @@ public class PageController {
 	public void toPlayerPage(String name, boolean p1Ai, boolean p2Ai) throws Exception {
 		gFW.connectToServer(name);
 		gFW.setPlayers(p1Ai, p2Ai);
+
         playerPage.createPage();
         scene.setRoot(playerPage.getPane());
+    }
+
+    public void backToPlayerPage() throws Exception {
+        scene.setRoot(playerPage.getPane());
+    }
+
+	public void toChallengePage() {
+		challengePage.createPage();
+		scene.setRoot(challengePage.getPane());
+	}
+
+	public void toChallengeChoicePage(String player, String game) {
+		System.out.println("being called from inside toChallengeChoicePage");
+		challengeChoicePage.createPage();
+		scene.setRoot(challengeChoicePage.getPane());
 	}
 	
 	public void toPlayerPage() {
@@ -73,8 +93,12 @@ public class PageController {
 	public String[] getPlayers() {
 		return gFW.getPlayers();
 	}
-	
+
 	public void disconnect() {
 		gFW.disconnect();
+	}
+
+	public void startChallenge(String username, String game){
+		gFW.startChallenge(username, game);
 	}
 }

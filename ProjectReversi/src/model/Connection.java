@@ -42,18 +42,16 @@ public class Connection {
              while (this.connected) {
                  try {
                     String message = this.input.readLine();
-
                     if (message == null) { // server disconnected
                         this.connected = false;
                         message = "disconnect";
                         close();
                     }
-
-                    parser.parse(message);
+                     parser.parse(message);
                  } catch (SocketException exception) {
-                    if (exception.getMessage().equals("Connection reset")) {
-                        this.connected = false;
-                        // TODO: send disconnect command to the server
+                     if (exception.getMessage().equals("Connection reset")) {
+                         this.connected = false;
+                         // TODO: send disconnect command to the server
                         close();
                     }
                  } catch (IOException exception) {

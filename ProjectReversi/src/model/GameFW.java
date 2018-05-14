@@ -1,6 +1,8 @@
 package model;
 
 import java.io.IOException;
+
+import controller.PageController;
 import javafx.application.Platform;
 import view.CellPane;
 
@@ -8,11 +10,12 @@ public class GameFW {
 	private Board board;
 	private int turn = 0;
 	private Game game;
-	private Connection connection;
-	private CommandDispatcher dispatcher;
+	  private Connection connection;
+	  private CommandDispatcher dispatcher;
     private DotEnv env;
     private String[] players;
     private Player player1, player2;
+    PageController pageController;
     
     public GameFW(){
     	try {
@@ -33,6 +36,10 @@ public class GameFW {
 		dispatcher = connection.getDispatcher();
 		dispatcher.login(name);
 	}
+
+	public void login(String username){
+        dispatcher.login(username);
+    }
 	
 	// Get method for the value of the Horizontal value / X-value
 	public int getHor() {
@@ -127,7 +134,7 @@ public class GameFW {
 	public void disconnect() {
 		dispatcher.disconnect();
 	}
-	
+
     public void setPlayers(String[] players) {
         this.players = players;
     }
@@ -149,4 +156,17 @@ public class GameFW {
     public void setTurn(int turn) {
         this.turn = turn;
     }
+
+    public void startChallenge(String username, String game){
+        dispatcher.challenge(username, game);
+    }
+
+	public void setPageController(PageController pageController) {
+		this.pageController = pageController;
+	}
+
+	public PageController pageController(){
+    	return this.pageController;
+	}
+
 }

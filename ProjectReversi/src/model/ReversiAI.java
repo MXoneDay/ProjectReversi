@@ -1,6 +1,6 @@
 package model;
 
-public class ReversiAI implements AI, Player {
+public class ReversiAI implements AI {
 	Reversi rev;
 	/*
 	ReversiAI(Reversi rev){

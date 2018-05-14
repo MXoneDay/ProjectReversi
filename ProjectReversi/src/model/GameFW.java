@@ -1,7 +1,6 @@
 package model;
 
 import java.io.IOException;
-
 import controller.PageController;
 import javafx.application.Platform;
 import view.CellPane;
@@ -14,7 +13,6 @@ public class GameFW {
 	private CommandDispatcher dispatcher;
     private DotEnv env;
     private String[] players;
-    private Player player1, player2;
     PageController pageController;
     
     public GameFW(){
@@ -23,11 +21,6 @@ public class GameFW {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-    
-    public void setPlayers(boolean p1Ai, boolean p2Ai ) {
-    	player1 = (p1Ai) ? null : new User();
-    	player2 = (p2Ai) ? null : new User();
     }
 
 	public void connectToServer(String name) throws Exception {
@@ -72,7 +65,7 @@ public class GameFW {
 	}
 
 	// Function for setting a move this checks if the moves is valid before sending it
-	public String move(int hor, int ver, Player player) {
+	public String move(int hor, int ver) {
         if(game.isValid(turn, hor, ver, board, false)) {
             CellPane cp = board.getCell(hor, ver);
             cp.filled = turn;
@@ -86,9 +79,6 @@ public class GameFW {
 	public void drawMove(int loc){
  		int newhor = loc % getHor();
         int newver = loc / getVer();
-
-		System.out.println(newhor);
-		System.out.println(newver);
 
 		Platform.runLater(new Runnable() {
 			@Override

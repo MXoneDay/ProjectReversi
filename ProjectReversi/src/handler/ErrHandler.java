@@ -16,10 +16,10 @@ public class ErrHandler extends ActionHandler{
 
             @Override
             public void run() {
+                gFW.pageController().getAlertView().setAlert(Alert.AlertType.INFORMATION);
                 Alert alert = gFW.pageController().getAlertView().getAlert();
-                alert.setAlertType(Alert.AlertType.INFORMATION);
                 alert.setHeaderText(null);
-                alert.setTitle("Error!");
+                alert.setTitle("Error");
                 alert.setContentText(message);
                 alert.show();
             }

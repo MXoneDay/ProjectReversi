@@ -41,7 +41,8 @@ public class GameMatchHandler extends ActionHandler{
                 try {
                     gFW.pageController().setGame(Class.forName("model." + gameType).getConstructor().newInstance());
                 } catch (Exception e) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    gFW.pageController().getAlertView().setAlert(Alert.AlertType.INFORMATION);
+                    Alert alert = gFW.pageController().getAlertView().getAlert();
                     alert.setHeaderText(null);
                     alert.setTitle("Unknown game");
                     alert.setContentText("Can not find game: " +gameType);

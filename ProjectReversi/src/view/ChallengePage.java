@@ -24,7 +24,7 @@ public class ChallengePage implements Page{
             @Override
             public void handle(ActionEvent ae) {
                 try {
-                    pc.backToPlayerPage();
+                    pc.toPlayerPage();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

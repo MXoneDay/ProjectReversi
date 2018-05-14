@@ -8,13 +8,11 @@ public class ReversiAI implements AI, Player {
 		System.out.println(rev.getVer());
 	}*/
 
-	@Override
 	public void tryMove() {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void doMove() {
 		// TODO Auto-generated method stub
 		

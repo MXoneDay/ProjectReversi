@@ -12,6 +12,7 @@ import controller.PageController;
 public class PlayerPage implements Page{
     private final PageController pc;
     private GridPane gp = new GridPane();
+    
 
     public PlayerPage(PageController pc){
         this.pc = pc;

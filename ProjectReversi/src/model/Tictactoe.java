@@ -48,7 +48,6 @@ public class Tictactoe implements Game {
 	@Override
 	public void createAI() {
 		TictactoeAI ai = new TictactoeAI(this);
-		ai.tryMove();
 	}
 	
 	@Override

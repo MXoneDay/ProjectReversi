@@ -10,9 +10,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
-import javafx.stage.Popup;
-import javafx.scene.shape.Circle;
-import javafx.scene.paint.Color;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 public class HomePage implements Page{
 	private final PageController pc;
@@ -24,7 +23,7 @@ public class HomePage implements Page{
 	
 	public void createPage() {
 		try {
-			final Popup ppp = new Popup();
+			Alert alert = new Alert(AlertType.WARNING);
 			ToggleGroup tg = new ToggleGroup();
 			TextField text = new TextField();
 			Label name = new Label("Username: ");
@@ -34,6 +33,8 @@ public class HomePage implements Page{
 			RadioButton rb1 = new RadioButton("Player vs AI");
 			RadioButton rb2 = new RadioButton("Player vs Online");
 			RadioButton rb3 = new RadioButton("AI vs Online");
+			
+			alert.setHeaderText(null);
 			
 			rb1.setUserData(2);
 			rb1.setToggleGroup(tg);
@@ -49,13 +50,18 @@ public class HomePage implements Page{
 				@Override
 				public void handle(ActionEvent ae) {
 					try {
-						pc.toPlayerPage(text.getText(), rb3.isSelected(), rb1.isSelected());
+						if(!text.getText().isEmpty()) {
+							pc.toPlayerPage(text.getText(), rb3.isSelected(), rb1.isSelected());
+						}else {
+							alert.setTitle("No name");
+							alert.setContentText("Please enter a Username");
+							alert.show();
+						}
 					}
 					catch(Exception ex) {
-						ppp.getContent().addAll(new Circle(25, 25, 50, Color.AQUAMARINE));
-						text.setText(ex.getMessage());
-						ppp.show(pc.getScene().getWindow());
-						//TODO popup?
+						alert.setTitle(ex.getMessage());
+						alert.setContentText("Please you have a working connection to the server.");
+						alert.show();
 					}
 				}
 			});

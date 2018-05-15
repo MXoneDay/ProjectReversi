@@ -13,7 +13,7 @@ public class GameFW {
 	private CommandDispatcher dispatcher;
     private DotEnv env;
     private String[] playerlist;
-    private Player[] players = new Player[2];
+    private User[] users = new User[2];
     private PageController pageController;
     String username;
     
@@ -29,7 +29,7 @@ public class GameFW {
 		connection = new Connection(this);
 		connection.start(env.get("HOST"), Integer.parseInt(env.get("PORT")));
 		dispatcher = connection.getDispatcher();
-		players[0] = new Player(name);
+		users[0] = new Player(name);
 		dispatcher.login(name);
 		this.username = name;
 	}
@@ -56,72 +56,70 @@ public class GameFW {
 	// If the game is not supported by the client it will throw an execption
 	public void setGame(Object game, String pToMove, String oppenent) {
 		this.game = (Game) game;
-		players[1] = new Player(oppenent);
+		users[1] = new Player(oppenent);
 		board = new Board(getVer(), getHor());
 		
 		if(pToMove.equals(oppenent)) {
 			turn = 1;
-			players[1].setTurn(0);
-			players[0].setTurn(1);
+			users[1].setTurn(0);
+			users[0].setTurn(1);
 			System.out.println("yesy");
 			//players[1].setImageView(this.game.getImage(true));
 			//players[0].setImageView(this.game.getImage(false));
 		}
-		else if(pToMove.equals(players[0].getName())){
+		else if(pToMove.equals(users[0].getName())){
 			turn = 0;
-			players[1].setTurn(1);
-			players[0].setTurn(0);
+			users[1].setTurn(1);
+			users[0].setTurn(0);
 			System.out.println("yes");
 			/*
 			players[1].setImageView(this.game.getImage(false));
 			players[0].setImageView(this.game.getImage(true));*/
 		}
-		System.out.println("1: " + players[0] + " 2: " + players[1] + " m: " + pToMove);
 	}
 	
 	public void setup() {
-		game.setup(board, players);
+		game.setup(board);
 	}
 	
 	// Set the text for the current player
 	public String getTurntext() {
-		return "Turn: " + players[turn].getName();
+		return "Turn: " + users[turn].getName();
 	}
 
 	// Function for setting a move this checks if the moves is valid before sending it
-	public String move(int hor, int ver, Player player) {
+	public String move(int hor, int ver, User user) {
     	System.out.println("Move: " + hor + "-" + ver + " Turn: " + turn + " Fill: " + board.getCell(hor, ver).filled);
-    	if(player == null) {
-			player = players[0];
+    	if(user == null) {
+			user = users[0];
 		}
-		if(player.getTurn() != turn) {
+		if(user.getTurn() != turn) {
 			return "for the gods";
 		}
-		/*
-		for(int i = 0; i < players.length; i++) {
-			if(player == players[i]) {
-				if(turn != i) {
-					return "Turn: " + players[turn].getName();
-				}
-			}
-		}*/
-        if(game.isValid(players, turn, hor, ver, board, true)) {
+        if(game.isValid(users, turn, hor, ver, board, true)) {
         	dispatcher.move(board.getCell(hor, ver).loc);
-			if(turn == players[0].getTurn()) {
-				turn = players[1].getTurn();
+			if(turn == users[0].getTurn()) {
+				turn = users[1].getTurn();
 			}
-        	//turn = 1;
         }else {
         	System.out.println("not valid");
         }
         return "Player: " + turn;
 	}
+	
+	public void createAi(boolean p1) {
+		if(p1) {
+			users[0] = game.createAI();
+		}else {
+			users[1] = game.createAI();
+		}
+	}
 
 	public void drawMove(int loc, String player){
  		int newhor = loc % getHor();
         int newver = loc / getVer();
-        Player playr = null;
-        for(Player p : players) {
+        User playr = null;
+        for(User p : users) {
         	if(player.equals(p.getName())){
         		playr = p;
         	}
@@ -131,7 +129,7 @@ public class GameFW {
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
-				game.isValid(players, ftturn, newhor, newver, board, false);
+				game.isValid(users, ftturn, newhor, newver, board, false);
 				CellPane cp = board.getCell(newhor, newver);
 				cp.filled = ftturn;
 				cp.getChildren().add(game.getImage(ftturn));
@@ -162,8 +160,7 @@ public class GameFW {
     }
     
     public void setTurn() {
-    	turn = players[0].getTurn();
-        //turn = 0;
+    	turn = users[0].getTurn();
     }
 
     public void startChallenge(String username, String game){

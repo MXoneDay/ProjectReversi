@@ -2,7 +2,7 @@ package model;
 
 import view.CellPane;
 
-public class TictactoeAI implements AI {
+public class TictactoeAI implements AI, User {
 	private Tictactoe ttt;
 	private Board board;
 	private CellPane[] validMoves = new CellPane[ttt.getHor()*ttt.getVer()];
@@ -30,5 +30,17 @@ public class TictactoeAI implements AI {
 	}
 	
 	public void doMove() {
+	}
+
+	@Override
+	public int getTurn() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

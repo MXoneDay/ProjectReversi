@@ -8,16 +8,7 @@ public class Reversi implements Game {
 	private final int hor = 8, ver = 8;
 	
 	@Override
-	public void setup(Board board, Player[] players) {
-		Player one = null, two = null;
-		for(Player p: players) {
-			if(p.getTurn() == 0) {
-				one = p;
-			}else if(p.getTurn() == 1) {
-				two = p;
-			}
-		}
-		
+	public void setup(Board board) {
 		CellPane cp;
 		cp = board.getCell(3, 3);
 		cp.filled = 1;
@@ -45,8 +36,8 @@ public class Reversi implements Game {
 	}
 	
 	@Override
-	public void createAI() {
-		
+	public User createAI() {
+		return new ReversiAI(this);
 	}
 	
 	@Override
@@ -60,7 +51,7 @@ public class Reversi implements Game {
 	}
 	
 	@Override
-	public boolean isValid(Player[] players, int turn, int hor, int ver, Board board, boolean justCheck) {
+	public boolean isValid(User[] users, int turn, int hor, int ver, Board board, boolean justCheck) {
 		if(board.getCell(hor, ver).filled != 3) {
 			return false;
 		}

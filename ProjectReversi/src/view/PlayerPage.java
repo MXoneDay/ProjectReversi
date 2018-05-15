@@ -15,6 +15,8 @@ public class PlayerPage implements Page{
     private GridPane gp = new GridPane();
     private String selectedOpponent;
     private boolean p1ai, p2ai;
+    private ListView<String> players;
+    private ObservableList<String> playerList;
 
     public PlayerPage(PageController pc){
         this.pc = pc;
@@ -27,10 +29,10 @@ public class PlayerPage implements Page{
         Button refreshButton = new Button("Refresh player list");
 
     	gp.setAlignment(Pos.CENTER);
-    	ObservableList<String> playerList = FXCollections.<String>observableArrayList();
-    	playerList.addAll(pc.getPlayers());
-    	ListView<String> players = new ListView<String>(playerList);
-    	
+    	playerList = FXCollections.<String>observableArrayList();
+    	playerList.setAll(pc.getPlayers());
+    	players = new ListView<String>(playerList);
+
     	b1.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent ae) {
@@ -42,6 +44,7 @@ public class PlayerPage implements Page{
         reversiButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent ae) {
+                System.out.println("debuggignging: "+selectedOpponent);
                 if (selectedOpponent != null){
                     System.out.println("Challenging player: "+selectedOpponent+" to Reversi");
                     pc.startChallenge(selectedOpponent, "Reversi");
@@ -65,10 +68,8 @@ public class PlayerPage implements Page{
         refreshButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                ObservableList<String> playerList = FXCollections.<String>observableArrayList();
-                playerList.addAll(pc.getPlayers());
-                ListView<String> players = new ListView<String>(playerList);
-                gp.add(players, 0, 0);
+                playerList.setAll(pc.getPlayers());
+                players.refresh();
             }
         });
 

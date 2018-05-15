@@ -70,7 +70,6 @@ public class Reversi implements Game {
 		int enemy = done;
 		CellPane cp;
 		done = 0;
-		System.out.println("en: " + enemy + " tu: " + turn);
 		
 		while(done < 8) {
 			switch(done) {

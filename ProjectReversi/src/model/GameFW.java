@@ -94,7 +94,6 @@ public class GameFW {
     	if(player == null) {
 			player = players[0];
 		}
-    	System.out.println("mpTurn: " + player.getTurn());
 		if(player.getTurn() != turn) {
 			return "for the gods";
 		}
@@ -127,22 +126,14 @@ public class GameFW {
         		playr = p;
         	}
         }
-        System.out.println("pTurn: " + playr.getTurn());
-        /*
-        for(int i = 0; i < players.length; i++) {
-			if(player.equals(players[i].getName())) {
-				tturn = i;
-			}
-		}*/
         
         final int ftturn = playr.getTurn();
-        System.out.println("fTurn " + ftturn);
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
 				game.isValid(players, ftturn, newhor, newver, board, false);
 				CellPane cp = board.getCell(newhor, newver);
-				cp.filled = players[ftturn].getTurn();
+				cp.filled = ftturn;
 				cp.getChildren().add(game.getImage(ftturn));
 			}
 		});

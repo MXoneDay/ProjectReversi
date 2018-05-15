@@ -1,6 +1,6 @@
 package model;
 
-public class Player {
+public class Player implements User {
 	private String name;
 	private int turn;
 	
@@ -8,14 +8,17 @@ public class Player {
 		this.name = name;
 	}
 	
+	@Override
 	public void setTurn(int turn) {
 		this.turn = turn;
 	}
 	
+	@Override
 	public int getTurn() {
 		return turn;
 	}
 	
+	@Override
 	public String getName(){
 		return name;
 	}

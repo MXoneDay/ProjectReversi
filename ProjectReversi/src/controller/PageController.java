@@ -42,6 +42,12 @@ public class PageController {
 	public void toPlayerPage(String name, boolean p1Ai, boolean p2Ai) throws Exception {
 		gFW.connectToServer(name);
         playerPage.createPage();
+        if(p1Ai) {
+        	gFW.createAi(true);
+        }
+        if(p2Ai) {
+        	gFW.createAi(false);
+        }
         scene.setRoot(playerPage.getPane());
     }
 	

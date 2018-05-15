@@ -9,7 +9,7 @@ public class Tictactoe implements Game {
 	private final int hor = 3, ver = 3;
 
 	@Override
-	public void setup(Board board, Player[] players) {
+	public void setup(Board board) {
 	}
 
 	@Override
@@ -25,7 +25,7 @@ public class Tictactoe implements Game {
 	}
 
 	@Override
-	public boolean isValid(Player[] players, int turn, int hor, int ver, Board board, boolean justCheck) {
+	public boolean isValid(User[] users, int turn, int hor, int ver, Board board, boolean justCheck) {
 		// check if the move is valid
 		CellPane cp = board.getCell(hor, ver);
 		//System.out.println("Move: " + cp.loc + cp.filled);
@@ -36,8 +36,8 @@ public class Tictactoe implements Game {
 	}
 	
 	@Override
-	public void createAI() {
-		TictactoeAI ai = new TictactoeAI(this);
+	public User createAI() {
+		return new TictactoeAI(this);
 	}
 	
 	@Override

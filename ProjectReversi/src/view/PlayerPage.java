@@ -23,6 +23,7 @@ public class PlayerPage implements Page{
     	Button b1 = new Button("Back");
         Button reversiButton = new Button("Challenge Reversi");
         Button TictactoeButton = new Button("Challenge Tic-tac-toe");
+        Button refreshButton = new Button("Refresh player list");
 
     	gp.setAlignment(Pos.CENTER);
     	ObservableList<String> playerList = FXCollections.<String>observableArrayList();
@@ -60,6 +61,16 @@ public class PlayerPage implements Page{
             }
         });
 
+        refreshButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                ObservableList<String> playerList = FXCollections.<String>observableArrayList();
+                playerList.addAll(pc.getPlayers());
+                ListView<String> players = new ListView<String>(playerList);
+                gp.add(players, 0, 0);
+            }
+        });
+
 		players.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
 			public void handle(MouseEvent event) {
@@ -70,6 +81,7 @@ public class PlayerPage implements Page{
 		});
     	gp.add(players, 0, 0);
     	gp.add(b1, 0, 1);
+    	gp.add(refreshButton, 0, 2);
         gp.add(reversiButton, 1, 2);
         gp.add(TictactoeButton, 2, 2);
     }

@@ -73,6 +73,13 @@ public class GridPage implements Page{
 				//pc.getgFW().getDispatcher().disconnect();
 			}
 		});
+
+		playerList.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				pc.toPlayerPage();
+			}
+		});
 		/*
 		reset.setOnAction(new EventHandler<ActionEvent>() {
 

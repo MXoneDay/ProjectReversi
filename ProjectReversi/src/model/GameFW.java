@@ -15,6 +15,7 @@ public class GameFW {
     private String[] playerlist;
     private Player[] players = new Player[2];
     private PageController pageController;
+    String username;
     
     public GameFW(){
     	try {
@@ -30,6 +31,7 @@ public class GameFW {
 		dispatcher = connection.getDispatcher();
 		players[0] = new Player(name);
 		dispatcher.login(name);
+		this.username = name;
 	}
 
 	public void login(String username){
@@ -171,5 +173,9 @@ public class GameFW {
 
 	public void acceptChallenge(String challengeNumber){
 		dispatcher.acceptChallenge(challengeNumber);
+	}
+
+	public String getUsername() {
+		return username;
 	}
 }

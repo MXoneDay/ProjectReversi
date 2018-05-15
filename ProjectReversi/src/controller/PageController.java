@@ -24,11 +24,11 @@ public class PageController {
 	}
 	
 	public String move(int hor, int ver) {
-		return gFW.move(hor, ver, null);
+		return gFW.move(hor, ver);
 	}
 	
-	public void setGame(Object game) {
-		gFW.setGame(game);
+	public void setGame(Object game, String pToMove, String opponent) {
+		gFW.setGame(game, pToMove, opponent);
 		gPage.createPage();
 		gFW.setup();
 		toGrid();
@@ -41,8 +41,6 @@ public class PageController {
   
 	public void toPlayerPage(String name, boolean p1Ai, boolean p2Ai) throws Exception {
 		gFW.connectToServer(name);
-		gFW.setPlayers(p1Ai, p2Ai);
-
         playerPage.createPage();
         scene.setRoot(playerPage.getPane());
     }

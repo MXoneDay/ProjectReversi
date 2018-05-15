@@ -4,7 +4,7 @@ import javafx.scene.layout.Pane;
 
 public class CellPane extends Pane {
 	public final int loc, hor, ver;
-	public int filled = 0;
+	public String filled = null;
 
 	public CellPane(int loc, int hor, int ver){
 		this.loc = loc;

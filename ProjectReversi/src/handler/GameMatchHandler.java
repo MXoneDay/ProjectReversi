@@ -22,9 +22,9 @@ public class GameMatchHandler extends ActionHandler{
         Pattern pattern = Pattern.compile("SVR GAME MATCH \\{PLAYERTOMOVE: \"(.*?)\", GAMETYPE: \"(.*?)\", OPPONENT: \"(.*?)\"\\}");
         Matcher matcher = pattern.matcher(message);
 
-        String playerToMove = null;
+        String playerToMove;
         String gameType;
-        String opponent = null;
+        String opponent;
 
         if (matcher.find()){
             playerToMove = matcher.group(1);
@@ -32,14 +32,16 @@ public class GameMatchHandler extends ActionHandler{
             opponent = matcher.group(3);
         }
         else{
+        	playerToMove = null;
             gameType = null;
+            opponent = null;
         }
 
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 try {
-                    gFW.pageController().setGame(Class.forName("model." + gameType.replace("-", "")).getConstructor().newInstance());
+                    gFW.pageController().setGame(Class.forName("model." + gameType.replace("-", "")).getConstructor().newInstance(), playerToMove, opponent);
                 } catch (Exception e) {
                     gFW.pageController().getAlertView().setAlert(Alert.AlertType.INFORMATION);
                     Alert alert = gFW.pageController().getAlertView().getAlert();

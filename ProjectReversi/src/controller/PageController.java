@@ -6,10 +6,10 @@ import javafx.scene.Scene;
 
 public class PageController {
 	private Scene scene;
-	private Page hPage = new HomePage(this);
-	private Page playerPage = new PlayerPage(this);
-	private Page challengePage = new ChallengePage(this);
-	private Page gPage = new GridPage(this);
+	private HomePage hPage = new HomePage(this);
+	private PlayerPage playerPage = new PlayerPage(this);
+	private ChallengePage challengePage = new ChallengePage(this);
+	private GridPage gPage = new GridPage(this);
 	private AlertView av = new AlertView();
 	private GameFW gFW = new GameFW();
 
@@ -42,12 +42,14 @@ public class PageController {
 	public void toPlayerPage(String name, boolean p1Ai, boolean p2Ai) throws Exception {
 		gFW.connectToServer(name);
         playerPage.createPage();
+        playerPage.setAIs(p1Ai, p2Ai);
+        /*
         if(p1Ai) {
         	gFW.createAi(true);
         }
         if(p2Ai) {
         	gFW.createAi(false);
-        }
+        }*/
         scene.setRoot(playerPage.getPane());
     }
 	

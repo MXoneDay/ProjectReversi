@@ -5,12 +5,12 @@ public class ReversiAI implements User, AI {
 	
 	ReversiAI(Reversi rev){
 		this.rev = rev;
+		System.out.println("made it");
 	}
 
 	@Override
 	public void setTurn(int turn) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

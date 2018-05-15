@@ -13,7 +13,8 @@ import controller.PageController;
 public class PlayerPage implements Page{
     private final PageController pc;
     private GridPane gp = new GridPane();
-    String selectedOpponent;
+    private String selectedOpponent;
+    private boolean p1ai, p2ai;
 
     public PlayerPage(PageController pc){
         this.pc = pc;
@@ -84,6 +85,11 @@ public class PlayerPage implements Page{
     	gp.add(refreshButton, 0, 2);
         gp.add(reversiButton, 1, 2);
         gp.add(TictactoeButton, 2, 2);
+    }
+    
+    public void setAIs(boolean p1ai, boolean p2ai) {
+    	this.p1ai = p1ai;
+    	this.p2ai = p2ai;
     }
 
     @Override

@@ -8,7 +8,6 @@ public class PageController {
 	private Scene scene;
 	private HomePage hPage = new HomePage(this);
 	private PlayerPage playerPage = new PlayerPage(this);
-	private ChallengePage challengePage = new ChallengePage(this);
 	private GridPage gPage = new GridPage(this);
 	private AlertView av = new AlertView();
 	private GameFW gFW = new GameFW();
@@ -58,11 +57,6 @@ public class PageController {
 		scene.setRoot(playerPage.getPane());
 	}
 	
-	public void toChallengePage() {
-		challengePage.createPage();
-		scene.setRoot(challengePage.getPane());
-	}
-
 	public void toGrid() {
 		scene.setRoot(gPage.getPane());
 	}

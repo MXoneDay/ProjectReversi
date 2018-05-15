@@ -9,6 +9,7 @@ public class Reversi implements Game {
 	
 	@Override
 	public void setup(Board board) {
+		/*
 		CellPane cp;
 		cp = board.getCell(3, 3);
 		cp.filled = 2;
@@ -21,7 +22,7 @@ public class Reversi implements Game {
 		cp.getChildren().add(getImage(1));
 		cp = board.getCell(4, 4);
 		cp.filled = 2;
-		cp.getChildren().add(getImage(2));
+		cp.getChildren().add(getImage(2));*/
 	}
 	
 	@Override
@@ -52,7 +53,7 @@ public class Reversi implements Game {
 	}
 	
 	@Override
-	public boolean isValid(Player turn, int hor, int ver, Board board, boolean justCheck) {
+	public boolean isValid(Player[] players, int turn, int hor, int ver, Board board, boolean justCheck) {
 		if(board.getCell(hor, ver).filled != null) {
 			return false;
 		}
@@ -60,6 +61,7 @@ public class Reversi implements Game {
 		boolean ret = false, go = false;
 		int i = hor, j = ver, done = 0;
 		String cpFill;
+		Player enemy = players[1];
 		CellPane cp;
 		
 		while(done < 8) {
@@ -96,20 +98,20 @@ public class Reversi implements Game {
 			try {
 				cpFill = board.getCell(i, j).filled;
 				
-				if(cpFill == enemy) {
+				if(cpFill == enemy.getName()) {
 					go = true;
 					continue;
 				}else if(cpFill == null) {
 					throw new Exception();
-				}else if(cpFill == turn) {
+				}else if(cpFill == players[turn].getName()) {
 					while(go) {
 						if(justCheck) {
 							return true;
 						}
 						cp = board.getCell(i, j);
 						cp.getChildren().clear();
-						cp.filled = turn;
-						cp.getChildren().add(getImage(turn));
+						cp.filled = players[turn].getName();
+						cp.getChildren().add(players[turn].getImageView());
 						ret = true;
 						if(i == hor && j == ver) {
 							throw new Exception();

@@ -1,14 +1,11 @@
 package handler;
 
-import java.lang.reflect.InvocationTargetException;
-import java.sql.SQLOutput;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import model.GameFW;
-import model.Reversi;
 
 public class GameMatchHandler extends ActionHandler{
     GameFW gFW;

@@ -10,36 +10,25 @@ public class Tictactoe implements Game {
 	@Override
 	public void setup(Board board) {
 	}
-	
-	@Override
-	public String getTurntext(int turn) {
-		String t = null;
-		if(turn == 1){
-			t =  "Turn : Player O"; }
-		else if(turn == 2){
-			t = "Turn : Player X";
-		}
-		return t;
-	}
 
 	@Override
-	public ImageView getImage(int turn) {
+	public ImageView getImage(boolean turn) {
 		Image img = null;
 
-		if(turn == 1){
+		if(turn){
 			img = new Image("pictures/x.png");
-		}else if(turn == 2){
+		}else {
 			img = new Image("pictures/o.png");
 		}
 		return new ImageView(img);
 	}
 
 	@Override
-	public boolean isValid(int turn, int hor, int ver, Board board, boolean justCheck) {
+	public boolean isValid(Player[] players, int turn, int hor, int ver, Board board, boolean justCheck) {
 		// check if the move is valid
 		CellPane cp = board.getCell(hor, ver);
 		System.out.println("Move: " + cp.loc + cp.filled);
-		if(cp.filled == 0) {
+		if(cp.filled == null) {
 			return true;
 		}
 		return false;

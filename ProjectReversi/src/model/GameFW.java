@@ -7,14 +7,13 @@ import view.CellPane;
 
 public class GameFW {
 	private Board board;
-	private Player turn = null;
+	private int turn;
 	private Game game;
 	private Connection connection;
 	private CommandDispatcher dispatcher;
     private DotEnv env;
     private String[] playerlist;
-    private Player user1, user2;
-    private Player[] players = new Player[10]; // TODO implememnt
+    private Player[] players = new Player[2];
     private PageController pageController;
     
     public GameFW(){
@@ -29,7 +28,7 @@ public class GameFW {
 		connection = new Connection(this);
 		connection.start(env.get("HOST"), Integer.parseInt(env.get("PORT")));
 		dispatcher = connection.getDispatcher();
-		user1 = new Player(name);
+		players[0] = new Player(name);
 		dispatcher.login(name);
 	}
 
@@ -54,21 +53,24 @@ public class GameFW {
 
 	// If the game is not supported by the client it will throw an execption
 	public void setGame(Object game, String pToMove, String oppenent) {
+		/*
+		 * add ai creation through arguments TODO
+		 */
 		this.game = (Game) game;
-		user2 = new Player(oppenent);
+		players[1] = new Player(oppenent);
 		board = new Board(getVer(), getHor());
 		
 		if(pToMove == oppenent) {
-			turn = user2;
-			user2.setImageView(this.game.getImage(true));
-			user1.setImageView(this.game.getImage(false));
+			turn = 1;
+			players[1].setImageView(this.game.getImage(true));
+			players[0].setImageView(this.game.getImage(false));
 		}
-		else if(pToMove == user1.getName()){
-			turn = user1;
-			user2.setImageView(this.game.getImage(false));
-			user1.setImageView(this.game.getImage(true));
+		else if(pToMove == players[0].getName()){
+			turn = 0;
+			players[1].setImageView(this.game.getImage(false));
+			players[0].setImageView(this.game.getImage(true));
 		}
-		System.out.println("1: " + user1 + " 2: " + user2 + " m: " + pToMove);
+		System.out.println("1: " + players[0] + " 2: " + players[1] + " m: " + pToMove);
 	}
 	
 	public void setup() {
@@ -77,22 +79,18 @@ public class GameFW {
 	
 	// Set the text for the current player
 	public String getTurntext() {
-		//return game.getTurntext(turn); TODO
-		return "TODO";
+		return "Turn: " + players[turn].getName();
 	}
 
 	// Function for setting a move this checks if the moves is valid before sending it
 	public String move(int hor, int ver) {
-		if(turn == user2) {
-			return "Player: " + turn;
-		}
-        if(game.isValid(turn, hor, ver, board, false)) {
+        if(game.isValid(players, turn, hor, ver, board, false)) {
         	System.out.println("Move: " + hor + "-" + ver + " " + turn + " " + board.getCell(hor, ver).filled);
             CellPane cp = board.getCell(hor, ver);
-            cp.filled = turn.getName();
-            cp.getChildren().add(turn.getImageView());
+            cp.filled = players[turn].getName();
+            cp.getChildren().add(players[turn].getImageView());
             dispatcher.move(cp.loc);
-            turn = user2;
+            turn = 1;
         }
         return "Player: " + turn;
 	}
@@ -105,8 +103,8 @@ public class GameFW {
 			@Override
 			public void run() {
 				CellPane cp = board.getCell(newhor, newver);
-				cp.filled = turn.getName();
-				//cp.getChildren().add(game.getImage(turn)); TODO
+				cp.filled = players[turn].getName();
+				cp.getChildren().add(players[turn].getImageView());
 			}
 		});
     }
@@ -134,7 +132,7 @@ public class GameFW {
     }
     
     public void setTurn() {
-        turn = user1;
+        turn = 0;
     }
 
     public void startChallenge(String username, String game){

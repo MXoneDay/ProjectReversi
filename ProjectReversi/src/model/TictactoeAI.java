@@ -21,10 +21,10 @@ public class TictactoeAI implements AI {
 	public void getValidMoves() {
 		for (int i = 0; i < ttt.getVer(); i++) {
 			for (int j = 0; j < ttt.getHor(); j++) {
-				if (ttt.isValid(turn, j, i, board, false)) {
+				/*if (ttt.isValid(turn, j, i, board, false)) {
 					validMoves[arrLoc] = board.getCell(j, i);
 					arrLoc++;
-				}
+				}*/
 			}
 		}
 	}

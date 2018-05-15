@@ -60,7 +60,7 @@ public class HomePage implements Page{
 					}
 					catch(Exception ex) {
 						alert.setTitle(ex.getMessage());
-						alert.setContentText("Please you have a working connection to the server.");
+						alert.setContentText("You do not have a working connection to the server.");
 						alert.show();
 					}
 				}

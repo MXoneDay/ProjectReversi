@@ -39,7 +39,7 @@ public class GameMatchHandler extends ActionHandler{
             @Override
             public void run() {
                 try {
-                    gFW.pageController().setGame(Class.forName("model." + gameType).getConstructor().newInstance());
+                    gFW.pageController().setGame(Class.forName("model." + gameType.replace("-", "")).getConstructor().newInstance());
                 } catch (Exception e) {
                     gFW.pageController().getAlertView().setAlert(Alert.AlertType.INFORMATION);
                     Alert alert = gFW.pageController().getAlertView().getAlert();

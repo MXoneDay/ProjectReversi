@@ -11,6 +11,12 @@ public class CellPane extends Pane {
 		this.hor = hor;
 		this.ver = ver;
 	}
+	
+	@Override
+	public String toString() {
+		return hor + "-" + ver;
+		
+	}
 	/*
 	public int getFilled() {
 		return filled;

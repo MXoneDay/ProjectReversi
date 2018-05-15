@@ -1,40 +1,47 @@
 package model;
 
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import view.CellPane;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 
 public class Reversi implements Game {
 	private final int hor = 8, ver = 8;
 	
 	@Override
-	public void setup(Board board) {
-		/*
+	public void setup(Board board, Player[] players) {
+		Player one = null, two = null;
+		for(Player p: players) {
+			if(p.getTurn() == 0) {
+				one = p;
+			}else if(p.getTurn() == 1) {
+				two = p;
+			}
+		}
+		
 		CellPane cp;
 		cp = board.getCell(3, 3);
-		cp.filled = 2;
-		cp.getChildren().add(getImage(2));
+		cp.filled = two.getName();
+		cp.getChildren().add(getImage(1));
 		cp = board.getCell(3, 4);
-		cp.filled = 1;
-		cp.getChildren().add(getImage(1));
+		cp.filled = one.getName();
+		cp.getChildren().add(getImage(0));
 		cp = board.getCell(4, 3);
-		cp.filled = 1;
-		cp.getChildren().add(getImage(1));
+		cp.filled = one.getName();
+		cp.getChildren().add(getImage(0));
 		cp = board.getCell(4, 4);
-		cp.filled = 2;
-		cp.getChildren().add(getImage(2));*/
+		cp.filled = two.getName();
+		cp.getChildren().add(getImage(1));
 	}
 	
 	@Override
-	public ImageView getImage(boolean turn) {
+	public ImageView getImage(int turn) {
 		Image img = null;
-		if(turn){
-			img = new Image("pictures/blackpiece.png", 60 ,60, false, true);
-		}else {
-			img = new Image("pictures/whitepiece.png", 60, 60, false, true);
+		if(turn == 0){
+			img = new Image("pictures/blackpiece.png", 60, 60, false, true);
+		}else if(turn == 1){
+			img = new Image("pictures/whitepiece.png", 60, 60 ,false, true);
 		}
-		ImageView iv = new ImageView(img);
-		return iv;
+		return new ImageView(img);
 	}
 	
 	@Override
@@ -111,7 +118,7 @@ public class Reversi implements Game {
 						cp = board.getCell(i, j);
 						cp.getChildren().clear();
 						cp.filled = players[turn].getName();
-						cp.getChildren().add(players[turn].getImageView());
+						cp.getChildren().add(getImage(turn));
 						ret = true;
 						if(i == hor && j == ver) {
 							throw new Exception();

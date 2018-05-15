@@ -53,28 +53,30 @@ public class GameFW {
 
 	// If the game is not supported by the client it will throw an execption
 	public void setGame(Object game, String pToMove, String oppenent) {
-		/*
-		 * add ai creation through arguments TODO
-		 */
 		this.game = (Game) game;
 		players[1] = new Player(oppenent);
 		board = new Board(getVer(), getHor());
 		
-		if(pToMove == oppenent) {
+		if(pToMove.equals(oppenent)) {
 			turn = 1;
-			players[1].setImageView(this.game.getImage(true));
-			players[0].setImageView(this.game.getImage(false));
+			players[1].setTurn(0);
+			players[0].setTurn(1);
+			//players[1].setImageView(this.game.getImage(true));
+			//players[0].setImageView(this.game.getImage(false));
 		}
-		else if(pToMove == players[0].getName()){
+		else if(pToMove.equals(players[0].getName())){
 			turn = 0;
+			players[1].setTurn(1);
+			players[0].setTurn(0);
+			/*
 			players[1].setImageView(this.game.getImage(false));
-			players[0].setImageView(this.game.getImage(true));
+			players[0].setImageView(this.game.getImage(true));*/
 		}
 		System.out.println("1: " + players[0] + " 2: " + players[1] + " m: " + pToMove);
 	}
 	
 	public void setup() {
-		game.setup(board);
+		game.setup(board, players);
 	}
 	
 	// Set the text for the current player
@@ -83,28 +85,48 @@ public class GameFW {
 	}
 
 	// Function for setting a move this checks if the moves is valid before sending it
-	public String move(int hor, int ver) {
-        if(game.isValid(players, turn, hor, ver, board, false)) {
+	public String move(int hor, int ver, Player player) {
+		if(player == null) {
+			player = players[0];
+		}
+		for(int i = 0; i < players.length; i++) {
+			if(player == players[i]) {
+				if(turn != i) {
+					return "Turn: " + players[turn].getName();
+				}
+			}
+		}
+        if(game.isValid(players, turn, hor, ver, board, true)) {
         	System.out.println("Move: " + hor + "-" + ver + " " + turn + " " + board.getCell(hor, ver).filled);
-            CellPane cp = board.getCell(hor, ver);
-            cp.filled = players[turn].getName();
-            cp.getChildren().add(players[turn].getImageView());
-            dispatcher.move(cp.loc);
-            turn = 1;
+        	dispatcher.move(board.getCell(hor, ver).loc);
+        	turn = 1;
         }
         return "Player: " + turn;
 	}
 
-	public void drawMove(int loc){
+	public void drawMove(int loc, String player){
  		int newhor = loc % getHor();
         int newver = loc / getVer();
-
+        Player playr = null;
+        for(Player p : players) {
+        	if(player.equals(p.getName())){
+        		playr = p;
+        	}
+        }/*
+        for(int i = 0; i < players.length; i++) {
+			if(player.equals(players[i].getName())) {
+				tturn = i;
+			}
+		}*/
+        
+        final int ftturn = playr.getTurn();
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
+				game.isValid(players, ftturn, newhor, newver, board, false);
 				CellPane cp = board.getCell(newhor, newver);
-				cp.filled = players[turn].getName();
-				cp.getChildren().add(players[turn].getImageView());
+				cp.filled = players[ftturn].getName();
+				cp.getChildren().add(game.getImage(ftturn));
 			}
 		});
     }

@@ -6,7 +6,7 @@ public interface Game {
 	void setup(Board board, Player[] players);
 	boolean isValid(Player[] players, int turn, int hor, int ver, Board board, boolean justCheck);
 	void createAI();
-	ImageView getImage(boolean turn);
+	ImageView getImage(int turn);
 	int getHor();
 	int getVer();
 }

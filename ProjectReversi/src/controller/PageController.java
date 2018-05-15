@@ -24,7 +24,7 @@ public class PageController {
 	}
 	
 	public String move(int hor, int ver) {
-		return gFW.move(hor, ver);
+		return gFW.move(hor, ver, null);
 	}
 	
 	public void setGame(Object game, String pToMove, String opponent) {

@@ -19,9 +19,7 @@ public class GameChallengeHandler extends ActionHandler{
     }
 
     public void run(String message){
-    	
-
-        System.out.println("Running GAME CHALLENGE command handler");
+    	//System.out.println("Running GAME CHALLENGE command handler");
         Pattern pattern = Pattern.compile("SVR GAME CHALLENGE \\{CHALLENGER: \"(.*?)\", CHALLENGENUMBER: \"(.*?)\", GAMETYPE: \"(.*?)\"\\}");
         Matcher matcher = pattern.matcher(message);
 

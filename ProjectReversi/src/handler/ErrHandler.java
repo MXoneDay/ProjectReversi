@@ -22,6 +22,7 @@ public class ErrHandler extends ActionHandler{
                 alert.setTitle("Error");
                 alert.setContentText(message);
                 alert.show();
+                gFW.pageController().toHome();
             }
         });
     }

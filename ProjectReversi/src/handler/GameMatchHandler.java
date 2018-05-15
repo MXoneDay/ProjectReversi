@@ -15,7 +15,7 @@ public class GameMatchHandler extends ActionHandler{
     }
 
     public void run(String message){
-        System.out.println("Running GAME MATCH command handler");
+        //System.out.println("Running GAME MATCH command handler");
         Pattern pattern = Pattern.compile("SVR GAME MATCH \\{PLAYERTOMOVE: \"(.*?)\", GAMETYPE: \"(.*?)\", OPPONENT: \"(.*?)\"\\}");
         Matcher matcher = pattern.matcher(message);
 

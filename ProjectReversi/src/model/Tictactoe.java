@@ -1,24 +1,25 @@
 package model;
 
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
+
 import view.CellPane;
 
 public class Tictactoe implements Game {
 	private final int hor = 3, ver = 3;
 
 	@Override
-	public void setup(Board board) {
+	public void setup(Board board, Player[] players) {
 	}
 
 	@Override
-	public ImageView getImage(boolean turn) {
+	public ImageView getImage(int turn) {
 		Image img = null;
 
-		if(turn){
-			img = new Image("pictures/x.png");
-		}else {
-			img = new Image("pictures/o.png");
+		if(turn == 0){
+			img = new Image("pictures/x.jpg");
+		}else if(turn == 1){
+			img = new Image("pictures/o.jpg");
 		}
 		return new ImageView(img);
 	}
@@ -27,7 +28,7 @@ public class Tictactoe implements Game {
 	public boolean isValid(Player[] players, int turn, int hor, int ver, Board board, boolean justCheck) {
 		// check if the move is valid
 		CellPane cp = board.getCell(hor, ver);
-		System.out.println("Move: " + cp.loc + cp.filled);
+		//System.out.println("Move: " + cp.loc + cp.filled);
 		if(cp.filled == null) {
 			return true;
 		}

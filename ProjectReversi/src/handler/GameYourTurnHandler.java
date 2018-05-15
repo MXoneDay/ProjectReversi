@@ -10,7 +10,7 @@ public class GameYourTurnHandler extends ActionHandler{
 	}
 	
     public void run(String message){
-        System.out.println("Running GAME YOUR TURN  command handler");
+        //System.out.println("Running GAME YOUR TURN  command handler");
         gFW.setTurn();
     }
 }

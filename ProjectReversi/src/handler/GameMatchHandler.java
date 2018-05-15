@@ -38,9 +38,10 @@ public class GameMatchHandler extends ActionHandler{
             @Override
             public void run() {
                 try {
-                    gFW.pageController().setGame(Class.forName("model." + gameType).getConstructor().newInstance(), playerToMove, opponent);
+                    gFW.pageController().setGame(Class.forName("model." + gameType.replace("-", "")).getConstructor().newInstance(), playerToMove, opponent);
                 } catch (Exception e) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    gFW.pageController().getAlertView().setAlert(Alert.AlertType.INFORMATION);
+                    Alert alert = gFW.pageController().getAlertView().getAlert();
                     alert.setHeaderText(null);
                     alert.setTitle("Unknown game");
                     alert.setContentText("Can not find game: " +gameType);

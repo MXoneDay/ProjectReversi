@@ -15,8 +15,8 @@ public class GameDrawHandler extends ActionHandler {
 
 			@Override
 			public void run() {
+				gFW.pageController().getAlertView().setAlert(Alert.AlertType.INFORMATION);
 				Alert alert = gFW.pageController().getAlertView().getAlert();
-				alert.setAlertType(Alert.AlertType.INFORMATION);
 				alert.setHeaderText(null);
 				alert.setTitle("GAME OVER");
 				alert.setContentText("It's a draw!");

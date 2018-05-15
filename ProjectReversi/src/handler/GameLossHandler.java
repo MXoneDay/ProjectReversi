@@ -15,14 +15,13 @@ public class GameLossHandler extends ActionHandler{
 
 			@Override
 			public void run() {
+				gFW.pageController().getAlertView().setAlert(Alert.AlertType.INFORMATION);
 				Alert alert = gFW.pageController().getAlertView().getAlert();
-				alert.setAlertType(Alert.AlertType.INFORMATION);
 				alert.setHeaderText(null);
 				alert.setTitle("GAME OVER");
 				alert.setContentText("You have lost the game.");
 				alert.show();
 			}
-
 		});
     }
 }

@@ -15,6 +15,7 @@ public class GameFW {
     private String[] playerlist;
     private User[] users = new User[2];
     private PageController pageController;
+    private boolean p1ai, p2ai;
     String username;
     
     public GameFW(){
@@ -107,10 +108,11 @@ public class GameFW {
         return "Player: " + turn;
 	}
 	
-	public void createAi(boolean p1) {
-		if(p1) {
+	public void createAi() {
+		if(p1ai) {
 			users[0] = game.createAI();
-		}else {
+		}
+		if(p2ai){
 			users[1] = game.createAI();
 		}
 	}
@@ -181,5 +183,10 @@ public class GameFW {
 
 	public String getUsername() {
 		return username;
+	}
+	
+	public void setAi(boolean p1, boolean p2) {
+		p1ai = p1;
+		p2ai = p2;
 	}
 }

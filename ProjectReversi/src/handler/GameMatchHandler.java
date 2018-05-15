@@ -38,6 +38,7 @@ public class GameMatchHandler extends ActionHandler{
             @Override
             public void run() {
                 try {
+                	gFW.pageController().getAlertView().hideAlert();
                     gFW.pageController().setGame(Class.forName("model." + gameType.replace("-", "")).getConstructor().newInstance(), playerToMove, opponent);
                 } catch (Exception e) {
                     gFW.pageController().getAlertView().setAlert(Alert.AlertType.INFORMATION);

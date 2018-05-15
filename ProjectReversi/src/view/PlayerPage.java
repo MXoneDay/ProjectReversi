@@ -8,13 +8,15 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 import controller.PageController;
 
 public class PlayerPage implements Page{
     private final PageController pc;
     private GridPane gp = new GridPane();
     private String selectedOpponent;
-    private boolean p1ai, p2ai;
     private ListView<String> players;
     private ObservableList<String> playerList;
 
@@ -44,11 +46,14 @@ public class PlayerPage implements Page{
         reversiButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent ae) {
-                System.out.println("debuggignging: "+selectedOpponent);
                 if (selectedOpponent != null){
-                    System.out.println("Challenging player: "+selectedOpponent+" to Reversi");
-                    pc.startChallenge(selectedOpponent, "Reversi");
-                    pc.toChallengePage();
+                	Alert alert = pc.getAlertView().getAlert();
+                	Timeline tl = new Timeline(new KeyFrame(Duration.seconds(10), (aEvent) -> {pc.getAlertView().hideAlert();}));
+                	alert.setTitle("Challenging Player...");
+                	alert.setContentText("Player: " + selectedOpponent);
+                	pc.startChallenge(selectedOpponent, "Reversi");
+                	alert.show();
+                	tl.play();
                 }
             }
         });
@@ -58,9 +63,13 @@ public class PlayerPage implements Page{
             @Override
             public void handle(ActionEvent ae) {
                 if (selectedOpponent != null){
-                    System.out.println("Challenging player: "+selectedOpponent+" to Tic-tac-toe");
-                    pc.startChallenge(selectedOpponent, "Tic-tac-toe");
-                    pc.toChallengePage();
+                	Alert alert = pc.getAlertView().getAlert();
+                	Timeline tl = new Timeline(new KeyFrame(Duration.seconds(10), (aEvent) -> {pc.getAlertView().hideAlert();}));
+                	alert.setTitle("Challenging Player...");
+                	alert.setContentText("Player: " + selectedOpponent);
+                	pc.startChallenge(selectedOpponent, "Tic-tac-toe");
+                	alert.show();
+                	tl.play();
                 }
             }
         });
@@ -86,11 +95,6 @@ public class PlayerPage implements Page{
     	gp.add(refreshButton, 0, 2);
         gp.add(reversiButton, 1, 2);
         gp.add(TictactoeButton, 2, 2);
-    }
-    
-    public void setAIs(boolean p1ai, boolean p2ai) {
-    	this.p1ai = p1ai;
-    	this.p2ai = p2ai;
     }
 
     @Override

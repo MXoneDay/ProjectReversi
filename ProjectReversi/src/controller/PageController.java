@@ -31,6 +31,7 @@ public class PageController {
 		gFW.setGame(game, pToMove, opponent);
 		gPage.createPage();
 		gFW.setup();
+		gFW.createAi();
 		toGrid();
 	}
 	
@@ -41,8 +42,8 @@ public class PageController {
   
 	public void toPlayerPage(String name, boolean p1Ai, boolean p2Ai) throws Exception {
 		gFW.connectToServer(name);
+		gFW.setAi(p1Ai, p2Ai);
         playerPage.createPage();
-        playerPage.setAIs(p1Ai, p2Ai);
         /*
         if(p1Ai) {
         	gFW.createAi(true);

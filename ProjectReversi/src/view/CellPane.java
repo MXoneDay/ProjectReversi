@@ -4,7 +4,7 @@ import javafx.scene.layout.Pane;
 
 public class CellPane extends Pane {
 	public final int loc, hor, ver;
-	public String filled = null;
+	public int filled = 3;
 
 	public CellPane(int loc, int hor, int ver){
 		this.loc = loc;
@@ -14,7 +14,7 @@ public class CellPane extends Pane {
 	
 	@Override
 	public String toString() {
-		return hor + "-" + ver;
+		return hor + "-" + ver + " " + filled;
 		
 	}
 	/*

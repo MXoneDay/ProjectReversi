@@ -29,7 +29,7 @@ public class Tictactoe implements Game {
 		// check if the move is valid
 		CellPane cp = board.getCell(hor, ver);
 		//System.out.println("Move: " + cp.loc + cp.filled);
-		if(cp.filled == null) {
+		if(cp.filled == 3) {
 			return true;
 		}
 		return false;

@@ -61,6 +61,7 @@ public class GameFW {
 			turn = 1;
 			players[1].setTurn(0);
 			players[0].setTurn(1);
+			System.out.println("yesy");
 			//players[1].setImageView(this.game.getImage(true));
 			//players[0].setImageView(this.game.getImage(false));
 		}
@@ -68,6 +69,7 @@ public class GameFW {
 			turn = 0;
 			players[1].setTurn(1);
 			players[0].setTurn(0);
+			System.out.println("yes");
 			/*
 			players[1].setImageView(this.game.getImage(false));
 			players[0].setImageView(this.game.getImage(true));*/
@@ -86,20 +88,30 @@ public class GameFW {
 
 	// Function for setting a move this checks if the moves is valid before sending it
 	public String move(int hor, int ver, Player player) {
-		if(player == null) {
+    	System.out.println("Move: " + hor + "-" + ver + " Turn: " + turn + " Fill: " + board.getCell(hor, ver).filled);
+    	if(player == null) {
 			player = players[0];
 		}
+    	System.out.println("mpTurn: " + player.getTurn());
+		if(player.getTurn() != turn) {
+			return "for the gods";
+		}
+		/*
 		for(int i = 0; i < players.length; i++) {
 			if(player == players[i]) {
 				if(turn != i) {
 					return "Turn: " + players[turn].getName();
 				}
 			}
-		}
+		}*/
         if(game.isValid(players, turn, hor, ver, board, true)) {
-        	System.out.println("Move: " + hor + "-" + ver + " " + turn + " " + board.getCell(hor, ver).filled);
         	dispatcher.move(board.getCell(hor, ver).loc);
-        	turn = 1;
+			if(turn == players[0].getTurn()) {
+				turn = players[1].getTurn();
+			}
+        	//turn = 1;
+        }else {
+        	System.out.println("not valid");
         }
         return "Player: " + turn;
 	}
@@ -112,7 +124,9 @@ public class GameFW {
         	if(player.equals(p.getName())){
         		playr = p;
         	}
-        }/*
+        }
+        System.out.println("pTurn: " + playr.getTurn());
+        /*
         for(int i = 0; i < players.length; i++) {
 			if(player.equals(players[i].getName())) {
 				tturn = i;
@@ -120,12 +134,13 @@ public class GameFW {
 		}*/
         
         final int ftturn = playr.getTurn();
+        System.out.println("fTurn " + ftturn);
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
 				game.isValid(players, ftturn, newhor, newver, board, false);
 				CellPane cp = board.getCell(newhor, newver);
-				cp.filled = players[ftturn].getName();
+				cp.filled = players[ftturn].getTurn();
 				cp.getChildren().add(game.getImage(ftturn));
 			}
 		});
@@ -154,7 +169,8 @@ public class GameFW {
     }
     
     public void setTurn() {
-        turn = 0;
+    	turn = players[0].getTurn();
+        //turn = 0;
     }
 
     public void startChallenge(String username, String game){

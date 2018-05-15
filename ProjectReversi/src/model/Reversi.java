@@ -20,16 +20,16 @@ public class Reversi implements Game {
 		
 		CellPane cp;
 		cp = board.getCell(3, 3);
-		cp.filled = two.getName();
+		cp.filled = 1;
 		cp.getChildren().add(getImage(1));
 		cp = board.getCell(3, 4);
-		cp.filled = one.getName();
+		cp.filled = 0;
 		cp.getChildren().add(getImage(0));
 		cp = board.getCell(4, 3);
-		cp.filled = one.getName();
+		cp.filled = 0;
 		cp.getChildren().add(getImage(0));
 		cp = board.getCell(4, 4);
-		cp.filled = two.getName();
+		cp.filled = 1;
 		cp.getChildren().add(getImage(1));
 	}
 	
@@ -61,15 +61,16 @@ public class Reversi implements Game {
 	
 	@Override
 	public boolean isValid(Player[] players, int turn, int hor, int ver, Board board, boolean justCheck) {
-		if(board.getCell(hor, ver).filled != null) {
+		if(board.getCell(hor, ver).filled != 3) {
 			return false;
 		}
 		
 		boolean ret = false, go = false;
-		int i = hor, j = ver, done = 0;
-		String cpFill;
-		Player enemy = players[1];
+		int cpFill, i = hor, j = ver, done = (turn == 1) ? 0 : 1;
+		int enemy = done;
 		CellPane cp;
+		done = 0;
+		System.out.println("en: " + enemy + " tu: " + turn);
 		
 		while(done < 8) {
 			switch(done) {
@@ -105,19 +106,19 @@ public class Reversi implements Game {
 			try {
 				cpFill = board.getCell(i, j).filled;
 				
-				if(cpFill == enemy.getName()) {
+				if(cpFill == enemy) {
 					go = true;
 					continue;
-				}else if(cpFill == null) {
+				}else if(cpFill == 3) {
 					throw new Exception();
-				}else if(cpFill == players[turn].getName()) {
+				}else if(cpFill == turn) {
 					while(go) {
 						if(justCheck) {
 							return true;
 						}
 						cp = board.getCell(i, j);
 						cp.getChildren().clear();
-						cp.filled = players[turn].getName();
+						cp.filled = turn;
 						cp.getChildren().add(getImage(turn));
 						ret = true;
 						if(i == hor && j == ver) {

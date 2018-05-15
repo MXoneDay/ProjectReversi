@@ -57,7 +57,7 @@ public class MessageParser {
 
             if (message.matches(regex)) {
                 messageFound = true;
-                System.out.println(message);
+                //System.out.println(message);
                 handler.run(message);
             }
         }

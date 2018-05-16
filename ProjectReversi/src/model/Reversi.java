@@ -36,8 +36,8 @@ public class Reversi implements Game {
 	}
 	
 	@Override
-	public User createAI() {
-		return new ReversiAI(this);
+	public User createAI(GameFW fw) {
+		return new ReversiAI(fw,this);
 	}
 	
 	@Override

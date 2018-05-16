@@ -110,10 +110,10 @@ public class GameFW {
 	
 	public void createAi() {
 		if(p1ai) {
-			users[0] = game.createAI();
+			users[0] = game.createAI(this);
 		}
 		if(p2ai){
-			users[1] = game.createAI();
+			users[1] = game.createAI(this);
 		}
 	}
 
@@ -160,10 +160,16 @@ public class GameFW {
     public Connection getConnection() {
         return connection;
     }
-    
-    public void setTurn() {
-    	turn = users[0].getTurn();
-    }
+
+	public void setTurn() {
+    	User user = users[0];
+		turn = user.getTurn();
+
+		if (users[0] instanceof AI) {
+			AI userai = (AI) user;
+			userai.doMove();
+		}
+	}
 
     public void startChallenge(String username, String game){
         dispatcher.challenge(username, game);

@@ -36,8 +36,9 @@ public class Tictactoe implements Game {
 	}
 	
 	@Override
-	public User createAI() {
-		return new TictactoeAI(this);
+	public User createAI(GameFW fw) {
+
+		return new TictactoeAI(fw, this);
 	}
 	
 	@Override

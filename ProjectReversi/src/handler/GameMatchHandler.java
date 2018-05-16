@@ -45,6 +45,7 @@ public class GameMatchHandler extends ActionHandler{
                     Alert alert = gFW.pageController().getAlertView().getAlert();
                     alert.setHeaderText(null);
                     alert.setTitle("Unknown game");
+                    e.printStackTrace();
                     alert.setContentText("Can not find game: " +gameType);
                     alert.show();
                 }

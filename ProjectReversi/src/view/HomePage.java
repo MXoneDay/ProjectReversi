@@ -56,7 +56,7 @@ public class HomePage implements Page{
 					}
 					catch(Exception ex) {
 						alert.setTitle(ex.getMessage());
-						ex.printStackTrace();
+						//ex.printStackTrace();
 						alert.setContentText("Please have a working connection to the server.");
 						alert.show();
 					}

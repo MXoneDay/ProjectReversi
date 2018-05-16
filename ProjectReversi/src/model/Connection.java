@@ -59,8 +59,9 @@ public class Connection {
                  }
              }
          };
-
+         
          this.listenerThread = new Thread(runnable);
+         this.listenerThread.setName("Listening Thread");
          this.listenerThread.start();
      }
 

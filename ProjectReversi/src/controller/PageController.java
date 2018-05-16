@@ -31,6 +31,14 @@ public class PageController {
 		gPage.createPage();
 		gFW.setup();
 		gFW.createAi(pToMove, opponent);
+		synchronized(gFW) {
+			try {
+				System.out.println(Thread.currentThread().getName() + " is notifying");
+				gFW.notifyAll();
+			}catch(Exception ex) {
+				
+			}
+		}
 		toGrid();
 	}
 	

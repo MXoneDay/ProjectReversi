@@ -58,6 +58,8 @@ public class MessageParser {
             if (message.matches(regex)) {
                 messageFound = true;
                 System.out.println(message);
+                //Runnable handle = () -> {handler.run(message);};
+                //new Thread(handle).start();
                 handler.run(message);
             }
         }

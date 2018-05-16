@@ -135,6 +135,14 @@ public class GameFW {
 				cp.getChildren().add(game.getImage(ftturn));
 			}
 		});
+		try {
+			synchronized(this) {
+				System.out.println(Thread.currentThread().getName() + " is notifying");
+				this.notifyAll();
+			}
+		}catch(Exception ex) {
+			
+		}
     }
 
 	public void disconnect() {
@@ -169,7 +177,7 @@ public class GameFW {
 			@Override
 			public void run() {
 				try {
-					Thread.sleep(2000);
+					//Thread.sleep(1000);
 				}catch (Exception ex){
 					
 				}

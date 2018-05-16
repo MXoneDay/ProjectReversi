@@ -22,7 +22,7 @@ public class GameFW {
     	try {
             env = new DotEnv();
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 

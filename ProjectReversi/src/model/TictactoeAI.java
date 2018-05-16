@@ -1,16 +1,16 @@
 package model;
 
 import view.CellPane;
+
+import java.util.ArrayList;
 import java.util.Random;
 
-public class TictactoeAI implements User, AI {
-	GameFW fw;
+public class TictactoeAI implements AI {
+	private GameFW fw;
 	private Tictactoe ttt;
-	private Board board;
 	private String name;
-	private CellPane[] validMoves = new CellPane[fw.getHor()*fw.getVer()];
+	private ArrayList<CellPane> validMoves = new ArrayList<CellPane>();
 	private Random rand = new Random();
-	private int arrLoc = 0;
 	private int turn;
 
 	TictactoeAI(GameFW gFW, Tictactoe ttt){
@@ -20,8 +20,14 @@ public class TictactoeAI implements User, AI {
 	}
 
 	@Override
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@Override
 	public void setTurn(int turn) {
 		this.turn = turn;
+		System.out.println("turn: " + turn);
 	}
 
 	@Override
@@ -35,23 +41,21 @@ public class TictactoeAI implements User, AI {
 	}
 
 	// Genarates a array with validMoves
-	public CellPane[] possibleMoves() {
+	public void possibleMoves() {
 		for (int i = 0; i < fw.getVer(); i++) {
 			for (int j = 0; j < fw.getHor(); j++) {
-				if (ttt.isValid(fw.getUsers(), turn, j, i, board, false)) {
-					validMoves[arrLoc] = board.getCell(j, i);
-					arrLoc++;
+				if (ttt.isValid(fw.getUsers(), turn, i, j, fw.getBoard(), true)) {
+					validMoves.add(fw.getBoard().getCell(i, j));
 				}
 			}
 		}
-		return validMoves;
 	}
 
 	// Picks a random int from the possible moves
 	public CellPane getRandomMove(){
-		CellPane[] validMoves = possibleMoves();
-		int randomMove = rand.nextInt(validMoves.length);
-		return validMoves[randomMove];
+		possibleMoves();
+		int randomMove = rand.nextInt(validMoves.size() -  1);
+		return validMoves.get(randomMove);
 	}
 
 	public void doMove() {
@@ -59,10 +63,5 @@ public class TictactoeAI implements User, AI {
 		int hor = move.hor ;
 		int ver = move.ver ;
 		fw.move(hor, ver, this);
-	}
-
-	@Override
-	public void setName(String name) {
-		this.name = name;
 	}
 }

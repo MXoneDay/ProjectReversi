@@ -9,10 +9,8 @@ public class ReversiAI implements AI {
 	private GameFW fw;
 	private Reversi rev;
 	private String name;
-	//private CellPane[] validMoves = new CellPane[8*8];
 	private ArrayList<CellPane> validMoves = new ArrayList<CellPane>();
 	private Random rand = new Random();
-	//private int arrLoc = 0;
 	private int turn;
 
 	ReversiAI(GameFW gFW, Reversi rev){

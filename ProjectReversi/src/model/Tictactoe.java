@@ -34,11 +34,10 @@ public class Tictactoe implements Game {
 		}
 		return false;
 	}
-	
-	@Override
-	public User createAI(GameFW fw) {
 
-		return new TictactoeAI(fw, this);
+	@Override
+	public AI createAI(GameFW fw) {
+		return new TictactoeAI(fw,this);
 	}
 	
 	@Override

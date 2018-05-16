@@ -36,7 +36,7 @@ public class Reversi implements Game {
 	}
 	
 	@Override
-	public User createAI(GameFW fw) {
+	public AI createAI(GameFW fw) {
 		return new ReversiAI(fw,this);
 	}
 	
@@ -57,10 +57,9 @@ public class Reversi implements Game {
 		}
 		
 		boolean ret = false, go = false;
-		int cpFill, i = hor, j = ver, done = (turn == 1) ? 0 : 1;
-		int enemy = done;
+		int cpFill, i = hor, j = ver, done = 0;
+		int enemy = (turn == 1) ? 0 : 1;
 		CellPane cp;
-		done = 0;
 		
 		while(done < 8) {
 			switch(done) {

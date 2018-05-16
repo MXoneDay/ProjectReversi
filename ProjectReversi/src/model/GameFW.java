@@ -15,7 +15,7 @@ public class GameFW {
     private String[] playerlist;
     private User[] users = new User[2];
     private PageController pageController;
-    private boolean p1ai, p2ai;
+    private boolean p1ai;
     String username;
     
     public GameFW(){
@@ -30,7 +30,7 @@ public class GameFW {
 		connection = new Connection(this);
 		connection.start(env.get("HOST"), Integer.parseInt(env.get("PORT")));
 		dispatcher = connection.getDispatcher();
-		users[0] = new Player(name);
+		//users[0] = new Player(name);
 		dispatcher.login(name);
 		this.username = name;
 	}
@@ -55,27 +55,34 @@ public class GameFW {
 	}
 
 	// If the game is not supported by the client it will throw an execption
-	public void setGame(Object game, String pToMove, String oppenent) {
+	public void setGame(Object game) {
 		this.game = (Game) game;
-		users[1] = new Player(oppenent);
+		//users[1] = new Player(oppenent);
 		board = new Board(getVer(), getHor());
+	}
+	
+	
+	public void createAi(String pToMove, String opponent) {
+		users[1] = new Player(opponent);
+		if(p1ai) {
+			AI ai = game.createAI(this);
+			ai.setName(username);
+			users[0] = ai;
+		}else {
+			users[0] = new Player(username);
+		}
 		
-		if(pToMove.equals(oppenent)) {
+		if(pToMove.equals(opponent)) {
 			turn = 1;
 			users[1].setTurn(0);
 			users[0].setTurn(1);
 			System.out.println("yesy");
-			//players[1].setImageView(this.game.getImage(true));
-			//players[0].setImageView(this.game.getImage(false));
 		}
 		else if(pToMove.equals(users[0].getName())){
 			turn = 0;
 			users[1].setTurn(1);
 			users[0].setTurn(0);
 			System.out.println("yes");
-			/*
-			players[1].setImageView(this.game.getImage(false));
-			players[0].setImageView(this.game.getImage(true));*/
 		}
 	}
 	
@@ -106,15 +113,6 @@ public class GameFW {
         	System.out.println("not valid");
         }
         return "Player: " + turn;
-	}
-	
-	public void createAi() {
-		if(p1ai) {
-			users[0] = game.createAI(this);
-		}
-		if(p2ai){
-			users[1] = game.createAI(this);
-		}
 	}
 
 	public void drawMove(int loc, String player){
@@ -156,19 +154,33 @@ public class GameFW {
 		}
 		return playerlist;
 	}
+	
+	public User[] getUsers() {
+		return users;
+	}
 
     public Connection getConnection() {
         return connection;
     }
 
 	public void setTurn() {
-    	User user = users[0];
-		turn = user.getTurn();
+		Platform.runLater(new Runnable() {
 
-		if (users[0] instanceof AI) {
-			AI userai = (AI) user;
-			userai.doMove();
-		}
+			@Override
+			public void run() {
+				try {
+					Thread.sleep(2000);
+				}catch (Exception ex){
+					
+				}
+				User user = users[0];
+				turn = user.getTurn();
+				if (users[0] instanceof AI) {
+					AI userai = (AI) user;
+					userai.doMove();
+				}
+			}
+		});
 	}
 
     public void startChallenge(String username, String game){
@@ -191,8 +203,12 @@ public class GameFW {
 		return username;
 	}
 	
-	public void setAi(boolean p1, boolean p2) {
+	public Board getBoard() {
+		return board;
+	}
+	
+	public void setAi(boolean p1) {
 		p1ai = p1;
-		p2ai = p2;
+		//p2ai = p2;
 	}
 }

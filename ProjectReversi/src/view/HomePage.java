@@ -30,18 +30,14 @@ public class HomePage implements Page{
 			Label RButtons = new Label("Mode:");
 			Button b1 = new Button("Next");
 			
-			RadioButton rb1 = new RadioButton("Player vs AI");
 			RadioButton rb2 = new RadioButton("Player vs Online");
 			RadioButton rb3 = new RadioButton("AI vs Online");
 			
 			alert.setHeaderText(null);
 			
-			rb1.setUserData(2);
-			rb1.setToggleGroup(tg);
-			rb1.setSelected(true);
-			
 			rb2.setUserData(3);
 			rb2.setToggleGroup(tg);
+			rb2.setSelected(true);
 			
 			rb3.setUserData(4);
 			rb3.setToggleGroup(tg);
@@ -51,7 +47,7 @@ public class HomePage implements Page{
 				public void handle(ActionEvent ae) {
 					try {
 						if(!text.getText().isEmpty()) {
-							pc.toPlayerPage(text.getText(), rb3.isSelected(), rb1.isSelected());
+							pc.toPlayerPage(text.getText(), rb3.isSelected());
 						}else {
 							alert.setTitle("No name");
 							alert.setContentText("Please enter a Username");
@@ -72,7 +68,6 @@ public class HomePage implements Page{
 			gp.add(name, 0, 0);
 			gp.add(text, 1, 0);
 			gp.add(b1, 2, 5);
-			gp.add(rb1, 0, 2);
 			gp.add(rb2, 0, 3);
 			gp.add(rb3, 0, 4);
 		}

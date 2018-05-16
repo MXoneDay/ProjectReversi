@@ -1,17 +1,18 @@
 package model;
 
 import view.CellPane;
+
+import java.util.ArrayList;
 import java.util.Random;
 
-public class ReversiAI implements User, AI {
-	GameFW fw;
+public class ReversiAI implements AI {
+	private GameFW fw;
 	private Reversi rev;
-	private Board board;
-	private Player player[];
 	private String name;
-	private CellPane[] validMoves = new CellPane[fw.getHor()*fw.getVer()];
+	//private CellPane[] validMoves = new CellPane[8*8];
+	private ArrayList<CellPane> validMoves = new ArrayList<CellPane>();
 	private Random rand = new Random();
-	private int arrLoc = 0;
+	//private int arrLoc = 0;
 	private int turn;
 
 	ReversiAI(GameFW gFW, Reversi rev){
@@ -19,10 +20,16 @@ public class ReversiAI implements User, AI {
 		this.rev = rev;
 		System.out.println("made it");
 	}
+	
+	@Override
+	public void setName(String name) {
+		this.name = name;				
+	}
 
 	@Override
 	public void setTurn(int turn) {
 		this.turn = turn;
+		System.out.println("turn: " + turn);
 	}
 
 	@Override
@@ -36,23 +43,21 @@ public class ReversiAI implements User, AI {
 	}
 
 	// Genarates a array with validMoves
-	public CellPane[] possibleMoves() {
+	public void possibleMoves() {
 		for (int i = 0; i < fw.getVer(); i++) {
 			for (int j = 0; j < fw.getHor(); j++) {
-				if (rev.isValid(player, turn, j, i, board, false)) {
-					validMoves[arrLoc] = board.getCell(j, i);
-					arrLoc++;
+				if (rev.isValid(fw.getUsers(), turn, i, j, fw.getBoard(), true)) {
+					validMoves.add(fw.getBoard().getCell(i, j));
 				}
 			}
 		}
-		return validMoves;
 	}
 
 	// Picks a random int from the possible moves
 	public CellPane getRandomMove(){
-		CellPane[] validMoves = possibleMoves();
-		int randomMove = rand.nextInt(validMoves.length);
-		return validMoves[randomMove];
+		possibleMoves();
+		int randomMove = rand.nextInt(validMoves.size() -  1);
+		return validMoves.get(randomMove);
 	}
 
 	public void doMove() {

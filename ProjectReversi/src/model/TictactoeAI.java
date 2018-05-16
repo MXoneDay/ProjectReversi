@@ -7,7 +7,6 @@ public class TictactoeAI implements User, AI {
 	GameFW fw;
 	private Tictactoe ttt;
 	private Board board;
-	private Player player[];
 	private String name;
 	private CellPane[] validMoves = new CellPane[fw.getHor()*fw.getVer()];
 	private Random rand = new Random();
@@ -39,7 +38,7 @@ public class TictactoeAI implements User, AI {
 	public CellPane[] possibleMoves() {
 		for (int i = 0; i < fw.getVer(); i++) {
 			for (int j = 0; j < fw.getHor(); j++) {
-				if (ttt.isValid(player, turn, j, i, board, false)) {
+				if (ttt.isValid(fw.getUsers(), turn, j, i, board, false)) {
 					validMoves[arrLoc] = board.getCell(j, i);
 					arrLoc++;
 				}
@@ -60,5 +59,10 @@ public class TictactoeAI implements User, AI {
 		int hor = move.hor ;
 		int ver = move.ver ;
 		fw.move(hor, ver, this);
+	}
+
+	@Override
+	public void setName(String name) {
+		this.name = name;
 	}
 }

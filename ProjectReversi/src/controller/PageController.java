@@ -27,10 +27,10 @@ public class PageController {
 	}
 	
 	public void setGame(Object game, String pToMove, String opponent) {
-		gFW.setGame(game, pToMove, opponent);
+		gFW.setGame(game);
 		gPage.createPage();
 		gFW.setup();
-		gFW.createAi();
+		gFW.createAi(pToMove, opponent);
 		toGrid();
 	}
 	
@@ -39,17 +39,10 @@ public class PageController {
 		scene.setRoot(hPage.getPane());
 	}
   
-	public void toPlayerPage(String name, boolean p1Ai, boolean p2Ai) throws Exception {
+	public void toPlayerPage(String name, boolean p1Ai) throws Exception {
 		gFW.connectToServer(name);
-		gFW.setAi(p1Ai, p2Ai);
+		gFW.setAi(p1Ai);
         playerPage.createPage();
-        /*
-        if(p1Ai) {
-        	gFW.createAi(true);
-        }
-        if(p2Ai) {
-        	gFW.createAi(false);
-        }*/
         scene.setRoot(playerPage.getPane());
     }
 	

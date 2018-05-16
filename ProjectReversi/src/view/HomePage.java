@@ -72,7 +72,7 @@ public class HomePage implements Page{
 			gp.add(rb3, 0, 4);
 		}
 		catch(Exception ex) {
-			ex.printStackTrace();
+			//ex.printStackTrace();
 		}	
 	}
 	

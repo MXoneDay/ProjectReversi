@@ -65,7 +65,6 @@ public class GridPage implements Page{
 		
 		
 		back.setOnAction(new EventHandler<ActionEvent>() {
-
 			@Override
 			public void handle(ActionEvent ae) {
 				pc.toHome();

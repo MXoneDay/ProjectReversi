@@ -20,7 +20,7 @@ public class CommandDispatcher {
     }
 
     public void disconnect(){
-        connection.send("exit");
+        connection.send("disconnect");
     }
 
     public void getPlayers(){

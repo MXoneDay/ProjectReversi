@@ -53,6 +53,7 @@ public class ReversiAI implements AI {
 
 	// Picks a random int from the possible moves
 	public CellPane getRandomMove(){
+		validMoves = new ArrayList<CellPane>();
 		possibleMoves();
 		int randomMove = rand.nextInt(validMoves.size() -  1);
 		return validMoves.get(randomMove);

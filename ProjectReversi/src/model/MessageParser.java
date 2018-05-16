@@ -2,20 +2,7 @@ package model;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import handler.ActionHandler;
-import handler.ErrHandler;
-import handler.GameChallengeCancelledHandler;
-import handler.GameChallengeHandler;
-import handler.GameDrawHandler;
-import handler.GameListHandler;
-import handler.GameLossHandler;
-import handler.GameMatchHandler;
-import handler.GameMoveHanlder;
-import handler.GameWinHandler;
-import handler.GameYourTurnHandler;
-import handler.OkHandler;
-import handler.PlayerListHandler;
+import handler.*;
 
 public class MessageParser {
     Map<String, ActionHandler> messages = new HashMap<String, ActionHandler>();
@@ -33,20 +20,19 @@ public class MessageParser {
     GameChallengeCancelledHandler gameChallengeCancelledHandler;
 
     public MessageParser(GameFW gFW){
-        //System.out.println("DEBUG 2 : "+this.gf.toString());
         // initialize handlers
         this.okHandler = new OkHandler();
-        this.errHandler = new ErrHandler();
+        this.errHandler = new ErrHandler(gFW);
         this.gameListHandler = new GameListHandler();
         this.playerListHandler = new PlayerListHandler(gFW);
-        this.gameMatchHandler = new GameMatchHandler();
+        this.gameMatchHandler = new GameMatchHandler(gFW);
         this.gameYourTurnHandler = new GameYourTurnHandler(gFW);
         this.gameMoveHanlder = new GameMoveHanlder(gFW);
         this.gameWinHandler = new GameWinHandler(gFW);
         this.gameLossHandler = new GameLossHandler(gFW);
         this.gameDrawHandler = new GameDrawHandler(gFW);
-        this.gameChallengeHandler = new GameChallengeHandler();
-        this.gameChallengeCancelledHandler = new GameChallengeCancelledHandler();
+        this.gameChallengeHandler = new GameChallengeHandler(gFW);
+        this.gameChallengeCancelledHandler = new GameChallengeCancelledHandler(gFW);
 
         messages.put("OK", this.okHandler);
         messages.put("ERR (.*?)+", this.errHandler);
@@ -71,6 +57,7 @@ public class MessageParser {
 
             if (message.matches(regex)) {
                 messageFound = true;
+                System.out.println(message);
                 handler.run(message);
             }
         }

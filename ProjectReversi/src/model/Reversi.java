@@ -1,8 +1,8 @@
 package model;
 
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import view.CellPane;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 
 public class Reversi implements Game {
 	private final int hor = 8, ver = 8;
@@ -11,45 +11,33 @@ public class Reversi implements Game {
 	public void setup(Board board) {
 		CellPane cp;
 		cp = board.getCell(3, 3);
-		cp.filled = 2;
-		cp.getChildren().add(getImage(2));
+		cp.filled = 1;
+		cp.getChildren().add(getImage(1));
 		cp = board.getCell(3, 4);
-		cp.filled = 1;
-		cp.getChildren().add(getImage(1));
+		cp.filled = 0;
+		cp.getChildren().add(getImage(0));
 		cp = board.getCell(4, 3);
+		cp.filled = 0;
+		cp.getChildren().add(getImage(0));
+		cp = board.getCell(4, 4);
 		cp.filled = 1;
 		cp.getChildren().add(getImage(1));
-		cp = board.getCell(4, 4);
-		cp.filled = 2;
-		cp.getChildren().add(getImage(2));
-	}
-
-	@Override
-	public String getTurntext(int turn) {
-		String t = null;
-		if(turn == 1){
-			t =  "Turn : Player White"; }
-		else if(turn == 2){
-			t = "Turn : Player Black";
-		}
-		return t;
-	}
-
-	@Override
-	public ImageView getImage(int turn) {
-		Image img = null;
-		if(turn == 1){
-			img = new Image("pictures/blackpiece.png", 60 ,60, false, true);
-		}else if(turn == 2){
-			img = new Image("pictures/whitepiece.png", 60, 60, false, true);
-		}
-		ImageView iv = new ImageView(img);
-		return iv;
 	}
 	
 	@Override
-	public void createAI() {
-		
+	public ImageView getImage(int turn) {
+		Image img = null;
+		if(turn == 0){
+			img = new Image("pictures/blackpiece.png", 60, 60, false, true);
+		}else if(turn == 1){
+			img = new Image("pictures/whitepiece.png", 60, 60 ,false, true);
+		}
+		return new ImageView(img);
+	}
+	
+	@Override
+	public AI createAI(GameFW fw) {
+		return new ReversiAI(fw,this);
 	}
 	
 	@Override
@@ -63,15 +51,14 @@ public class Reversi implements Game {
 	}
 	
 	@Override
-	public boolean isValid(int turn, int hor, int ver, Board board) {
-		System.out.println("Move: " + hor + "-" + ver + " " + turn + " " + board.getCell(hor, ver).filled);
-		if(board.getCell(hor, ver).filled != 0) {
+	public boolean isValid(User[] users, int turn, int hor, int ver, Board board, boolean justCheck) {
+		if(board.getCell(hor, ver).filled != 3) {
 			return false;
 		}
 		
 		boolean ret = false, go = false;
-		int i = hor, j = ver, done = 0, cpFill;
-		int enemy = (turn == 1) ? 2 : 1;
+		int cpFill, i = hor, j = ver, done = 0;
+		int enemy = (turn == 1) ? 0 : 1;
 		CellPane cp;
 		
 		while(done < 8) {
@@ -111,10 +98,13 @@ public class Reversi implements Game {
 				if(cpFill == enemy) {
 					go = true;
 					continue;
-				}else if(cpFill == 0) {
+				}else if(cpFill == 3) {
 					throw new Exception();
 				}else if(cpFill == turn) {
 					while(go) {
+						if(justCheck) {
+							return true;
+						}
 						cp = board.getCell(i, j);
 						cp.getChildren().clear();
 						cp.filled = turn;

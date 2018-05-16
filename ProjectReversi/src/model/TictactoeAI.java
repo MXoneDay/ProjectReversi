@@ -2,70 +2,67 @@ package model;
 
 import view.CellPane;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class TictactoeAI implements AI {
+	private GameFW fw;
 	private Tictactoe ttt;
-	private Board board;
+	private String name;
+	private ArrayList<CellPane> validMoves = new ArrayList<CellPane>();
 	private Random rand = new Random();
-	private int[] validMoves = new int[9];
-	public boolean waitForMove;
-	int turn;
-	int hor;
-	int ver;
-	int loc;
+	private int turn;
 
-
-	TictactoeAI(Tictactoe ttt) {
+	TictactoeAI(GameFW gFW, Tictactoe ttt){
+		this.fw = gFW;
 		this.ttt = ttt;
+		System.out.println("made it");
 	}
 
-	// Te doen goede aanroep / implementatie van de variablen
-	// --> getValidMoves loopt door het bord heen alle vakjes worden dus in het bord gezet tenzij deze al bezet is dan wordt deze niet toe gevoegd
-	// --> GetRandomMove is een werkende functie deze pakt een int uit de array willekeurig en plaats deze
-	// --> huidige plaatsings probleem is we zitten met Loc maar ook met hor en ver
-	// --> TryMove komt uit de game zelf de AI moet mee krijgen welke speler hij is zodat deze een int uit de array kan plaatsen
+	@Override
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public int[] getValidMoves() {
+	@Override
+	public void setTurn(int turn) {
+		this.turn = turn;
+		System.out.println("turn: " + turn);
+	}
 
-		for (int i = 0; i < board ; i++) {
-			if(ttt.isValid(turn, hor, ver, board)) {
-				if (board.checkFilled(hor, ver) = false) { // check filled is nog geen goede functie
-					Arrays.fill(validMoves, i);
+	@Override
+	public int getTurn() {
+		return turn;
+	}
+
+	@Override
+	public String getName() {
+		return name;
+	}
+
+	// Genarates a array with validMoves
+	public void possibleMoves() {
+		for (int i = 0; i < fw.getVer(); i++) {
+			for (int j = 0; j < fw.getHor(); j++) {
+				if (ttt.isValid(fw.getUsers(), turn, i, j, fw.getBoard(), true)) {
+					validMoves.add(fw.getBoard().getCell(i, j));
 				}
 			}
-			return validMoves;
 		}
 	}
 
 	// Picks a random int from the possible moves
-	public int getRandomMove(){
-		int[] validMoves = getValidMoves();
-		int randomMove = rand.nextInt(validMoves.length);
-		return validMoves[randomMove];
+	public CellPane getRandomMove(){
+		validMoves = new ArrayList<CellPane>();
+		possibleMoves();
+		int randomMove = rand.nextInt(validMoves.size());
+		return validMoves.get(randomMove);
 	}
 
-	// Tries to place the random move by waiting for its turn
-	public void tryMove(int hor, int ver) {
-			if(waitForMove) {
-				return move(hor, ver);
-			}else if(!waitForMove) {
-				return move(hor, ver);
-			}
+	public void doMove() {
+		CellPane move = getRandomMove();
+		int hor = move.hor ;
+		int ver = move.ver ;
+		fw.move(hor, ver, this);
 	}
 }
-
-/* First attempt to loop throught the board
-		for (int i = 0; i < ttt.getVer(); i++) {
-			for (int j = 0; j < ttt.getHor(); j++) {
-				if (ttt.isValid(turn, j, i, board)) {
-					CellPane cp = board.getCell(ttt.getHor(), ttt.getVer()); // hor en ver
-					cp.filled = turn;
-					loc++;
-				}
-			}
-			return validMoves[];
-		}
- */

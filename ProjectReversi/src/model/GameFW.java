@@ -1,42 +1,43 @@
 package model;
 
 import java.io.IOException;
+import controller.PageController;
 import javafx.application.Platform;
 import view.CellPane;
 
 public class GameFW {
 	private Board board;
-	private int turn = 0; // default -> 0! TODO
+	private int turn;
 	private Game game;
-	public String user1;
-	public String user2;
-	private int mode;
-	private char type;
-	public boolean waitForMove;
-	Connection connection;
-	CommandDispatcher dispatcher;
-    DotEnv env;
-    String[] players;
-    Player player;
-
-    {
-        try {
+	private Connection connection;
+	private CommandDispatcher dispatcher;
+    private DotEnv env;
+    private String[] playerlist;
+    private User[] users = new User[2];
+    private PageController pageController;
+    private boolean p1ai;
+    String username;
+    
+    public GameFW(){
+    	try {
             env = new DotEnv();
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
-	
 
-	public void connectToServer() throws Exception {
-
+	public void connectToServer(String name) throws Exception {
 		connection = new Connection(this);
 		connection.start(env.get("HOST"), Integer.parseInt(env.get("PORT")));
 		dispatcher = connection.getDispatcher();
-
-        this.player = new Player(user1);
-		dispatcher.login(this.player.getUsername());
+		//users[0] = new Player(name);
+		dispatcher.login(name);
+		this.username = name;
 	}
+
+	public void login(String username){
+        dispatcher.login(username);
+    }
 	
 	// Get method for the value of the Horizontal value / X-value
 	public int getHor() {
@@ -54,131 +55,84 @@ public class GameFW {
 	}
 
 	// If the game is not supported by the client it will throw an execption
-	public void setGame(char type, Object wait) throws Exception{
-		this.type = type;
-		mode = (int) wait;
-		
-		if(type == 'r') {
-			game = new Reversi();
-			dispatcher.subscribe("Reversi");
-
-            if (getPlayers().length == 0){
-                this.player.setImage("whitepiece.png");
-            }else{
-                this.player.setImage("blackpiece.png");
-            }
-		}else if(type == 't') {
-			game = new Tictactoe();
-			dispatcher.subscribe("Tic-tac-toe");
-
-            if (getPlayers().length == 0){
-                this.player.setImage("x.png");
-            }else{
-                this.player.setImage("o.png");
-            }
-
-		}
-		else {
-			throw new Exception("Not currently supported");
+	public void setGame(Object game) {
+		this.game = (Game) game;
+		//users[1] = new Player(oppenent);
+		board = new Board(getVer(), getHor());
+	}
+	
+	
+	public void createAi(String pToMove, String opponent) {
+		users[1] = new Player(opponent);
+		if(p1ai) {
+			AI ai = game.createAI(this);
+			ai.setName(username);
+			users[0] = ai;
+		}else {
+			users[0] = new Player(username);
 		}
 		
-		if(mode == 1) {
-			waitForMove = false;
-		}else if(mode == 2) {
-			waitForMove = true;
-			game.createAI();
-		}else if(mode == 3) {
-			waitForMove = true;
-		}else if(mode == 4) {
-			waitForMove = true;
-			game.createAI();
+		if(pToMove.equals(opponent)) {
+			turn = 1;
+			users[1].setTurn(0);
+			users[0].setTurn(1);
+			System.out.println("yesy");
 		}
-		
-		board = new Board(game.getVer(), game.getHor());
+		else if(pToMove.equals(users[0].getName())){
+			turn = 0;
+			users[1].setTurn(1);
+			users[0].setTurn(0);
+			System.out.println("yes");
+		}
 	}
 	
 	public void setup() {
 		game.setup(board);
 	}
 	
-	public void reset() {
-		try {
-			board.reset();
-			disconnect();
-			connectToServer();
-			if(type == 'r') {
-				dispatcher.subscribe("Reversi");
-                if (getPlayers().length == 0){
-                    this.player.setImage("whitepiece.png");
-                }else{
-                    this.player.setImage("blackpiece.png");
-                }
-			}else if(type == 't') {
-				dispatcher.subscribe("Tic-tac-toe");
-                if (getPlayers().length == 0){
-                    this.player.setImage("x.png");
-                }else{
-                    this.player.setImage("o.png");
-                }
-			}
-			game.setup(board);
-			turn = 1;
-		}
-		catch(Exception ex) {
-		}
-	}
-	
 	// Set the text for the current player
 	public String getTurntext() {
-		return game.getTurntext(turn);
-	}
-	
-	public String tryMove(int hor, int ver) {
-		if(waitForMove/* && turn == 2*/) {
-			return move(hor, ver);
-		}else if(!waitForMove) {
-			return move(hor, ver);
-		}
-		else {
-			return "Player: " + turn;
-		}
+		return "Turn: " + users[turn].getName();
 	}
 
 	// Function for setting a move this checks if the moves is valid before sending it
-	public String move(int hor, int ver) {
-        if(turn != 1){
-            return "Player: " + turn;
+	public String move(int hor, int ver, User user) {
+    	System.out.println("Move: " + hor + "-" + ver + " Turn: " + turn + " Fill: " + board.getCell(hor, ver).filled);
+    	if(user == null) {
+			user = users[0];
+		}
+		if(user.getTurn() != turn) {
+			return "for the gods";
+		}
+        if(game.isValid(users, turn, hor, ver, board, true)) {
+        	dispatcher.move(board.getCell(hor, ver).loc);
+			if(turn == users[0].getTurn()) {
+				turn = users[1].getTurn();
+			}
+        }else {
+        	System.out.println("not valid");
         }
-
-        if(game.isValid(turn, hor, ver, board)) {
-            CellPane cp = board.getCell(hor, ver);
-            cp.filled = turn;
-            cp.getChildren().add(game.getImage(turn));
-            dispatcher.move(cp.loc);
-            setTurn(2);
-        }
-//		turn = (turn == 1) ? 2 : 1;
         return "Player: " + turn;
 	}
 
-	public void drawMove(int loc){
-        //int hor = 0;
-        //int ver = 0;
-
+	public void drawMove(int loc, String player){
  		int newhor = loc % getHor();
         int newver = loc / getVer();
-
-		System.out.println(newhor);
-		System.out.println(newver);
-
+        User playr = null;
+        for(User p : users) {
+        	if(player.equals(p.getName())){
+        		playr = p;
+        	}
+        }
+        
+        final int ftturn = playr.getTurn();
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
+				game.isValid(users, ftturn, newhor, newver, board, false);
 				CellPane cp = board.getCell(newhor, newver);
-				System.out.println("Cellpane hor, ver: "+newhor+", "+newver);
-				System.out.println("CellPane to draw on: " + cp.toString());
-				cp.filled = turn;
-				cp.getChildren().add(game.getImage(turn));
+				cp.filled = ftturn;
+				cp.getChildren().add(game.getImage(ftturn));
 			}
 		});
     }
@@ -186,9 +140,9 @@ public class GameFW {
 	public void disconnect() {
 		dispatcher.disconnect();
 	}
-	
+
     public void setPlayers(String[] players) {
-        this.players = players;
+        this.playerlist = players;
     }
     
 	public String[] getPlayers() {
@@ -197,16 +151,64 @@ public class GameFW {
 			Thread.sleep(1000);
 		}
 		catch(Exception ex) {
-			
 		}
-		return players;
+		return playerlist;
+	}
+	
+	public User[] getUsers() {
+		return users;
 	}
 
     public Connection getConnection() {
         return connection;
     }
 
-    public void setTurn(int turn) {
-        this.turn = turn;
+	public void setTurn() {
+		Platform.runLater(new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+					Thread.sleep(2000);
+				}catch (Exception ex){
+					
+				}
+				User user = users[0];
+				turn = user.getTurn();
+				if (users[0] instanceof AI) {
+					AI userai = (AI) user;
+					userai.doMove();
+				}
+			}
+		});
+	}
+
+    public void startChallenge(String username, String game){
+        dispatcher.challenge(username, game);
     }
+
+	public void setPageController(PageController pageController) {
+		this.pageController = pageController;
+	}
+
+	public PageController pageController(){
+    	return this.pageController;
+	}
+
+	public void acceptChallenge(String challengeNumber){
+		dispatcher.acceptChallenge(challengeNumber);
+	}
+
+	public String getUsername() {
+		return username;
+	}
+	
+	public Board getBoard() {
+		return board;
+	}
+	
+	public void setAi(boolean p1) {
+		p1ai = p1;
+		//p2ai = p2;
+	}
 }

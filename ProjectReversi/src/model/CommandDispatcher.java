@@ -7,7 +7,7 @@ public class CommandDispatcher {
     }
 
     public void login(String username){
-        System.out.println(username);
+        //System.out.println(username);
         connection.send("login "+username);
     }
 
@@ -20,10 +20,20 @@ public class CommandDispatcher {
     }
 
     public void disconnect(){
-        connection.send("exit");
+        connection.send("disconnect");
     }
 
     public void getPlayers(){
         connection.send("get playerlist");
+    }
+
+    public void challenge(String username, String game){
+        //System.out.println(("challenge " + '"'+username+ "\" " + '"'+game+'"'));
+        connection.send("challenge " + '"'+username+ "\" " + '"'+game+'"');
+    }
+
+    public void acceptChallenge(String challengeNumber){
+        //System.out.println("accepting challenge...");
+        connection.send("challenge accept "+challengeNumber);
     }
 }

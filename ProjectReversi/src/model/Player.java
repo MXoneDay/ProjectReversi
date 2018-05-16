@@ -1,29 +1,40 @@
 package model;
 
-import javax.swing.text.html.ImageView;
-import java.awt.*;
+public class Player implements User {
+	private String name;
+	private int turn;
+	
+	Player(String name){
+		this.name = name;
+	}
+	
+	@Override
+	public void setTurn(int turn) {
+		this.turn = turn;
+	}
+	
+	@Override
+	public int getTurn() {
+		return turn;
+	}
+	
+	@Override
+	public String getName(){
+		return name;
+	}
+	
+	/*
+	public String getPiece() {
+		return img.split(".")[0];
+	}
+	
+	public void setImageView(String loc) {
+		img = loc.split("-")[0];
+		size = Integer.parseInt(loc.split("-")[1]);
 
-public class Player {
-    boolean isTurn = false;
-    String image;
-    String username;
-
-    public Player(String username){
-        this.username = username;
-    }
-    public void setTurn(){
-        this.isTurn = true;
-    }
-
-     public void endTurn(){
-        this.isTurn = false;
-     }
-
-     public void setImage(String image){
-        this.image = image;
-     }
-
-    public String getUsername() {
-        return username;
-    }
+	}
+	
+	public ImageView getImageView() {
+		return new ImageView(new Image(img, size, size, true, true));
+	}*/
 }

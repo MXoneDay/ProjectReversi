@@ -6,43 +6,51 @@ import javafx.scene.Scene;
 
 public class PageController {
 	private Scene scene;
-	private Page hPage = new HomePage(this);
-	private Page playerPage = new PlayerPage(this);
-	private Page gPage = new GridPage(this);
+	private HomePage hPage = new HomePage(this);
+	private PlayerPage playerPage = new PlayerPage(this);
+	private GridPage gPage = new GridPage(this);
+	private AlertView av = new AlertView();
 	private GameFW gFW = new GameFW();
-	
+
 	public PageController() {
 		hPage.createPage();
 		scene = new Scene(hPage.getPane(), 600, 600);
+		gFW.setPageController(this);
 	}
 	
 	public Scene getScene() {
 		return scene;
 	}
 	
-	public void setGameFW(char type, Object wait) throws Exception {
-		gFW.connectToServer();
-		gFW.setGame(type, wait);
+	public String move(int hor, int ver) {
+		return gFW.move(hor, ver, null);
+	}
+	
+	public void setGame(Object game, String pToMove, String opponent) {
+		gFW.setGame(game);
 		gPage.createPage();
 		gFW.setup();
+		gFW.createAi(pToMove, opponent);
 		toGrid();
 	}
 	
-	public void reset() {
-		gFW.reset();
-	}
-	
 	public void toHome() {
+		gFW.disconnect();
 		scene.setRoot(hPage.getPane());
 	}
   
-	public void toPlayerPage() throws Exception {
-		gFW.connectToServer();
+	public void toPlayerPage(String name, boolean p1Ai) throws Exception {
+		gFW.connectToServer(name);
+		gFW.setAi(p1Ai);
         playerPage.createPage();
         scene.setRoot(playerPage.getPane());
+    }
+	
+	public void toPlayerPage() {
+		scene.setRoot(playerPage.getPane());
 	}
-
-	public void toGrid() throws Exception{
+	
+	public void toGrid() {
 		scene.setRoot(gPage.getPane());
 	}
 	
@@ -54,31 +62,23 @@ public class PageController {
 		return gFW.getHor();
 	}
 	
-	public String getTurntext() {
-		return gFW.getTurntext();
-	}
-	
-	public String move(int hor, int ver) {
-		return gFW.tryMove(hor, ver);
-	}
-	
 	public void setInBoard(Object cp) {
 		gFW.setInBoard(cp);
-	}
-	
-	public void setUser1(String user1) {
-		gFW.user1 = user1;
-	}
-	
-	public void setUser2(String user2) {
-		gFW.user2 = user2;
 	}
 	
 	public String[] getPlayers() {
 		return gFW.getPlayers();
 	}
-	
+
 	public void disconnect() {
 		gFW.disconnect();
+	}
+
+	public void startChallenge(String username, String game){
+		gFW.startChallenge(username, game);
+	}
+	
+	public AlertView getAlertView(){
+		return av;
 	}
 }

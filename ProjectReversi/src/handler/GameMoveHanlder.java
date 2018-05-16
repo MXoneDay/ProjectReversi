@@ -13,11 +13,11 @@ public class GameMoveHanlder extends ActionHandler {
 	}
 	
     public void run(String message){
-        System.out.println("Running GAME MOVE command handler");
+        //System.out.println("Running GAME MOVE command handler");
 		Pattern pattern = Pattern.compile("SVR GAME MOVE \\{PLAYER: \"(.*?)\", MOVE: \"(.*?)\", DETAILS: \"(.*?)\"\\}");
 		Matcher matcher = pattern.matcher(message);
 
-		String player;
+		String player = null;
 		Integer move = null;
 		String details;
 
@@ -26,7 +26,7 @@ public class GameMoveHanlder extends ActionHandler {
 			move = Integer.parseInt(matcher.group(2));
 			details = matcher.group(3);
 		}
-		System.out.println("drawMove: "+move);
-		gFW.drawMove(move);
+		//System.out.println("drawMove: "+move);
+		gFW.drawMove(move, player);
     }
 }

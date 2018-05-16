@@ -1,18 +1,19 @@
 package view;
 
+import controller.PageController;
 import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import controller.PageController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 public class HomePage implements Page{
-	public String usernm = "";
 	private final PageController pc;
 	private GridPane gp = new GridPane();
 	
@@ -22,88 +23,57 @@ public class HomePage implements Page{
 	
 	public void createPage() {
 		try {
+			Alert alert = new Alert(AlertType.WARNING);
 			ToggleGroup tg = new ToggleGroup();
-			TextField text = new TextField(usernm);
-			Label label = new Label("Username: ");
+			TextField text = new TextField();
+			Label name = new Label("Username: ");
+			Label RButtons = new Label("Mode:");
+			Button b1 = new Button("Next");
 			
-			RadioButton rb1 = new RadioButton("Player vs Player");
-			rb1.setUserData(1);
-			rb1.setToggleGroup(tg);
-			rb1.setSelected(true);
-			RadioButton rb4 = new RadioButton("Player vs AI");
-			rb4.setUserData(2);
-			rb4.setToggleGroup(tg);
 			RadioButton rb2 = new RadioButton("Player vs Online");
+			RadioButton rb3 = new RadioButton("AI vs Online");
+			
+			alert.setHeaderText(null);
+			
 			rb2.setUserData(3);
 			rb2.setToggleGroup(tg);
-			RadioButton rb3 = new RadioButton("AI vs Online");
+			rb2.setSelected(true);
+			
 			rb3.setUserData(4);
 			rb3.setToggleGroup(tg);
 			
-			Button b1 = new Button("TicTacToe");
-			Button b2 = new Button("Reversi");
-			Button b3 = new Button("Players");
-
-
-			gp.setAlignment(Pos.CENTER);
-			gp.add(label, 0, 0);
-			gp.add(text, 1, 0);
-			gp.add(b1, 0, 1);
-			gp.add(b2, 1, 1);
-			gp.add(b3, 2, 1);
-			gp.add(rb1, 0, 2);
-			gp.add(rb4, 0, 3);
-			gp.add(rb2, 0, 4);
-			gp.add(rb3, 0, 5);
-			
 			b1.setOnAction(new EventHandler<ActionEvent>() {
-				
 				@Override
 				public void handle(ActionEvent ae) {
-					usernm = text.getText();
 					try {
-						pc.setUser1(usernm);
-						pc.setGameFW('t', tg.getSelectedToggle().getUserData());
-						
-						//pc.getgFW().getDispatcher().login(usernm);
-						//pc.getgFW().getDispatcher().subscribe("Tic-tac-toe");
+						if(!text.getText().isEmpty()) {
+							pc.toPlayerPage(text.getText(), rb3.isSelected());
+						}else {
+							alert.setTitle("No name");
+							alert.setContentText("Please enter a Username");
+							alert.show();
+						}
 					}
 					catch(Exception ex) {
-						text.setText(ex.getMessage());
+						alert.setTitle(ex.getMessage());
+						//ex.printStackTrace();
+						alert.setContentText("Please have a working connection to the server.");
+						alert.show();
 					}
 				}
 			});
-			b2.setOnAction(new EventHandler<ActionEvent>() {
-				
-				@Override
-				public void handle(ActionEvent ae) {
-					usernm = text.getText();
-					try {
-						pc.setUser1(usernm);
-						pc.setGameFW('r', tg.getSelectedToggle().getUserData());
-					}
-					catch(Exception ex) {
-						text.setText(ex.getMessage());
-					}
-				}
-			});
-			b3.setOnAction(new EventHandler<ActionEvent>() {
-				@Override
-				public void handle(ActionEvent ae) {
-					usernm = text.getText();
-					try {
-						pc.setUser1(usernm);
-						pc.toPlayerPage();
-					}
-					catch(Exception ex) {
-						text.setText(ex.getMessage());
-					}
-				}
-			});
+			
+			gp.setAlignment(Pos.CENTER);
+			gp.add(RButtons, 0, 1);
+			gp.add(name, 0, 0);
+			gp.add(text, 1, 0);
+			gp.add(b1, 2, 5);
+			gp.add(rb2, 0, 3);
+			gp.add(rb3, 0, 4);
 		}
 		catch(Exception ex) {
-			ex.printStackTrace();
-		}
+			//ex.printStackTrace();
+		}	
 	}
 	
 	@Override

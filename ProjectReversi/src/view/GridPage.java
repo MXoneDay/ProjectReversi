@@ -27,8 +27,7 @@ public class GridPage implements Page{
 		Text turn = new Text(" ");
 		Button back = new Button("Back");
 		Button playerList = new Button("PlayerList");
-		//Button reset = new Button("Reset");
-		
+
 		ColumnConstraints cHor = new ColumnConstraints(hor);
 		cHor.setPercentWidth(100.0/hor);
 		RowConstraints rVer = new RowConstraints(ver);
@@ -52,8 +51,6 @@ public class GridPage implements Page{
 					@Override
 					public void handle(MouseEvent me) {
 						turn.setText(pc.move(cp.hor, cp.ver));
-						//cp.getChildren().add((ImageView) pc.getImage());
-						//turn.setText(pc.getTurntext());
 					}
 				});
 				
@@ -68,8 +65,7 @@ public class GridPage implements Page{
 			@Override
 			public void handle(ActionEvent ae) {
 				pc.toHome();
-				pc.disconnect();
-				//pc.getgFW().getDispatcher().disconnect();
+				//pc.disconnect();
 			}
 		});
 
@@ -79,33 +75,12 @@ public class GridPage implements Page{
 				pc.toPlayerPage();
 			}
 		});
-		/*
-		reset.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent ae) {
-				try {
-					pc.reset();
-					//pc.getgFW().getDispatcher().disconnect();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});*/
 
 		turn.setStyle("-fx-font: 22 arial;");
 		
 		menu.add(back, 0, 0);
-		//menu.add(reset, 1, 0);
 		menu.add(playerList, 2, 0);
 
-		/*
-		int test = hor;
-		if(hor > 3) {
-			test = hor/3;
-		}
-		System.out.println(test);
-		gPane.add(menu, hor-1, ver, test, 1);*/
 		gPane.add(menu, hor-1, ver);
 		gPane.add(turn, 0, ver);
 	}

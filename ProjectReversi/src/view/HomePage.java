@@ -56,7 +56,6 @@ public class HomePage implements Page{
 					}
 					catch(Exception ex) {
 						alert.setTitle(ex.getMessage());
-						//ex.printStackTrace();
 						alert.setContentText("Please have a working connection to the server.");
 						alert.show();
 					}
@@ -72,7 +71,6 @@ public class HomePage implements Page{
 			gp.add(rb3, 0, 4);
 		}
 		catch(Exception ex) {
-			//ex.printStackTrace();
 		}	
 	}
 	

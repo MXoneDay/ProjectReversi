@@ -17,12 +17,4 @@ public class CellPane extends Pane {
 		return hor + "-" + ver + " " + filled;
 		
 	}
-	/*
-	public int getFilled() {
-		return filled;
-	}
-	
-	public void setFilled(int player) {
-		filled = player;
-	}*/
 }

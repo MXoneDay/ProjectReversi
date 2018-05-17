@@ -1,6 +1,5 @@
 package model;
 
-import java.util.ArrayList;
 import view.CellPane;
 
 public interface AI extends User{

@@ -22,7 +22,6 @@ public class GameFW {
     	try {
             env = new DotEnv();
         } catch (IOException e) {
-            //e.printStackTrace();
         }
     }
 
@@ -30,7 +29,6 @@ public class GameFW {
 		connection = new Connection(this);
 		connection.start(env.get("HOST"), Integer.parseInt(env.get("PORT")));
 		dispatcher = connection.getDispatcher();
-		//users[0] = new Player(name);
 		dispatcher.login(name);
 		this.username = name;
 	}
@@ -57,7 +55,6 @@ public class GameFW {
 	// If the game is not supported by the client it will throw an execption
 	public void setGame(Object game) {
 		this.game = (Game) game;
-		//users[1] = new Player(oppenent);
 		board = new Board(getVer(), getHor());
 	}
 	
@@ -209,6 +206,5 @@ public class GameFW {
 	
 	public void setAi(boolean p1) {
 		p1ai = p1;
-		//p2ai = p2;
 	}
 }

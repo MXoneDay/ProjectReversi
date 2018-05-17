@@ -87,7 +87,6 @@ public class PlayerPage implements Page{
 			public void handle(MouseEvent event) {
 
 			    selectedOpponent = players.getSelectionModel().getSelectedItem();
-                System.out.println("Selected: "+selectedOpponent);
 			}
 		});
     	gp.add(players, 0, 0);

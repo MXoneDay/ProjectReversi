@@ -21,7 +21,6 @@ public class PlayerListHandler extends ActionHandler{
         if (matcher.find()) {
             String players = matcher.group(1);
             String username = gFW.getUsername();
-            //System.out.println("DEBUG: "+players);
             players = players.replace("\"", "");
             String[] playersArray = players.split(", ");
             List<String> list = new ArrayList<String>(Arrays.asList(playersArray));

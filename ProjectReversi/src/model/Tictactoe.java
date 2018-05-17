@@ -28,7 +28,6 @@ public class Tictactoe implements Game {
 	public boolean isValid(User[] users, int turn, int hor, int ver, Board board, boolean justCheck) {
 		// check if the move is valid
 		CellPane cp = board.getCell(hor, ver);
-		//System.out.println("Move: " + cp.loc + cp.filled);
 		if(cp.filled == 3) {
 			return true;
 		}

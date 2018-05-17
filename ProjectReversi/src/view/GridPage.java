@@ -65,7 +65,6 @@ public class GridPage implements Page{
 			@Override
 			public void handle(ActionEvent ae) {
 				pc.toHome();
-				//pc.disconnect();
 			}
 		});
 
